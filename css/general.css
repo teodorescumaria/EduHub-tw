@@ -1,0 +1,259 @@
+body {
+    --culoare-baza: #781E00;     
+    --culoare-secundara: #BD3A40; 
+    --culoare-fundal: #FCEBE9;  
+    --culoare-accent: #76B27C; 
+    --culoare-accent-deschisa: #D6FFDA;  
+    --text-main: #2D3436;      
+    
+    --spatiere: 24px;
+    --rotunjire: 12px;
+}
+
+html {
+    font-size: 14px;
+    transition: font-size 0.5s ease-in-out;
+    scroll-behavior: smooth;
+}
+
+@media screen and (min-width: 768px) {
+    html { font-size: 15px; } 
+}
+
+@media screen and (min-width: 1100px) {
+    html { font-size: 16px; } 
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-main);
+    background-color: var(--culoare-fundal);
+    line-height: 1.6;
+}
+
+h1 { font-size: 2.2rem; color: var(--culoare-baza); margin-bottom: 1rem; }
+h2 { font-size: 1.75rem; color: var(--culoare-secundara); margin-bottom: 0.8rem; }
+p { font-size: 1rem; margin-bottom: 1rem; }
+
+.grid-container-z1 { grid-area: z1; display: flex; flex-direction: column; gap: var(--spatiere); }
+.grid-container-z2 { grid-area: z2; display: flex; flex-direction: column; gap: var(--spatiere); }
+.grid-container-z8 { grid-area: z8; display: flex; flex-direction: column; gap: var(--spatiere); }
+
+#vizual-resurse { grid-area: z3; }
+#produse { grid-area: z4; }
+#promotii { grid-area: z5; }
+#anunturi { grid-area: z6; }
+#galerie-statica { grid-area: z7; }
+
+
+#grid-pagina {
+    display: grid;
+    gap: var(--spatiere);
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 95%;
+    padding: 32px 0;
+}
+
+
+@media screen and (min-width: 1100px) {
+    #grid-pagina {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+            "z1 z1 z1 z1"
+            "z1 z1 z1 z1"
+            "z2 z2 z3 z3"
+            "z2 z2 z4 z4"
+            "z5 z6 z6 z7"
+            "z8 z8 z8 z8";
+        grid-auto-rows: auto;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1099px) {
+    #grid-pagina {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "z1 z1"
+            "z2 z2"
+            "z3 z4"
+            "z5 z7"
+            "z6 z6"
+            "z8 z8";
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #grid-pagina {
+        grid-template-columns: 1fr;
+        grid-template-areas: "z1" "z2" "z3" "z4" "z5" "z6" "z7" "z8";
+    }
+    .fa-spin, * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+header {
+    background-color: var(--culoare-baza);
+    color: white;
+    padding: 40px 16px;
+    text-align: center;
+    border-bottom: 4px solid var(--culoare-secundara);
+}
+
+section {
+    background-color: white;
+    padding: 28px;
+    border-radius: var(--rotunjire);
+    border: 1px solid var(--culoare-accent-deschisa);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+#welcome {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#orar {
+    overflow-x: auto;
+}
+
+#tab-orar {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid var(--culoare-baza);
+}
+
+#tab-orar th {
+    background-color: var(--culoare-baza);
+    color: white;
+    padding: 12px;
+}
+
+#tab-orar td {
+    border: 1px solid var(--culoare-accent-deschisa);
+    padding: 10px;
+}
+
+#index-intrebari {
+    background-color: var(--culoare-baza);
+    color: white;
+    border: 4px double var(--culoare-fundal);
+}
+
+#index-intrebari h2, #index-intrebari summary {
+    color: white;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    margin: 1rem auto;
+}
+
+footer {
+    background-color: var(--culoare-baza);
+    color: white;
+    padding: 3rem var(--pag-margin);
+    margin-top: 4rem;
+}
+
+footer a { color: var(--culoare-accent-deschisa); }
+/*
+.container-iframe {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+iframe[name="ifr-video"] {
+    width: 100%;
+    height: 350px;
+    background-color: white;
+    border: 3px solid var(--culoare-accent); 
+    border-radius: 10px 0 10px 10px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.taburi-iframe {
+    display: flex; 
+    gap: 8px;
+    padding-right: 10px; 
+}
+
+.taburi-iframe a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--culoare-baza);
+    background-color: var(--culoare-fundal);
+    padding: 8px 15px;
+    
+    border: 2px solid var(--culoare-accent);
+    border-top: none; 
+
+    border-radius: 0 0 12px 12px;
+    
+    transition: all 0.3s ease;
+}
+
+.taburi-iframe a:hover {
+    background-color: var(--culoare-secundara);
+    color: white;
+    padding-top: 12px; 
+}
+    */
+
+.container-iframe{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+iframe[name="ifr-video"] {
+    width: 100%;
+    height: 315px;
+    border: 1px solid var(--culoare-baza);
+    display: block;
+    margin: 0; 
+}
+.taburi-iframe{
+    display: flex;
+    /*flex-direction: row;
+    align-items:stretch;*/
+    justify-content: flex-end;
+    width: 100%;
+}
+.taburi-iframe > a{
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--culoare-baza);
+    background-color: var(--culoare-fundal);
+    padding: 8px 15px; /* Păstrează padding-ul fix ca să nu se mai mărească */
+    
+    border: 2px solid var(--culoare-baza);
+    border-top: none; /* Eliminăm bordura de sus ca să se unească cu video-ul */
+
+    /* Rotunjim doar colțurile de jos */
+    border-radius: 0 0 12px 12px;
+    
+    /* Tranziția doar pentru culoare, nu și pentru dimensiune */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.taburi-iframe > a:hover{
+    background-color: var(--culoare-secundara);
+    color: white;
+    padding-bottom: 15px;
+}
