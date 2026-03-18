@@ -165,53 +165,6 @@ footer {
 }
 
 footer a { color: var(--culoare-accent-deschisa); }
-/*
-.container-iframe {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; 
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-iframe[name="ifr-video"] {
-    width: 100%;
-    height: 350px;
-    background-color: white;
-    border: 3px solid var(--culoare-accent); 
-    border-radius: 10px 0 10px 10px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.taburi-iframe {
-    display: flex; 
-    gap: 8px;
-    padding-right: 10px; 
-}
-
-.taburi-iframe a {
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--culoare-baza);
-    background-color: var(--culoare-fundal);
-    padding: 8px 15px;
-    
-    border: 2px solid var(--culoare-accent);
-    border-top: none; 
-
-    border-radius: 0 0 12px 12px;
-    
-    transition: all 0.3s ease;
-}
-
-.taburi-iframe a:hover {
-    background-color: var(--culoare-secundara);
-    color: white;
-    padding-top: 12px; 
-}
-    */
 
 .container-iframe{
     display: flex;
@@ -241,19 +194,55 @@ iframe[name="ifr-video"] {
     font-weight: bold;
     color: var(--culoare-baza);
     background-color: var(--culoare-fundal);
-    padding: 8px 15px; /* Păstrează padding-ul fix ca să nu se mai mărească */
+    padding: 8px 15px; 
     
     border: 2px solid var(--culoare-baza);
-    border-top: none; /* Eliminăm bordura de sus ca să se unească cu video-ul */
-
-    /* Rotunjim doar colțurile de jos */
+    border-top: none;
     border-radius: 0 0 12px 12px;
-    
-    /* Tranziția doar pentru culoare, nu și pentru dimensiune */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 .taburi-iframe > a:hover{
     background-color: var(--culoare-secundara);
     color: white;
     padding-bottom: 15px;
+}
+.tabel-scroll {
+    overflow-x: auto;
+    width: 100%;
+    border: 1px solid var(--culoare-accent-deschisa);
+    border-radius: var(--rotunjire);
+    margin: 20px 0;
+}
+#tab-orar {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 600px;
+}
+#tab-orar th,
+#tab-orar td {
+    border: 1px solid black;
+    padding: 12px;
+    text-align: center;
+}
+#tab-orar col:nth-child(odd) {
+    border-right: 4px solid var(--culoare-secundara);
+}
+#tab-orar col:nth-child(even) {
+    border-right: 4px solid var(--culoare-accent);
+}
+
+#tab-orar col:last-child {
+    border-right: none;
+}
+#tab-orar thead tr:last-child th {
+    border-bottom: 3px solid var(--culoare-baza);
+}
+#tab-orar tfoot tr:first-child td {
+    border-top: 3px solid var(--culoare-baza);
+}
+#tab-orar tbody tr {
+    transition: box-shadow 0.5s ease-in-out;
+}
+#tab-orar tbody tr:hover {
+    box-shadow: inset 0 0 15px 5px rgba(0, 0, 0, 0.2);
 }
