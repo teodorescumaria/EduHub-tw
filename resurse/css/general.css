@@ -207,23 +207,32 @@ iframe[name="ifr-video"] {
     padding-bottom: 15px;
 }
 .tabel-scroll {
-    overflow-x: auto;
+    overflow-x: auto;                
+    -webkit-overflow-scrolling: touch; 
     width: 100%;
     border: 1px solid var(--culoare-accent-deschisa);
     border-radius: var(--rotunjire);
     margin: 20px 0;
 }
 #tab-orar {
+    width: max-content; 
+    min-width: 100%;     
     border-collapse: collapse;
-    width: 100%;
-    min-width: 600px;
 }
-#tab-orar th,
-#tab-orar td {
+#tab-orar th, #tab-orar td {
     border: 1px solid black;
     padding: 12px;
     text-align: center;
 }
+
+@media screen and (max-width: 767px) {
+    #tab-orar {
+        min-width: 500px; 
+        width: max-content; 
+    
+    }
+}
+
 #tab-orar col:nth-child(odd) {
     border-right: 4px solid var(--culoare-secundara);
 }
