@@ -1,33 +1,39 @@
 footer {}
-
 #link-top {
-  position: fixed;
-  bottom: 0.3em;
-  opacity: 0.5;
-  left: 0.3em;
-  width: 3rem;
-  box-sizing: border-box;
-  height: 3rem;
-  line-height: 3rem;
-  text-align: center;
-  border: 5px solid grey;
-  border-top-color: red;
-  border-radius: 50%;
-  background: rgb(220, 220, 220);
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--culoare-fundal);
+    border: 3px solid var(--culoare-baza);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    opacity: 0.6;                             
+    transition: all 0.5s ease-in-out;
+    text-decoration: none;
+    z-index: 1000;
 }
-
-#link-top:hover {
-  opacity: 1;
-}
-
 #triunghi {
-  height: 0px;
-  width: 0;
-  display: inline-block;
-  border-bottom: 1.5rem solid grey;
-  border-left: 1rem solid transparent;
-  border-right: 1rem solid transparent;
-
-  vertical-align: top;
-  transform: translateY(30%);
+    height: auto; 
+    width: auto;
+    border: none; 
+    display: inline-block;
+    color: var(--culoare-baza); 
+    font-size: 2rem;
+    line-height: 1;
+    transform: translateY(-8%); 
+    transition: color 0.5s ease-in-out;
+}
+#link-top:hover {
+    opacity: 1;                                 
+    background-color: var(--culoare-secundara);    
+    border-color: var(--culoare-secundara);
+    cursor: pointer;
+}
+#link-top:hover #triunghi {
+    color: white; 
 }
