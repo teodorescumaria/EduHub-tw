@@ -1,4 +1,4 @@
-/* --- Stiluri pentru Navigație --- */
+
 nav {
     margin-top: 20px;
 }
@@ -29,7 +29,6 @@ nav ul li a {
     white-space: nowrap;
 }
 
-/* Ascundem submeniurile pe desktop și le afișăm la hover */
 nav ul li ul {
     display: none; 
     position: absolute;
@@ -57,7 +56,6 @@ nav ul li ul li a {
 }
 
 @media screen and (max-width: 767px) {
-    /* Navigația - vertical stack pe mobile */
     nav {
         margin-top: 16px;
         width: 100% !important;
@@ -85,8 +83,6 @@ nav ul li ul li a {
         white-space: normal;
         text-align: left;
     }
-    
-    /* Ascunde submeniurile pe mobile */
     nav ul li ul {
         position: static;
         display: none;
@@ -104,6 +100,7 @@ nav ul li ul li a {
 }
 
 footer {}
+
 #link-top {
     position: fixed;
     bottom: 2rem;
