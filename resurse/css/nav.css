@@ -1,3 +1,108 @@
+/* --- Stiluri pentru Navigație --- */
+nav {
+    margin-top: 20px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: var(--culoare-secundara);
+    border-radius: 8px;
+    gap: 0;
+}
+
+nav ul li {
+    position: relative;
+    flex: 0 1 auto;
+}
+
+nav ul li a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Ascundem submeniurile pe desktop și le afișăm la hover */
+nav ul li ul {
+    display: none; 
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+nav ul li:hover > ul {
+    display: block;
+}
+
+nav ul li ul li {
+    width: 100%;
+}
+
+nav ul li ul li a {
+    color: var(--text-main);
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+@media screen and (max-width: 767px) {
+    /* Navigația - vertical stack pe mobile */
+    nav {
+        margin-top: 16px;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+    
+    nav ul {
+        width: 100% !important;
+        box-sizing: border-box;
+        flex-direction: column;
+        border-radius: 8px;
+    }
+    
+    nav ul li {
+        width: 100% !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    nav ul li:last-child {
+        border-bottom: none;
+    }
+    
+    nav ul li a {
+        padding: 14px 16px;
+        white-space: normal;
+        text-align: left;
+    }
+    
+    /* Ascunde submeniurile pe mobile */
+    nav ul li ul {
+        position: static;
+        display: none;
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: none;
+        width: 100%;
+        max-width: none;
+        min-width: auto;
+        border-radius: 0;
+    }
+    
+    nav ul li:hover > ul {
+        display: none;
+    }
+}
+
 footer {}
 #link-top {
     position: fixed;
@@ -37,3 +142,4 @@ footer {}
 #link-top:hover #triunghi {
     color: white; 
 }
+
