@@ -18,6 +18,10 @@
 
     <link rel = "stylesheet" href = "./resurse/css/general.css" type = "text/css"/>
     <link rel = "stylesheet" href = "./resurse/css/nav.css" type = "text/css"/>
+    <link rel = "stylesheet" href = "./resurse/css/nav700.css" type = "text/css" media = "screen and (max-width: 767px)" />
+    <link rel = "stylesheet" href = "./resurse/css/nav1000.css" type = "text/css" media = "screen and (max-width: 1000px)" />
+    <link rel = "stylesheet" href = "./resurse/css/style.css" type = "text/css"/>
+    <link rel="stylesheet" href="./resurse/css/print.css" media="print" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,51 +37,45 @@
         <h1>EduHub</h1>
         <img src="./resurse/imagini/logo.jpg" alt="Logoul EduHub - Platforma Educationala" title = "EduHub: Drumul tau spre nota 10" />
         <nav>
-            <ul>
-                <li><a href="index.html">Acasa</a>
-                    <ul>
-                        <li><a href="#welcome">Bine ati venit</a></li>
-                        <li><a href="#produse">Produse</a></li>
-                        <li><a href="#servicii">Serivicii</a></li>
-                        <li><a href="#orar">Program si Calendar</a></li>
-                    </ul>
-                </li>
-                <li><a href="produse.html">Produse</a>
-                    <ul>
-                        <li><a href="#cls-8">Evaluarea Nationala</a></li>
-                        <li><a href="#cls-12-mate">Bacalaureat - matematica</a></li>
-                        <li><a href="#cls-12-info">Bacalaureat - informatica</a></li>
-                        <li><a href="promotii">Promotii</a></li>
-                    </ul>
-                </li>
-                <li><a href="servicii.html">Servicii</a>
-                    <ul>
-                        <li><a href="#sim-8">Simulari Evaluare Nationala</a></li>
-                        <li><a href="#sim-12-mate-MI">Simulari Bacalaureat - matematica (M1)</a></li>
-                        <li><a href="#sim-12-mate-SN">Simulari Bacalaureat - matematica (M2)</a></li>
-                        <li><a href="#sim-12-info-MI">Simulari Bacalaureat - informatica (mate-info)</a></li>
-                        <li><a href="#sim-12-info-SN">Simulari Bacalaureat - informatica (stiintele naturii)</a></li>
-                    </ul>
-                </li>
-                <li><a href="blog.html">Blog</a>
-                    <ul>
-                        <li><a href="#welcome">Bine ati venit</a></li>
-                        <li><a href="#produse">Produse</a></li>
-                        <li><a href="#servicii">Serivicii</a></li>
-                        <li><a href="#orar">Program si Calendar</a></li>
-                    </ul>                
-                </li>
-                <li><a href="contact.html">Contact</a>
-                    <ul>
-                        <li><a href="#welcome">Bine ati venit</a></li>
-                        <li><a href="#produse">Produse</a></li>
-                        <li><a href="#servicii">Serivicii</a></li>
-                        <li><a href="#orar">Program si Calendar</a></li>
-                    </ul>
-                </li>
-
+    <input type="checkbox" id="ch-menu" aria-label="Toggle navigation" />
+    <label id="hamburger" for="ch-menu" aria-hidden="true">
+        <i class="fa-solid fa-bars"></i>
+        <span class="nav-label">Meniu</span>
+    </label>
+    <ul class="meniu">
+        <li class="nav-item has-submenu">
+            <a href="#"><i class="fa-solid fa-house"></i><span>Acasă</span></a>
+            <ul class="sub-menu section-links">
+                <li><a href="#welcome">Bine ai venit</a></li>
+                <li><a href="#produse">Produse</a></li>
+                <li><a href="#servicii">Servicii</a></li>
+                <li><a href="#orar">Orar</a></li>
             </ul>
-        </nav>
+        </li>
+        <li class="nav-item has-submenu">
+            <a href="#"><i class="fa-solid fa-book"></i><span>Produse</span></a>
+            <ul class="sub-menu other-pages">
+                <li><a href="culegeri.html">Culegeri</a></li>
+                <li><a href="simulari.html">Simulari</a></li>
+                <li><a href="promotii.html">Promotii</a></li>
+            </ul>
+        </li>
+        <li class="nav-item has-submenu">
+            <a href="#"><i class="fa-solid fa-chalkboard-teacher"></i><span>Servicii</span></a>
+            <ul class="sub-menu other-pages">
+                <li><a href="meditatii.html">Meditatii</a></li>
+                <li><a href="consultatii.html">Consultatii</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="despre.html"><i class="fa-solid fa-users"></i><span>Despre</span></a>
+        </li>
+        <li class="nav-item">
+            <a href="#contact"><i class="fa-regular fa-envelope"></i><span>Contact</span></a>
+        </li>
+    </ul>
+</nav>
     </header>
     <main> 
         <div id="grid-pagina">
@@ -495,6 +493,7 @@
 
     </main>
     <footer>
+        <p id="banner-scolar">Acesta este un proiect școlar!</p>
         <a href="#" id="link-top" title="Sari la începutul paginii">
             <div id="triunghi">&#5123;</div>
         </a>
@@ -526,9 +525,10 @@
             <small>Copyright &copy; <time datetime="2026-03-02">2 martie 2026</time> EduHub - Platformă educațională</small>
         </p>
         
-        <p><a href="#welcome">Înapoi la începutul paginii</a></p>
+        <p id="link-sus"><a href="#welcome">Înapoi la începutul paginii</a></p>
     </footer>
 
+    <div id="watermark"><span>Teodorescu</span><span>Maria</span></div>
 </body>
 
 </html>
