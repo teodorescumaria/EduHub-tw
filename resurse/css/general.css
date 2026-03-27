@@ -109,9 +109,8 @@ body {
         grid-template-columns: 1fr;
         grid-template-areas: "z1" "z2" "z3" "z4" "z5" "z6" "z7" "z8";
     }
-    .fa-spin, * {
+    .fa-spin {
         animation: none !important;
-        transition: none !important;
     }
 }
 
@@ -141,18 +140,31 @@ header img {
 
 @media screen and (max-width: 767px) {
     header {
-        padding: 16px 12px;
-        gap: 12px;
+        position: relative;
+        padding: 10px 0 12px;
+        gap: 8px;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
     
     header h1 {
-        font-size: 1.75rem;
-        margin: 0;
+        display: none;
     }
     
     header img {
-        max-width: 32px;
+        order: 1;
+        max-width: 16px;
         height: auto;
+        margin: 0 0 0 12px;
+    }
+
+    header nav {
+        order: 2;
+        flex: 1 1 100%;
+        margin-top: 0;
+        position: static;
+        padding: 0 12px;
+        box-sizing: border-box;
     }
 }
 
@@ -367,6 +379,17 @@ iframe[name="ifr-video"] {
     color: white;
     padding-bottom: 15px;
 }
+
+.taburi-iframe > a:nth-child(2) {
+    font-size: 10px;
+}
+
+@media screen and (max-width: 767px) {
+    .taburi-iframe > a:nth-child(2) {
+        font-size: 9px;
+    }
+}
+
 .tabel-scroll {
     overflow-x: auto;                
     -webkit-overflow-scrolling: touch; 
