@@ -1,15 +1,7 @@
-/* ============================================================
-   STILURI PENTRU PRINTARE - EduHub
-   ============================================================ */
-
-/* Ascunde watermark-ul pe ecran */
 #watermark {
     display: none;
 }
 
-/* ============================================================
-   REGULI DE PAGINA (@page nu necesita @media print)
-   ============================================================ */
 
 @page {
     size: A4 portrait;
@@ -17,27 +9,19 @@
     margin-bottom: 2cm;
 }
 
-/* Paginile din stânga (pare, în print preview): margine stânga 2cm, dreapta 1cm */
+
 @page :left {
     margin-left: 2cm;
     margin-right: 1cm;
 }
 
-/* Paginile din dreapta (impare, în print preview): margine dreapta 2cm, stânga 1cm */
+
 @page :right {
     margin-left: 1cm;
     margin-right: 2cm;
 }
 
-/* ============================================================
-   MEDIA PRINT
-   ============================================================ */
-
 @media print {
-
-    /* ----------------------------------------------------------
-       1. BANNER - dreapta-sus a primei pagini
-    ---------------------------------------------------------- */
     #banner-scolar {
         position: absolute;
         top: 0;
@@ -52,10 +36,6 @@
         font-weight: bold;
         color: black;
     }
-
-    /* ----------------------------------------------------------
-       2. ASCUNDE ELEMENTE MEDIA ȘI DEPENDENTE
-    ---------------------------------------------------------- */
     img,
     video,
     iframe,
@@ -69,23 +49,13 @@
     #resurse-pdf {
         display: none !important;
     }
-
-    /* Ascunde linkul către începutul paginii */
     #link-top,
     #link-sus {
         display: none !important;
     }
-
-    /* ----------------------------------------------------------
-       3. GRIDUL PAGINII AFIȘAT CA BLOCK
-    ---------------------------------------------------------- */
     #grid-pagina {
         display: block !important;
     }
-
-    /* ----------------------------------------------------------
-       4. TOATE LINKURILE CA TEXT NORMAL
-    ---------------------------------------------------------- */
     a,
     a:visited,
     a:link {
@@ -93,29 +63,18 @@
         text-decoration: none !important;
     }
 
-    /* ----------------------------------------------------------
-       5. H1 CENTRAT, MENIU CA LISTĂ, PAGE BREAK DUPĂ MENIU
-          ȘI ÎNAINTE DE FOOTER
-    ---------------------------------------------------------- */
-
     h1 {
         text-align: center;
     }
-
-    /* Ascunde elementele hamburger */
     #ch-menu,
     #hamburger {
         display: none !important;
     }
-
-    /* Nav: resetare completă pentru printare */
     nav {
         background: none !important;
         page-break-after: always;
         break-after: page;
     }
-
-    /* Meniu principal ca listă neordonată */
     ul.meniu {
         display: block !important;
         list-style: disc !important;
@@ -140,18 +99,13 @@
         font-weight: normal !important;
         text-decoration: none !important;
     }
-
-    /* Afișează textul span din linkuri */
     ul.meniu > li > a span {
         display: inline !important;
     }
-
-    /* Ascunde iconițele Font Awesome din meniu */
     ul.meniu > li > a i {
         display: none !important;
     }
 
-    /* Submenuri ca subliste */
     ul.sub-menu {
         display: block !important;
         list-style: circle !important;
@@ -180,31 +134,19 @@
         font-weight: normal !important;
         text-decoration: none !important;
     }
-
-    /* Elimină barele laterale (::before/::after) de pe link-uri submeniu */
     ul.sub-menu li a::before,
     ul.sub-menu li a::after {
         display: none !important;
         content: none !important;
     }
-
-    /* Page break înainte de footer */
     footer {
         page-break-before: always;
         break-before: page;
     }
-
-    /* ----------------------------------------------------------
-       6. WATERMARK PE FIECARE PAGINĂ
-          - 60% lățime, 10% înălțime, centrat pe pagină
-          - culoare neagră cu opacitate 0.3 (setată pe culoare)
-    ---------------------------------------------------------- */
     #watermark {
         display: flex !important;
         position: fixed;
-        /* Centrat orizontal: (100% - 60%) / 2 = 20% */
         left: 20%;
-        /* Centrat vertical: 50% - jumatate din inaltime (5%) = 45% */
         top: 45%;
         width: 60%;
         height: 10%;
