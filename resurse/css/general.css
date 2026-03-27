@@ -42,6 +42,34 @@ p { font-size: 1rem; margin-bottom: 1rem; }
 .grid-container-z2 { grid-area: z2; display: flex; flex-direction: column; gap: var(--spatiere); }
 .grid-container-z8 { grid-area: z8; display: flex; flex-direction: column; gap: var(--spatiere); }
 
+.grid-container-z1,
+.grid-container-z2,
+.grid-container-z8 {
+    background-color: white;
+    padding: 28px;
+    border-radius: var(--rotunjire);
+    border: 1px solid var(--culoare-secundara);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.grid-container-z1 > section,
+.grid-container-z2 > section,
+.grid-container-z8 > section {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+.grid-container-z1 > section + section,
+.grid-container-z2 > section + section,
+.grid-container-z8 > section + section {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--culoare-secundara);
+}
+
 #vizual-resurse { grid-area: z3; }
 #produse { grid-area: z4; }
 #promotii { grid-area: z5; }
@@ -218,7 +246,7 @@ section {
     background-color: white;
     padding: 28px;
     border-radius: var(--rotunjire);
-    border: 1px solid var(--culoare-accent-deschisa);
+    border: 1px solid var(--culoare-secundara);
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
@@ -226,10 +254,28 @@ section {
     section {
         padding: 16px;
     }
+
+    .grid-container-z1,
+    .grid-container-z2,
+    .grid-container-z8 {
+        padding: 16px;
+    }
+
+    .grid-container-z1 > section,
+    .grid-container-z2 > section,
+    .grid-container-z8 > section {
+        padding: 0 !important;
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1099px) {
     section {
+        padding: 20px;
+    }
+
+    .grid-container-z1,
+    .grid-container-z2,
+    .grid-container-z8 {
         padding: 20px;
     }
 }
@@ -284,7 +330,7 @@ section {
 }
 
 #tab-orar td {
-    border: 1px solid var(--culoare-accent-deschisa);
+    border: 1px solid var(--culoare-secundara);
     padding: 10px;
 }
 
@@ -292,6 +338,9 @@ section {
     background-color: var(--culoare-baza);
     color: white;
     border: 4px double var(--culoare-fundal);
+    border-radius: var(--rotunjire);
+    box-shadow: 0 8px 18px rgba(45, 52, 54, 0.18);
+    padding: 24px;
 }
 
 #index-intrebari h2, #index-intrebari summary {
@@ -394,7 +443,7 @@ iframe[name="ifr-video"] {
     overflow-x: auto;                
     -webkit-overflow-scrolling: touch; 
     width: 100%;
-    border: 1px solid var(--culoare-accent-deschisa);
+    border: 1px solid var(--culoare-secundara);
     border-radius: var(--rotunjire);
     margin: 20px 0;
 }
