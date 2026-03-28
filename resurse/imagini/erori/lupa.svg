@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#FCEBE9" stroke="#BD3A40" stroke-width="4"/>
+
+  <!-- Magnifying glass handle -->
+  <line x1="128" y1="128" x2="160" y2="160" stroke="#781E00" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Magnifying glass circle -->
+  <circle cx="88" cy="88" r="40" fill="white" stroke="#BD3A40" stroke-width="8"/>
+
+  <!-- Question mark inside lens -->
+  <text x="88" y="101" text-anchor="middle" font-size="36" font-family="Arial, sans-serif" font-weight="bold" fill="#781E00">?</text>
+
+  <!-- 404 label at bottom -->
+  <text x="100" y="182" text-anchor="middle" font-size="22" font-family="Arial, sans-serif" font-weight="bold" fill="#781E00">404</text>
+</svg>

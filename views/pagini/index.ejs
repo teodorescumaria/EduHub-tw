@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <title>EduHub</title>
+    <meta name="description" content="EduHub ofera culegeri specializate pentru examenel nationale la matematica si informatica, dar si meditatii si simulari.">
+    <meta name="keywords" content="EduHub, resurse invatare, program simulari, evaluare nationala, bac, bacalaureat, examene, mate info, matematica, informatica">
+    <meta name="msapplication-TileColor" content="#0099e5">
+
+    <%- include('../fragmente/head.ejs') %>
+
+</head>
+
+<body>
+    <%- include('../fragmente/header.ejs') %>
+    <main>
+        <div id="grid-pagina">
+
+            <div class="grid-container-z1">
+                <section id="welcome">
+                    <hgroup>
+                        <h2><i class="fa-solid fa-graduation-cap"></i> Bun venit la EduHub</h2>
+                        <p>Excelenta in pregatirea la matematica si informatica</p>
+                    </hgroup>
+                    <p class="intro">Va multumim ca ati ales <b>EduHub</b>. Suntem aici sa va oferim cele mai bune <b>resurse educationale</b> pentru a obtine nota maxima la <b>bacalaureat</b> si <b>evaluarea nationala</b>.</p>
+                    <p><small>IP: <%= ip %></small></p>
+                    <div class="intro-oferte">
+                        <div>Culegeri</div><div>Simulari</div><div>Algoritmi</div><div>Cursuri video</div><div>Meditatii</div>
+                    </div>
+                    <p class="anunt intro">Descopera gama noastra de <b>culegeri de matematica</b> si <b>culegeri de informatica</b>.</p>
+                    <div id="dv-prezentare-1">
+                        <div id="dv-prezentare">
+                            <picture>
+                                <source srcset="/resurse/imagini/studiu-mic.jpg" media="(max-width:500px)" />
+                                <source srcset="/resurse/imagini/studiu-mediu.jpg" media="(max-width:700px)" />
+                                <img src="/resurse/imagini/studiu-desktop.jpg" alt="Elevi studiind" title="Sesiune de pregatire EduHub">
+                            </picture>
+                        </div>
+                    </div>
+                </section>
+                <section id="testimoniale">
+                    <h2>Ce spun elevii nostri</h2>
+                    <blockquote cite="https://exemplu-blog-educatie.ro/succes-elevi">
+                        <p>"Datorita resurselor de la <b>EduHub</b>, am reusit sa inteleg conceptele de grafuri care mi se pareau imposibile. Materialele sunt structurate exact pe formatul de examen."</p>
+                        <footer>&#8212; <cite>Andrei Popescu</cite>, elev premiat la Olimpiada de Informatica</footer>
+                    </blockquote>
+                </section>
+            </div>
+
+            <div class="grid-container-z2">
+                <section id="orar">
+                    <h2>Program Simulari</h2>
+                    <p>Mai jos puteti consulta programul sesiunilor de <b>simulare</b> si orele de consultanta pentru <b>bacalaureat</b> si <b>evaluare nationala</b>:</p>
+                    <div class="tabel-scroll">
+                        <table id="tab-orar">
+                            <caption>Calendarul activitatilor EduHub - sesiunea de primavara</caption>
+                            <colgroup><col><col><col><col><col><col></colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Cod Activitate</th><th>Categorie</th><th>Disciplina</th>
+                                    <th>Interval dimineata (Simulari)</th><th>Pauza</th><th>Interval seara (consulatatii)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>M1 Bac</td><td rowspan="5">Pregatire<br/>Bacalaureat</td><td>Luni (Mate M1)</td><td><time datetime="09:00">09:00</time>-12:00</td><td>12:00-14:00</td><td>14:00-18:00</td></tr>
+                                <tr><td>Info Bac (MI)</td><td>Marti (Info - MI)</td><td>09:00-12:00</td><td>12:00-14:00</td><td>14:00-19:00</td></tr>
+                                <tr><td>M2 Bac</td><td>Miercuri (Mate M2)</td><td>09:00-12:00</td><td>12:00-14:00</td><td>14:00-19:00</td></tr>
+                                <tr><td>M3 Bac</td><td>Joi (Mate M3)</td><td>09:00-12:00</td><td>12:00-13:00</td><td>13:00-17:00</td></tr>
+                                <tr><td>Info Bac (SN)</td><td>Vineri (Info - SN)</td><td>09:00-12:00</td><td>12:00-14:00</td><td>14:00-18:00</td></tr>
+                                <tr><td>EVN-8</td><td rowspan="2">Evaluare<br/>Nationala</td><td>Sambata (Mate EN)</td><td>10:00-12:00</td><td>12:00-13:00</td><td>13:00-16:00</td></tr>
+                                <tr><td></td><td>Duminica (consultatii)</td><td>10-14</td><td>-</td><td>inchis</td></tr>
+                            </tbody>
+                            <tfoot><tr><td colspan="6">Inchis cu ocazia sarbatorilor legale.</td></tr></tfoot>
+                        </table>
+                    </div>
+                    <div id="status-inscrieri" style="margin-top: 20px;">
+                        <h3>Gradul de ocupare al grupelor:</h3>
+                        <p>Locuri ocupate la simularea M1: <meter value="9" min="0" max="10" low="3" high="8" optimum="2">90%</meter> <strong>(Aproape plin)</strong></p>
+                        <p>Locuri ocupate la simularea Info: <meter value="2" min="0" max="10" low="3" high="8" optimum="2">20%</meter> <strong>(Locuri disponibile)</strong></p>
+                    </div>
+                    <p><strong>Atentie!!!</strong> In zilele examenelor nationale nu se mai desfasoara activitati!</p>
+                </section>
+                <section id="video-section">
+                    <h2>Prezentare Video</h2>
+                    <hr class="separator-sectiune" />
+                    <div id="container-video">
+                        <div id="centrare-video">
+                            <div id="clip-video">
+                                <div id="stil-video">
+                                    <video width="320" height="240" playsinline autoplay loop muted>
+                                        <source src="/resurse/video/video-prezentare.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <section id="promotii">
+                <h2>Promotii si oferte</h2>
+                <article>
+                    <h3 class="titlu">Super oferta de weekend</h3>
+                    <p><b>EduHub</b> ofera <b>reduceri de <s>10%</s> <ins>20%</ins></b> pentru toate <b>culegerile de matematica</b> achizitionate in intervalul 10:00 - 14:00.</p>
+                    <p>Oferta este valabila doar in zilele de sambata si duminica in aplicatia <abbr title="EduHub">EH</abbr>.</p>
+                    <p>In cazul in care cumparati mai mult de trei <b>materiale didactice</b> primiti si un cod de reducere pentru simularea de <strong>Bacalaureat!</strong></p>
+                </article>
+                <article>
+                    <h3>Pachet complet "Succes la examen!"</h3>
+                    <p>EduHub ofera pachete cuprinzand:</p>
+                    <ol>
+                        <li>Acces la platforma de <i lang="en">e-learning</i> timp de un an</li>
+                        <li>Un set de 4 culegeri (clasa a IX-a, a X-a, a XI-a, a XII-a)</li>
+                        <li>Participarea la una dintre simularile oferite de noi la alegere</li>
+                        <li>Un <i>curs video</i> bonus despre tehnici de invatare rapida</li>
+                        <li>Gratis: o mapa personalizata cu formule pentru <b>Bac M1</b></li>
+                        <li>Gratis: un set de fise de lucru</li>
+                    </ol>
+                </article>
+                <article>
+                    <h3>Maratonul de matematica</h3>
+                    <p>Noi punem suflet in problemele noastre! Avem pachete promotionale pentru toate nivelurile.</p>
+                </article>
+                <article>
+                    <h3>Planuri pentru noul an scolar</h3>
+                    <p>La inceputul fiecarui an va faceti planuri ca de data asta veti invata constant la <b>informatica</b>. Luati mai bine un curs ghidat pentru o pregatire completa.</p>
+                </article>
+            </section>
+
+            <section id="produse">
+                <h2>Produsele noastre</h2>
+                <p>Va oferim o multitudine de resurse premium pentru a va asigura succesul la <b>examenele nationale</b>.</p>
+                <section>
+                    <h3>Culegeri de matematica</h3>
+                    <ul>
+                        <li>Evaluarea Nationala (clasa a VIII-a)</li>
+                        <li>Bacalaureat M1 (Matematica-Informatica)</li>
+                        <li>Bacalaureat M2 (Stiinte ale Naturii)</li>
+                        <li>Bacalaureat M3 (Tehnologic)</li>
+                        <li>Admitere Facultate (Poli / FMI)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Culegeri de informatica</h3>
+                    <ul>
+                        <li>Programare in C++</li>
+                        <li>Grafuri orientate si neorientate</li>
+                        <li>20 de Teste de antrenament</li>
+                        <li>Vectori si matrice</li>
+                        <li>Functii si Recursivitate</li>
+                        <li>Structuri de date (100 de grile)</li>
+                        <li>Pseudocod (probleme rezolvate)</li>
+                        <li>Algoritmi elementari</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Resurse suplimentare</h3>
+                    <ul>
+                        <li>Planificator de studiu saptamanal</li>
+                        <li>Seturi de teste</li>
+                        <li>Set de evidentiatoare (mai multe culori)</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="vizual-resurse">
+                <h2>Materiale Didactice si Resurse de Studiu</h2>
+                <p>Exploreaza materialele noastre pregatite special pentru succesul tau la examene.</p>
+                <div class="container-culegere">
+                    <figure id="fig-mate-coperta">
+                        <picture>
+                            <source srcset="/resurse/imagini/culegere-mate-bac-small.jpg" media="(max-width: 600px)">
+                            <img src="/resurse/imagini/culegere-mate-bac.jpg" alt="Coperta Culegere Matematica Bacalaureat" title="Culegere Matematica EduHub">
+                        </picture>
+                        <figcaption>Culegere Matematica Bacalaureat - <a href="/resurse/imagini/culegere-mate-bac.jpg" download="Coperta_Mate_EduHub.jpg">Descarca imagine</a></figcaption>
+                    </figure>
+                    <figure id="fig-mate-interior">
+                        <a href="/resurse/imagini/interior-mate-zoom.jpg" target="_blank">
+                            <picture>
+                                <source srcset="/resurse/imagini/interior-mate-small.jpg" media="(max-width: 600px)">
+                                <img src="/resurse/imagini/interior-mate.jpg" alt="Pagina din interior" title="Click pentru zoom">
+                            </picture>
+                        </a>
+                        <figcaption>Interior Culegere Mate (Click pe imagine pentru zoom)</figcaption>
+                    </figure>
+                </div>
+                <div class="container-culegere">
+                    <figure id="fig-info-coperta">
+                        <picture>
+                            <source srcset="/resurse/imagini/culegere-info-bac-small.jpg" media="(max-width: 600px)">
+                            <img src="/resurse/imagini/culegere-info-bac.jpg" alt="Coperta Culegere Informatica Bacalaureat" title="Culegere Informatica EduHub">
+                        </picture>
+                        <figcaption>Culegere Informatica Bacalaureat - <a href="/resurse/imagini/culegere-info-bac.jpg" download="Coperta_Info_EduHub.jpg">Descarca imagine</a></figcaption>
+                    </figure>
+                    <figure id="fig-info-interior">
+                        <a href="/resurse/imagini/interior-info-zoom.jpg" target="_blank">
+                            <picture>
+                                <source srcset="/resurse/imagini/interior-info-small.jpg" media="(max-width: 600px)">
+                                <img src="/resurse/imagini/interior-info.jpg" alt="Pagina din interiorul culegerii de info" title="Click pentru zoom">
+                            </picture>
+                        </a>
+                        <figcaption>Interior Culegere Info (Click pe imagine pentru zoom)</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="anunturi">
+                <h2 class="fg-img">Ramaneti la curent cu programul simularilor si materialele nou adaugate:</h2>
+                <ul>
+                    <li><time datetime="2026-03-05T09:00">5 martie 2026, ora 09:00</time> - <b>Simulare Judeteana Matematica</b>: Testarea cunostintelor pentru clasa a VIII-a.</li>
+                    <li><time datetime="2026-03-20T17:00">20 martie 2026, ora 17:00</time> - <strong>Urgent!</strong> Ultima zi de inscrieri pentru <b>cursul gratuit</b>.</li>
+                    <li><time datetime="2026-04-10">10 aprilie 2026</time> - Lansarea noii <b>culegeri de informatica</b> (editia 2026) pentru profilul Mate-Info.</li>
+                    <li><time datetime="2026-05-15T14:00">15 mai 2026, ora 14:00</time> - Sesiune de intrebari si raspunsuri (<i lang="en">Q&amp;A Session</i>) despre admiterea la facultate.</li>
+                    <li><time datetime="2026-06-01">1 iunie 2026</time> - <b>EduHub</b> ureaza succes tuturor elevilor la <b>bacalaureat</b> si <b>evaluarea nationala</b>!</li>
+                </ul>
+                <p><i>Nota: Toate orele afisate corespund fusului orar al Romaniei.</i></p>
+            </section>
+
+            <section id="galerie-statica">
+                <h2>Galerie EduHub: Momente din activitatea noastra</h2>
+                <p>Descopera atmosfera de la cursurile noastre si succesul elevilor care au ales platforma noastra.</p>
+                <div id="grid-galerie">
+                    <figure>
+                        <div><img src="/resurse/imagini/ora-mate-online-liceu.jpg" alt="Sesiune online de matematica pentru liceu" title="Matematica Online - Nivel Liceu"></div>
+                        <figcaption>Pregatire intensiva online pentru elevii de liceu.</figcaption>
+                    </figure>
+                    <figure>
+                        <div><img src="/resurse/imagini/ora-mate-fizic.jpg" alt="Elevii scriind la curs" title="Lectii de matematica la sediu"></div>
+                        <figcaption>Interactiune directa si suport constant in sala de curs.</figcaption>
+                    </figure>
+                    <figure>
+                        <div><img src="/resurse/imagini/curs-info-incepatori.jpg" alt="Elevi la calculatoare studiind informatica" title="Primii pasi in algoritmica"></div>
+                        <figcaption>Cursuri de baza pentru viitorii programatori.</figcaption>
+                    </figure>
+                    <figure>
+                        <div><img src="/resurse/imagini/premianti-mate.jpg" alt="Grup de elevi premiati la matematica" title="Excelenta in Matematica"></div>
+                        <figcaption>Mandri de rezultatele obtinute de elevii nostri la olimpiade.</figcaption>
+                    </figure>
+                    <figure>
+                        <div><img src="/resurse/imagini/premianti-info.jpg" alt="Elev premiat la concurs de informatica" title="Succes la concursuri de profil"></div>
+                        <figcaption>Rezultate frumoase aduse de elevii nostri la concursuri.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <div class="grid-container-z8">
+                <section id="index-intrebari">
+                    <h2>Intrebari frecvente (FAQ)</h2>
+                    <p>Afla raspunsuri rapide la cele mai comune curiozitati despre resursele noastre:</p>
+                    <details>
+                        <summary>Cat de des sunt actualizate culegerile de matematica?</summary>
+                        <p>Toate materialele noastre sunt revizuite anual pentru a fi in deplina concordanta cu programa oficiala aprobata de Ministerul Educatiei.</p>
+                    </details>
+                    <details>
+                        <summary>Ce reprezinta nivelul de dificultate <dfn id="def-m1">Bac M1</dfn>?</summary>
+                        <p>Nivelul <b>M1</b> este specific profilului matematica-informatica si reprezinta cel mai avansat grad de dificultate al bacalaureatului.</p>
+                    </details>
+                    <details>
+                        <summary>Pot accesa cursurile de pe tableta sau telefon?</summary>
+                        <p>Da, platforma noastra este complet <i lang="en">responsive</i>, permitand invatarea de pe orice dispozitiv mobil.</p>
+                    </details>
+                    <details>
+                        <summary>Sunt incluse rezolvari detaliate pentru toate variantele de informatica?</summary>
+                        <p>Absolut! Fiecare varianta de antrenament vine insotita de explicatii pas cu pas si codul sursa optimizat.</p>
+                    </details>
+                </section>
+                <section id="lectii-demo">
+                    <h2>Lectii video demonstrative</h2>
+                    <p>Daca doriti sa aprofundati singuri materia va recomandam urmatoarele lectii demonstrative. Spor la lucru! &#128218;</p>
+                    <div class="container-iframe">
+                        <div class="taburi-iframe">
+                            <a href="https://www.youtube.com/embed/4q-wUjmaz2E" target="ifr-video">Matrice</a>
+                            <a href="https://www.youtube.com/embed/ZHuQDF9Xpt8" target="ifr-video">Geometrie</a>
+                            <a href="https://www.youtube.com/embed/9TWgFC53CAY" target="ifr-video">Info S1</a>
+                        </div>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/KC-r59aA9B4" name="ifr-video" title="YouTube video player" style="border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </main>
+    <%- include('../fragmente/footer.ejs') %>
+</body>
+</html>

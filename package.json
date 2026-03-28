@@ -1,0 +1,32 @@
+{
+  "name": "eduhub",
+  "version": "1.0.0",
+  "description": "Aplicatie web Node.js + EJS pentru proiectul EduHub.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No tests configured\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teodorescumaria/EduHub-tw.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "ejs",
+    "web"
+  ],
+  "author": "EduHub Team",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/teodorescumaria/EduHub-tw/issues"
+  },
+  "homepage": "https://github.com/teodorescumaria/EduHub-tw#readme",
+  "dependencies": {
+    "ejs": "^5.0.1",
+    "express": "^4.22.1",
+    "sass": "^1.98.0"
+  }
+}
