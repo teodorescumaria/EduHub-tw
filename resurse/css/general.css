@@ -355,6 +355,26 @@ img, video {
     margin: 1rem auto;
 }
 
+.video-prezentare {
+    width: 85%;
+    min-width: 260px;
+    max-width: 780px;
+    height: auto;
+}
+
+@media screen and (max-width: 767px) {
+    .video-prezentare {
+        width: 96%;
+        min-width: 220px;
+    }
+}
+
+video.video-prezentare::cue {
+    background: var(--culoare-fundal);
+    color: var(--culoare-baza);
+    font-weight: 700;
+}
+
 header img {
     margin: 0;
     display: inline-block;

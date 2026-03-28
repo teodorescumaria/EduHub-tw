@@ -33,7 +33,7 @@
             "status":false,
             "titlu":"Site în lucru",
             "text": "Muncim, muncim!",
-            "imagine":"interzis.png"
+            "imagine":"interzis.svg"
         },
         
         {
@@ -41,7 +41,7 @@
             "status":false,
             "titlu":"Eroare baza date",
             "text": "Reveniti mai tarziu!",
-            "imagine":"interzis.png"
+            "imagine":"interzis.svg"
         },
         
         {
@@ -49,7 +49,7 @@
             "status":false,
             "titlu":"Date gresit",
             "text": "Verificati datele",
-            "imagine":"interzis.png"
+            "imagine":"interzis.svg"
         }
         
     ]

@@ -137,7 +137,7 @@ if (fs.existsSync(obGlobal.folderScss)) {
 }
 
 
-app.get("*", function (req, res) {
+app.get("/*", function (req, res) {
     console.log("Cale pagina", req.url);
     if (req.path.startsWith("/resurse") && path.extname(req.path) === "") {
         afisareEroare(res, 403);
