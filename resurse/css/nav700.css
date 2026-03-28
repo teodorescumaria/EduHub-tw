@@ -1,4 +1,3 @@
-/* nav700 override is now mostly handled in nav.css. Keep minimal for compatibility */
 #hamburger { display: block; }
 ul.meniu { width: 100%; }
 ul.meniu li { width: 100%; }
