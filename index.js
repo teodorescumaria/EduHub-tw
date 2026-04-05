@@ -31,6 +31,11 @@ for (const folder of vect_foldere) {
 
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 
+app.use(function (req, res, next) {
+    res.locals.ip = req.ip;
+    next();
+});
+
 
 
 
