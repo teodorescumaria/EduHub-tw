@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols+2&display=swap");
+
 body {
     --culoare-baza: #781E00;     
     --culoare-secundara: #BD3A40; 
@@ -5,6 +7,10 @@ body {
     --culoare-accent: #76B27C; 
     --culoare-accent-deschisa: #D6FFDA;  
     --text-main: #2D3436;      
+    --culoare-link: var(--culoare-baza);
+    --culoare-link-hover: var(--culoare-secundara);
+    --culoare-link-vizitat: var(--culoare-accent);
+    --culoare-pata-link: var(--culoare-accent-deschisa);
     
     --spatiere: 24px;
     --rotunjire: 12px;
@@ -31,6 +37,62 @@ body {
 h1 { font-size: 2.2rem; color: var(--culoare-baza); margin-bottom: 1rem; }
 h2 { font-size: 1.75rem; color: var(--culoare-secundara); margin-bottom: 0.8rem; }
 p { font-size: 1rem; margin-bottom: 1rem; }
+
+a {
+    color: var(--culoare-link);
+    transition: color 0.25s ease;
+}
+
+a:hover {
+    color: var(--culoare-link-hover);
+}
+
+a:visited {
+    color: var(--culoare-link-vizitat);
+}
+
+a[href^="http"]::before {
+    content: "\002BB3";
+    display: inline-block;
+    margin-right: 0.35em;
+    font-size: 1.5em;
+    line-height: 1;
+    font-family: "Noto Sans Symbols 2", "Apple Symbols", "Segoe UI Symbol", "Symbola", sans-serif;
+    font-weight: 400;
+    color: currentColor;
+    transition: color 0.25s ease;
+}
+
+a[href^="http"]:hover::before {
+    color: var(--culoare-secundara);
+}
+
+main a:not([href^="http"]) {
+    background-image: radial-gradient(
+        ellipse,
+        var(--culoare-pata-link) 0%,
+        var(--culoare-pata-link) 35%,
+        transparent 75%,
+        transparent 100%
+    );
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0% 0%;
+    display: inline-block;
+    padding-inline: 0.2em;
+    border: none;
+    border-radius: 999px;
+    transition: background-size 0.45s ease, color 0.25s ease;
+}
+
+main a:not([href^="http"]):hover {
+    background-size: 180% 135%;
+}
+
+main a:not([href^="http"]):active {
+    outline: 2px solid var(--culoare-secundara);
+    outline-offset: 2px;
+}
 
 @media screen and (max-width: 767px) {
     h1 { font-size: 1.75rem; margin-bottom: 0.75rem; }

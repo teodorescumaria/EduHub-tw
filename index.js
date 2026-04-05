@@ -35,11 +35,11 @@ app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 
 
 app.get(["/", "/index", "/home"], function (req, res) {
-    res.render("pagini/index", { ip: req.ip });
+    res.render("pagini/index");
 });
 
 app.get("/despre", function (req, res) {
-    res.render("pagini/despre", { ip: req.ip });
+    res.render("pagini/despre");
 });
 
 
@@ -148,7 +148,7 @@ app.get("/*", function (req, res) {
         return;
     }
     try {
-        res.render("pagini" + req.path, { ip: req.ip }, function (err, rezRandare) {
+        res.render("pagini" + req.path, function (err, rezRandare) {
             if (err) {
                 if (err.message.startsWith("Failed to lookup view") || err.message.includes("Failed to lookup view")) {
                     afisareEroare(res, 404);
