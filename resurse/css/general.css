@@ -94,6 +94,12 @@ main a:not([href^="http"]):active {
     outline-offset: 2px;
 }
 
+::selection {
+    background-color: var(--culoare-secundara);
+    color: white;
+    text-shadow: none;
+}
+
 @media screen and (max-width: 767px) {
     h1 { font-size: 1.75rem; margin-bottom: 0.75rem; }
     h2 { font-size: 1.5rem; margin-bottom: 0.6rem; }
@@ -349,6 +355,66 @@ section {
     justify-content: center;
 }
 
+.banda-inscrieri {
+    overflow: hidden;
+    border: 1px solid var(--culoare-secundara);
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(252, 235, 233, 0.95), rgba(214, 255, 218, 0.9));
+    color: var(--culoare-baza);
+    font-weight: 700;
+    padding: 0.75rem 0;
+    margin: 0.75rem 0 1.25rem;
+    white-space: nowrap;
+}
+
+.banda-inscrieri span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: rulare-banda 18s linear infinite;
+}
+
+.panou-fundal-fix {
+    position: relative;
+    min-height: 250px;
+    margin: 1.25rem 0;
+    border-radius: var(--rotunjire);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    background-image:
+        linear-gradient(180deg, rgba(45, 52, 54, 0.12), rgba(45, 52, 54, 0.72)),
+        url("/resurse/imagini/studiu-desktop.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    animation: fundal-schimbator 16s ease-in-out infinite;
+}
+
+.panou-fundal-fix__content {
+    width: 100%;
+    color: white;
+    padding: 1.5rem;
+    background: linear-gradient(180deg, transparent, rgba(45, 52, 54, 0.82));
+}
+
+.panou-fundal-fix__content h3,
+.video-fundal-overlay h3 {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.coloane-text {
+    column-count: 2;
+    column-gap: 2rem;
+    column-rule: 2px solid rgba(189, 58, 64, 0.45);
+    margin-bottom: 1.5rem;
+}
+
+.coloane-text p {
+    margin-top: 0;
+    break-inside: avoid;
+}
+
 .intro-oferte {
     display: flex;
     flex-wrap: wrap;
@@ -396,6 +462,43 @@ section {
     padding: 10px;
 }
 
+.tabel-performanta-wrapper {
+    margin-top: 1.5rem;
+    overflow-x: auto;
+}
+
+#tab-performanta {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
+    border: 2px solid var(--culoare-baza);
+    background: white;
+}
+
+#tab-performanta caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: 700;
+    color: var(--culoare-baza);
+    margin-bottom: 0.75rem;
+}
+
+#tab-performanta th,
+#tab-performanta td {
+    padding: 0.85rem 0.9rem;
+    border: 1px solid rgba(189, 58, 64, 0.45);
+    text-align: left;
+}
+
+#tab-performanta thead {
+    background-color: var(--culoare-baza);
+    color: white;
+}
+
+#tab-performanta tbody tr:nth-child(even) {
+    background-color: rgba(252, 235, 233, 0.65);
+}
+
 #index-intrebari {
     background-color: var(--culoare-baza);
     color: white;
@@ -424,10 +527,81 @@ img, video {
     height: auto;
 }
 
+.video-fundal-card {
+    position: relative;
+    min-height: 320px;
+    border-radius: var(--rotunjire);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: #2d3436;
+}
+
+.video-fundal-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 0;
+    opacity: 0.45;
+}
+
+.video-fundal-overlay {
+    position: relative;
+    z-index: 1;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.75rem;
+    color: white;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.7));
+}
+
+.separator-sectiune {
+    border: none;
+    height: 24px;
+    width: 100%;
+    margin: 1rem auto 1.5rem;
+    opacity: 1;
+    background-image:
+        linear-gradient(90deg, transparent 0 14%, var(--culoare-baza) 14% 66%, transparent 66% 100%),
+        linear-gradient(90deg, transparent 0 40%, var(--culoare-accent) 40% 64%, transparent 64% 100%),
+        linear-gradient(90deg, transparent 0 14%, var(--culoare-secundara) 14% 66%, transparent 66% 100%);
+    background-repeat: repeat-x, repeat-x, repeat-x;
+    background-size: 60px calc(100% / 3), 60px calc(100% / 3), 60px calc(100% / 3);
+    background-position: left top, 8px center, left bottom;
+}
+
+.separator-intre-sectiuni {
+    width: 100%;
+    margin: 0.25rem auto 0.9rem;
+}
+
 @media screen and (max-width: 767px) {
     .video-prezentare {
         width: 96%;
         min-width: 220px;
+    }
+
+    .banda-inscrieri {
+        font-size: 0.9rem;
+    }
+
+    .panou-fundal-fix {
+        min-height: 220px;
+        background-attachment: scroll;
+    }
+
+    .panou-fundal-fix__content,
+    .video-fundal-overlay {
+        padding: 1rem;
+    }
+
+    .video-fundal-card,
+    .video-fundal-overlay {
+        min-height: 240px;
     }
 }
 
@@ -577,6 +751,73 @@ iframe[name="ifr-video"] {
     margin-bottom: 30px;
 }
 
+@media screen and (max-width: 1099px) {
+    .coloane-text {
+        column-count: 1;
+    }
+
+    #tab-performanta {
+        min-width: 620px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #tab-performanta,
+    #tab-performanta caption,
+    #tab-performanta tbody,
+    #tab-performanta tr,
+    #tab-performanta td {
+        display: block;
+        width: 100%;
+    }
+
+    #tab-performanta {
+        min-width: 0;
+        border: none;
+    }
+
+    #tab-performanta thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+
+    #tab-performanta tr {
+        margin-bottom: 1rem;
+        border: 1px solid rgba(189, 58, 64, 0.35);
+        border-radius: 10px;
+        overflow: hidden;
+        background: white;
+    }
+
+    #tab-performanta td {
+        border: none;
+        border-bottom: 1px solid rgba(189, 58, 64, 0.18);
+        padding: 0.85rem 0.9rem 0.85rem 48%;
+        position: relative;
+        min-height: 2.6rem;
+    }
+
+    #tab-performanta td:last-child {
+        border-bottom: none;
+    }
+
+    #tab-performanta td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0.9rem;
+        top: 0.85rem;
+        width: 40%;
+        font-weight: 700;
+        color: var(--culoare-baza);
+    }
+}
+
 @media screen and (max-width: 767px) {
     #grid-pagina {
         display: block !important;
@@ -608,5 +849,32 @@ iframe[name="ifr-video"] {
         width: 100%;
         overflow-x: auto;
         display: block;
+    }
+}
+
+@keyframes rulare-banda {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes fundal-schimbator {
+    0%, 30% {
+        background-image:
+            linear-gradient(180deg, rgba(45, 52, 54, 0.12), rgba(45, 52, 54, 0.72)),
+            url("/resurse/imagini/studiu-desktop.jpg");
+    }
+    33%, 63% {
+        background-image:
+            linear-gradient(180deg, rgba(45, 52, 54, 0.12), rgba(45, 52, 54, 0.72)),
+            url("/resurse/imagini/interior-mate.jpg");
+    }
+    66%, 100% {
+        background-image:
+            linear-gradient(180deg, rgba(45, 52, 54, 0.12), rgba(45, 52, 54, 0.72)),
+            url("/resurse/imagini/laborator-info.jpg");
     }
 }

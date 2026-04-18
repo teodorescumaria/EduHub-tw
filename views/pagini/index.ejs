@@ -11,7 +11,7 @@
 
 </head>
 
-<body>
+<body class="pagina-home">
     <%- include('../fragmente/header.ejs') %>
     <main>
         <div id="grid-pagina">
@@ -22,6 +22,9 @@
                         <h2><i class="fa-solid fa-graduation-cap"></i> Bun venit la EduHub</h2>
                         <p>Excelenta in pregatirea la matematica si informatica</p>
                     </hgroup>
+                    <div class="banda-inscrieri" aria-label="Mesaj animat despre inscrieri">
+                        <span>Inscrieri deschise pentru bac 2026, grupe restranse, consultanta saptamanala, simulare completa si feedback individual pentru fiecare elev.</span>
+                    </div>
                     <p class="intro">Va multumim ca ati ales <b>EduHub</b>. Suntem aici sa va oferim cele mai bune <b>resurse educationale</b> pentru a obtine nota maxima la <b>bacalaureat</b> si <b>evaluarea nationala</b>.</p>
                     <div class="intro-oferte">
                         <div>Culegeri</div><div>Simulari</div><div>Algoritmi</div><div>Cursuri video</div><div>Meditatii</div>
@@ -33,6 +36,12 @@
                     </div>
                     <div class="alert alert-info mt-3" role="alert">
                         Pregatim o grupa noua pentru <strong>bacalaureat 2026</strong> cu locuri limitate. Inscrie-te acum!
+                    </div>
+                    <div class="panou-fundal-fix">
+                        <div class="panou-fundal-fix__content">
+                            <h3>Ritm de studiu construit pentru rezultate</h3>
+                            <p>Blocul acesta demonstreaza un fundal fix la scroll, iar imaginile se schimba automat prin animatie pentru a crea o zona vizuala mai dinamica.</p>
+                        </div>
                     </div>
                     <div class="row gx-3 gy-3 mt-3">
                         <div class="col-12 col-md-6 theme-light rounded-3 p-3">
@@ -95,11 +104,56 @@
                         <p>Locuri ocupate la simularea M1: <meter value="9" min="0" max="10" low="3" high="8" optimum="2">90%</meter> <strong>(Aproape plin)</strong></p>
                         <p>Locuri ocupate la simularea Info: <meter value="2" min="0" max="10" low="3" high="8" optimum="2">20%</meter> <strong>(Locuri disponibile)</strong></p>
                     </div>
+                    <div class="tabel-performanta-wrapper">
+                        <h3>Repere recente ale elevilor</h3>
+                        <table id="tab-performanta">
+                            <caption>Rezultate sintetice obtinute de elevii inscrisi in programele EduHub</caption>
+                            <thead>
+                                <tr>
+                                    <th>Elev</th>
+                                    <th>Profil</th>
+                                    <th>Disciplina</th>
+                                    <th>Scor simulare</th>
+                                    <th>Obiectiv final</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Elev">Ioana M.</td>
+                                    <td data-label="Profil">Mate-Info</td>
+                                    <td data-label="Disciplina">Matematică M1</td>
+                                    <td data-label="Scor simulare">9.35</td>
+                                    <td data-label="Obiectiv final">10 BAC</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Elev">Radu P.</td>
+                                    <td data-label="Profil">Științe</td>
+                                    <td data-label="Disciplina">Matematică M2</td>
+                                    <td data-label="Scor simulare">8.90</td>
+                                    <td data-label="Obiectiv final">9.50 BAC</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Elev">Mara T.</td>
+                                    <td data-label="Profil">Mate-Info</td>
+                                    <td data-label="Disciplina">Informatică</td>
+                                    <td data-label="Scor simulare">9.70</td>
+                                    <td data-label="Obiectiv final">10 BAC</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Elev">David C.</td>
+                                    <td data-label="Profil">Gimnaziu</td>
+                                    <td data-label="Disciplina">Evaluare Națională</td>
+                                    <td data-label="Scor simulare">9.10</td>
+                                    <td data-label="Obiectiv final">9.80 EN</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <p><strong>Atentie!!!</strong> In zilele examenelor nationale nu se mai desfasoara activitati!</p>
                 </section>
+                <hr class="separator-sectiune separator-intre-sectiuni" />
                 <section id="video-section">
                     <h2>Prezentare Video</h2>
-                    <hr class="separator-sectiune" />
                     <div id="container-video">
                         <div id="centrare-video">
                             <div id="clip-video">
@@ -119,6 +173,11 @@
 
             <section id="promotii">
                 <h2>Promotii si oferte</h2>
+                <div class="coloane-text">
+                    <p>EduHub combina sesiuni de recapitulare, antrenament ghidat si evaluari scurte astfel incat elevii sa poata urmari mai usor progresul de la o saptamana la alta, fara perioade lungi in care materia ramane nefixata.</p>
+                    <p>In perioadele apropiate de examene, accentul cade pe ritm de lucru, claritate si recapitulare structurata. Tocmai de aceea am ales aici afisarea textului pe coloane, cu o separare vizuala clara intre idei.</p>
+                    <p>Pe ecrane mici si medii, blocul revine automat la o singura coloana, pentru a ramane usor de citit si pentru a nu comprima inutil randurile.</p>
+                </div>
                 <article>
                     <h3 class="titlu">Super oferta de weekend</h3>
                     <p><b>EduHub</b> ofera <b>reduceri de <s>10%</s> <ins>20%</ins></b> pentru toate <b>culegerile de matematica</b> achizitionate in intervalul 10:00 - 14:00.</p>
@@ -234,6 +293,16 @@
                     <li><time datetime="2026-06-01">1 iunie 2026</time> - <b>EduHub</b> ureaza succes tuturor elevilor la <b>bacalaureat</b> si <b>evaluarea nationala</b>!</li>
                 </ul>
                 <p><i>Nota: Toate orele afisate corespund fusului orar al Romaniei.</i></p>
+                <div class="video-fundal-card">
+                    <video class="video-fundal-media" autoplay muted loop playsinline poster="/resurse/imagini/poster-video.png">
+                        <source src="/resurse/video/video-prezentare.webm" type="video/webm">
+                        <source src="/resurse/video/video-prezentare.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-fundal-overlay">
+                        <h3>Un video care functioneaza ca fundal</h3>
+                        <p>Zona aceasta foloseste acelasi material video ca fundal decorativ, peste care ramane lizibil un mesaj scurt.</p>
+                    </div>
+                </div>
             </section>
 
             <section id="galerie-statica">
