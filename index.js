@@ -36,14 +36,13 @@ app.get("/favicon.ico", function(req, res){
 });
 
 app.get(["/", "/index","/home"], function(req, res){
-    let imaginiBaza = obGlobal.obImagini.imagini || [];
-    let imaginiFiltrateIndex = filtreazaImaginidupaDzi(imaginiBaza);
+    let imaginiBaza = (obGlobal.obImagini.imagini || []).slice(0, 14);
     
     res.render("pagini/index", {
         ip: req.ip,
         cale_galerie: obGlobal.obImagini.cale_galerie,
         titlu_galerie: obGlobal.obImagini.titlu_galerie,
-        imagini: imaginiFiltrateIndex
+        imagini: imaginiBaza
     });
 });
 
