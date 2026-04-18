@@ -36,8 +36,14 @@ app.get("/favicon.ico", function(req, res){
 });
 
 app.get(["/", "/index","/home"], function(req, res){
+    let imaginiBaza = obGlobal.obImagini.imagini || [];
+    let imaginiFiltrateIndex = filtreazaImaginidupaDzi(imaginiBaza);
+    
     res.render("pagini/index", {
-        ip: req.ip
+        ip: req.ip,
+        cale_galerie: obGlobal.obImagini.cale_galerie,
+        titlu_galerie: obGlobal.obImagini.titlu_galerie,
+        imagini: imaginiFiltrateIndex
     });
 });
 
@@ -59,6 +65,82 @@ function initErori(){
 
 }
 initErori()
+
+// Funcții pentru galerie
+function getZileSaptamana() {
+    return ["duminica", "luni", "marti", "miercuri", "joi", "vineri", "sambata"];
+}
+
+function filtreazaImaginidupaDzi(imagini, dataCurenta = new Date()) {
+    const zile = getZileSaptamana();
+    const indexZiCurenta = dataCurenta.getDay();
+    const zileCurenta = zile[indexZiCurenta];
+    
+    let imaginiFiltrate = imagini.filter(imagine => {
+        if (!imagine.intervale_zile || !Array.isArray(imagine.intervale_zile)) {
+            return false;
+        }
+        
+        return imagine.intervale_zile.some(interval => {
+            if (!Array.isArray(interval) || interval.length !== 2) {
+                return false;
+            }
+            
+            const ziInceput = interval[0].toLowerCase();
+            const ziSfarsit = interval[1].toLowerCase();
+            const indexInceput = zile.indexOf(ziInceput);
+            const indexSfarsit = zile.indexOf(ziSfarsit);
+            
+            if (indexInceput === -1 || indexSfarsit === -1) {
+                return false;
+            }
+            
+            if (indexInceput <= indexSfarsit) {
+                return indexZiCurenta >= indexInceput && indexZiCurenta <= indexSfarsit;
+            } else {
+                return indexZiCurenta >= indexInceput || indexZiCurenta <= indexSfarsit;
+            }
+        });
+    });
+    
+    if (imaginiFiltrate.length % 2 !== 0) {
+        imaginiFiltrate = imaginiFiltrate.slice(0, imaginiFiltrate.length - 1);
+    }
+    
+    return imaginiFiltrate;
+}
+
+function initImagini(){
+    let caleGalerieJson = path.join(__dirname,"resurse/json/galerie.json");
+    if (!fs.existsSync(caleGalerieJson)) {
+        obGlobal.obImagini = { imagini: [], cale_galerie: "/resurse/imagini", titlu_galerie: "Galerie" };
+        return;
+    }
+
+    var continut = fs.readFileSync(caleGalerieJson).toString("utf-8");
+    obGlobal.obImagini = JSON.parse(continut);
+    let vImagini = obGlobal.obImagini.imagini || [];
+    let caleGalerie = obGlobal.obImagini.cale_galerie || "/resurse/imagini";
+
+    let caleAbs = path.join(__dirname, caleGalerie);
+    let caleAbsMediu = path.join(caleAbs, "mediu");
+    if (!fs.existsSync(caleAbsMediu))
+        fs.mkdirSync(caleAbsMediu, { recursive: true });
+    
+    for (let imag of vImagini){
+        let numeFisExt = imag.fisier_imagine;
+        let [numeFis, ext] = numeFisExt.split(".");
+        let caleFisAbs = path.join(caleAbs, imag.fisier_imagine);
+        let caleFisMediuAbs = path.join(caleAbsMediu, numeFis+".webp");
+        
+        if (fs.existsSync(caleFisAbs)) {
+            sharp(caleFisAbs).resize(300).toFile(caleFisMediuAbs).catch(err => {
+                console.log("Eroare sharp:", err.message);
+            });
+        }
+    }
+}
+initImagini();
 
 
 function afisareEroare(res, identificator, titlu, text, imagine){
@@ -86,32 +168,6 @@ app.get("/eroare", function(req, res){
 });
 
 
-function initImagini(){
-    var continut= fs.readFileSync(path.join(__dirname,"resurse/json/galerie.json")).toString("utf-8");
-
-    obGlobal.obImagini=JSON.parse(continut);
-    let vImagini=obGlobal.obImagini.imagini;
-    let caleGalerie=obGlobal.obImagini.cale_galerie
-
-    let caleAbs=path.join(__dirname,caleGalerie);
-    let caleAbsMediu=path.join(caleAbs, "mediu");
-    if (!fs.existsSync(caleAbsMediu))
-        fs.mkdirSync(caleAbsMediu);
-    
-    for (let imag of vImagini){
-        [numeFis, ext]=imag.fisier.split("."); //"ceva.png" -> ["ceva", "png"]
-        let caleFisAbs=path.join(caleAbs,imag.fisier);
-        let caleFisMediuAbs=path.join(caleAbsMediu, numeFis+".webp");
-        sharp(caleFisAbs).resize(300).toFile(caleFisMediuAbs);
-        imag.fisier_mediu=path.join("/", caleGalerie, "mediu", numeFis+".webp" )
-        imag.fisier=path.join("/", caleGalerie, imag.fisier )
-        
-    }
-    // console.log(obGlobal.obImagini)
-}
-initImagini();
-
-
 function compileazaScss(caleScss, caleCss){
     if(!caleCss){
 
@@ -136,7 +192,7 @@ function compileazaScss(caleScss, caleCss){
     if (fs.existsSync(caleCss)){
         fs.copyFileSync(caleCss, path.join(obGlobal.folderBackup, "resurse/css",numeFisCss ))// +(new Date()).getTime()
     }
-    rez=sass.compile(caleScss, {"sourceMap":true});
+    rez=sass.compile(caleScss, {"sourceMap":true, loadPaths: [path.join(__dirname, "node_modules")]});
     fs.writeFileSync(caleCss,rez.css)
     
 }
@@ -160,6 +216,26 @@ fs.watch(obGlobal.folderScss, function(eveniment, numeFis){
     }
 })
 
+
+app.get("/galerie", function(req, res){
+    let imaginiBaza = (obGlobal.obImagini.imagini || []).slice(0, 14);
+    
+    res.render("pagini/galerie", {
+        cale_galerie: obGlobal.obImagini.cale_galerie,
+        titlu_galerie: obGlobal.obImagini.titlu_galerie,
+           imagini: imaginiBaza
+    });
+});
+
+app.get("/despre", function(req, res){
+    let imaginiBaza = (obGlobal.obImagini.imagini || []).slice(0, 14);
+    
+    res.render("pagini/despre", {
+        cale_galerie: obGlobal.obImagini.cale_galerie,
+        titlu_galerie: obGlobal.obImagini.titlu_galerie,
+           imagini: imaginiBaza
+    });
+});
 
 app.get("/*pagina", function(req, res){
     console.log("Cale pagina", req.url);

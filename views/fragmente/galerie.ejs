@@ -1,0 +1,27 @@
+<section class="galerie-container">
+  <h2 class="galerie-titlu"><%= typeof titlu_galerie !== 'undefined' ? titlu_galerie : 'Galerie' %></h2>
+  
+  <% if (typeof imagini !== 'undefined' && imagini && imagini.length > 0) { %>
+    <div class="galerie-grid">
+      <% imagini.forEach((imagine, idx) => { %>
+        <figure class="galerie-item galerie-item-<%= idx + 1 %>">
+          <picture>
+            <source media="(min-width: 1200px)" srcset="<%= (typeof cale_galerie !== 'undefined' ? cale_galerie : '/resurse/imagini') %>/<%= imagine.fisier_imagine %>">
+            <source media="(min-width: 768px)" srcset="<%= (typeof cale_galerie !== 'undefined' ? cale_galerie : '/resurse/imagini') %>/<%= imagine.fisier_imagine %>">
+            <img 
+              src="<%= (typeof cale_galerie !== 'undefined' ? cale_galerie : '/resurse/imagini') %>/<%= imagine.fisier_imagine %>" 
+              alt="<%= imagine.continut_alternativ || imagine.nume_poza %>"
+              title="<%= imagine.descriere_poza %>"
+              class="galerie-img"
+            >
+          </picture>
+          <figcaption class="galerie-caption">
+            <span class="galerie-index"></span><%= imagine.nume_poza %>
+          </figcaption>
+        </figure>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <p class="galerie-empty">Nu sunt imagini disponibile momentan.</p>
+  <% } %>
+</section>

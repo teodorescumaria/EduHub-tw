@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols+2&display=swap");
 
 body {
-    --culoare-baza: #781E00;     
-    --culoare-secundara: #BD3A40; 
-    --culoare-fundal: #FCEBE9;  
-    --culoare-accent: #76B27C; 
-    --culoare-accent-deschisa: #D6FFDA;  
-    --text-main: #2D3436;      
+    --culoare-baza: #781E00;
+    --culoare-secundara: #BD3A40;
+    --culoare-fundal: #FCEBE9;
+    --culoare-accent: #76B27C;
+    --culoare-accent-deschisa: #D6FFDA;
+    --text-main: #2D3436;
     --culoare-link: var(--culoare-baza);
     --culoare-link-hover: var(--culoare-secundara);
     --culoare-link-vizitat: var(--culoare-accent);

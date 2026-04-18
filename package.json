@@ -25,9 +25,11 @@
   },
   "homepage": "https://github.com/teodorescumaria/EduHub-tw#readme",
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "ejs": "^5.0.1",
     "express": "^4.22.1",
-    "sass": "^1.98.0"
+    "sass": "^1.98.0",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "ffmpeg-static": "^5.3.0"
