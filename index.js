@@ -30,6 +30,7 @@ for (let folder of vect_foldere){
 }
 
 app.use("/resurse",express.static(path.join(__dirname, "resurse")));
+app.use("/dist",express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
 
 app.get("/favicon.ico", function(req, res){
     res.sendFile(path.join(__dirname,"resurse/imagini/favicon/favicon.ico"))
@@ -191,7 +192,12 @@ function compileazaScss(caleScss, caleCss){
     if (fs.existsSync(caleCss)){
         fs.copyFileSync(caleCss, path.join(obGlobal.folderBackup, "resurse/css",numeFisCss ))// +(new Date()).getTime()
     }
-    rez=sass.compile(caleScss, {"sourceMap":true, loadPaths: [path.join(__dirname, "node_modules")]});
+    rez=sass.compile(caleScss, {
+        sourceMap:true,
+        loadPaths: [path.join(__dirname, "node_modules")],
+        quietDeps: true,
+        silenceDeprecations: ["import", "global-builtin", "color-functions", "if-function"]
+    });
     fs.writeFileSync(caleCss,rez.css)
     
 }
@@ -236,7 +242,7 @@ app.get("/despre", function(req, res){
     });
 });
 
-app.get("/*pagina", function(req, res){
+app.get("*", function(req, res){
     console.log("Cale pagina", req.url);
     if (req.url.startsWith("/resurse") && path.extname(req.url)==""){
         afisareEroare(res,403);
@@ -271,7 +277,22 @@ app.get("/*pagina", function(req, res){
         }
     }
 });
+const PORT_IMPLICIT = Number(process.env.PORT) || 8080;
 
+function pornesteServer(portCurent){
+    const server = app.listen(portCurent, () => {
+        console.log(`Serverul a pornit pe portul ${portCurent}!`);
+    });
 
-app.listen(8080);
-console.log("Serverul a pornit!");
+    server.on("error", (err) => {
+        if (err.code === "EADDRINUSE") {
+            console.log(`Portul ${portCurent} este ocupat. Incerc portul ${portCurent + 1}...`);
+            pornesteServer(portCurent + 1);
+        }
+        else {
+            console.log("Eroare la pornirea serverului:", err.message);
+        }
+    });
+}
+
+pornesteServer(PORT_IMPLICIT);
