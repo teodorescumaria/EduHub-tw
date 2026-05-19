@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+        <meta name="description" content="EduHub - pagina produs pentru culegeri si materiale educationale.">
+        <meta name="keywords" content="eduhub, culegeri, produs, <%- locals.prod.nume %>">
+        
+        <title>EduHub - <%- locals.prod.nume %></title>
+        <%- include("../fragmente/head") %>     
+        <link href="/resurse/css/produs.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+
+        <%- include("../fragmente/header") %>
+    <main class="page-produs">
+        <section class="sectiune-produs">
+            <p class="breadcrumb"><a href="/produse">Produse</a> / <span><%- locals.prod.nume %></span></p>
+            <h2>Pagina produs</h2>
+
+            <article id="art-produs">
+                <figure class="imag-produs">
+                    <img src="/resurse/imagini/produse/<%- locals.prod.imagine || 'Unknown.jpeg' %>" alt="Imagine produs <%- locals.prod.nume %>" />
+                </figure>
+
+                <div class="detalii-produs">
+                    <h3><span class="nume"><%- locals.prod.nume %></span></h3>
+                    <p class="pret-linie">Pret: <span class="pret"><%- locals.prod.pret %></span> lei</p>
+                    <p>Descriere: <span class="descriere"><%- locals.prod.descriere || 'Fara descriere disponibila.' %></span></p>
+
+                    <ul class="lista-meta">
+                        <li>Categorie: <span class="categorie"><%- locals.prod.categorie %></span></li>
+                        <li>Nivel: <span class="nivel"><%- locals.prod.nivel %></span></li>
+                        <li>Numar pagini: <span class="nr_pagini"><%- locals.prod.nr_pagini %></span></li>
+                        <li>Format: <span class="format"><%- locals.prod.format %></span></li>
+                        <li>Acreditata minister: <span class="acreditata"><%- locals.prod.acreditata_minister ? 'da' : 'nu' %></span></li>
+                        <li>Data adaugare: <span class="data_adaugare"><%- locals.prod.data_adaugare %></span></li>
+                    </ul>
+
+                    <% if (locals.prod.beneficii) { %>
+                        <p>Beneficii: <span class="beneficii"><%- locals.prod.beneficii %></span></p>
+                    <% } %>
+
+                    <p class="actiuni">
+                        <a class="btn-inapoi" href="/produse">Inapoi la produse</a>
+                    </p>
+                </div>
+                </article>
+        </section>
+    </main>
+
+    <%- include("../fragmente/footer") %>
+    </body>
+</html>

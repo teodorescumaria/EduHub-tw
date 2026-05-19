@@ -1,0 +1,121 @@
+.page-produs {
+    width: min(1000px, 94vw);
+    margin: 1.4rem auto 2.4rem;
+}
+
+.sectiune-produs {
+    background: #fff;
+    border: 1px solid var(--culoare-secundara);
+    border-radius: var(--rotunjire);
+    padding: 1rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.breadcrumb {
+    margin: 0 0 0.5rem;
+    color: #6a4a45;
+    font-size: 0.95rem;
+}
+
+.sectiune-produs h2 {
+    margin: 0 0 0.85rem;
+    color: var(--culoare-secundara);
+}
+
+#art-produs {
+    display: grid;
+    grid-template-columns: minmax(280px, 360px) 1fr;
+    gap: 1rem;
+    align-items: start;
+}
+
+.imag-produs {
+    margin: 0;
+    background: linear-gradient(145deg, #fff8f7, #fcebe9);
+    border: 1px solid #e6c5c0;
+    border-radius: var(--rotunjire);
+    min-height: 320px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.imag-produs img {
+    width: min(92%, 340px);
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.detalii-produs {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.detalii-produs h3 {
+    margin: 0;
+    color: var(--culoare-baza);
+    font-size: 1.35rem;
+    line-height: 1.2;
+}
+
+.pret-linie {
+    margin: 0;
+    font-size: 1.08rem;
+    color: var(--text-main);
+}
+
+.pret {
+    color: var(--culoare-baza);
+    font-weight: 700;
+}
+
+.detalii-produs p {
+    margin: 0;
+}
+
+.lista-meta {
+    margin: 0.2rem 0 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.3rem;
+}
+
+.lista-meta li {
+    color: var(--text-main);
+}
+
+.lista-meta span,
+.detalii-produs span {
+    font-weight: 600;
+}
+
+.actiuni {
+    margin-top: 0.7rem;
+}
+
+.btn-inapoi {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff !important;
+    background: var(--culoare-secundara);
+    border-radius: 999px;
+    padding: 0.5rem 0.95rem;
+    border: 1px solid transparent;
+    font-weight: 700;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-inapoi:hover {
+    background: var(--culoare-baza);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 800px) {
+    #art-produs {
+        grid-template-columns: 1fr;
+    }
+
+    .imag-produs {
+        min-height: 250px;
+    }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+        <meta name="description" content="EduHub - Produse educationale pentru matematica si informatica: culegeri, simulari si resurse de pregatire.">
+        <meta name="keywords" content="eduhub, produse educationale, matematica, informatica, culegeri, simulari">
+        <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
+        <title>EduHub - Produse</title>
+        <%- include("../fragmente/head") %>     
+    </head>
+    <body>
+    <%- include("../fragmente/header") %>
+
+    <main class="page-produse">
+        <section class="hero-produse">
+            <p class="eyebrow">Catalog EduHub</p>
+            <h1>Produse pentru pregatire serioasa</h1>
+            <p>
+                Alege materiale selectate pentru matematica si informatica.
+                Produsele sunt incarcate direct din baza ta de date.
+            </p>
+        </section>
+
+        <section class="panou-filtre" aria-labelledby="titlu-filtre">
+            <h2 id="titlu-filtre">Filtre rapide</h2>
+            <div class="filtre-grid">
+                <label class="camp-filtru">Nume
+                    <input type="text" id="inp-nume" placeholder="Ex: Algebra" autocomplete="off">
+                </label>
+
+                <label class="camp-filtru">Pret minim
+                    <input type="range" id="inp-pret" value="0" min="0" max="500">
+                    <span id="infoRange">(0)</span>
+                </label>
+
+                <label class="camp-filtru">Categorie
+                    <select id="inp-categorie">
+                        <option id="sel-toate" value="toate" <%= !locals.filtruTip || locals.filtruTip === "toate" ? "selected" : "" %>>toate</option>
+                        <% for (let opt of locals.optiuni) { %>
+                            <option value="<%- opt.categorie %>" <%= locals.filtruTip && opt.categorie.toLowerCase() === locals.filtruTip.toLowerCase() ? "selected" : "" %>><%- opt.categorie %></option>
+                        <% } %>
+                    </select>
+                </label>
+            </div>
+
+            <fieldset class="radio-grup">
+                <legend>Numar pagini</legend>
+                <label><input id="i_rad1" name="gr_rad" value="0:150" type="radio"/> Compacte (&lt; 150)</label>
+                <label><input id="i_rad2" name="gr_rad" value="150:220" type="radio"/> Medii (150 - 220)</label>
+                <label><input id="i_rad3" name="gr_rad" value="220:1000000000" type="radio"/> Extinse (&ge; 220)</label>
+                <label><input id="i_rad4" checked name="gr_rad" value="toate" type="radio"/> Toate</label>
+            </fieldset>
+
+            <div class="actiuni-filtre">
+                <button class="c1 c2 c3" id="filtrare">Filtreaza</button>
+                <button id="resetare">Reseteaza</button>
+                <button id="sortCrescNume">Sorteaza crescator</button>
+                <button id="sortDescrescNume">Sorteaza descrescator</button>
+            </div>
+
+            <p id="p-suma">Sfat: apasa Alt + C pentru suma preturilor produselor afisate.</p>
+        </section>
+
+        <section id="produse" aria-labelledby="titlu-produse">
+            <h2 id="titlu-produse">Produse disponibile (<%- locals.produse.length %>)</h2>
+
+            <% if (!locals.produse.length) { %>
+                <p class="stare-goala">Nu exista produse pentru filtrul ales.</p>
+            <% } %>
+
+            <div class="grid-produse">
+                <% for( let prod of locals.produse) { %>
+                    <article class="produs">
+                        <figure class="media-produs">
+                            <a href="/produs/<%- prod.id %>" aria-label="Deschide produsul <%- prod.nume %>">
+                                <img src="/resurse/imagini/produse/<%- prod.imagine || 'Unknown.jpeg' %>" alt="Imagine produs <%- prod.nume %>" loading="lazy" />
+                            </a>
+                            <figcaption class="badge-categorie val-categorie"><%- prod.categorie %></figcaption>
+                        </figure>
+
+                        <div class="continut-produs">
+                            <h3 class="nume"><a href="/produs/<%- prod.id %>"><span class="val-nume"><%- prod.nume %></span></a></h3>
+
+                            <div class="meta-produs info-prod">
+                                <p class="pret">Pret: <strong><span class="val-pret"><%- prod.pret %></span> lei</strong></p>
+                                <p class="calorii">Nivel: <span class="val-calorii"><%- prod.nivel %></span></p>
+                                <p class="gramaj">Pagini: <span class="val-gramaj"><%- prod.nr_pagini %></span></p>
+                                <p class="format">Format: <span><%- prod.format %></span></p>
+                            </div>
+
+                            <label class="selecteaza-cos">
+                                <input type="checkbox" class="select-cos" value="<%- prod.id %>" autocomplete="off">
+                                <span class="text-select">Selecteaza in cos</span>
+                            </label>
+                        </div>
+                    </article>
+                <% }%>
+            </div>
+        </section>
+    </main>
+
+    <%- include("../fragmente/footer") %>
+    </body>
+</html>

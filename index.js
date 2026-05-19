@@ -4,6 +4,9 @@ const fs=require("fs");
 const sass=require("sass");
 const sharp= require("sharp");
 
+const pg = require("pg");
+
+
 app= express();
 app.set("view engine", "ejs")
 
@@ -20,6 +23,26 @@ obGlobal={
 console.log("Folder index.js", __dirname);
 console.log("Folder curent (de lucru)", process.cwd());
 console.log("Cale fisier", __filename);
+
+
+ client=new pg.Client({
+     database:"tw2026",
+     user:"maria",
+     password:"maria",
+     host:"localhost",
+     port:5432
+ })
+
+ client.connect()
+
+ client.query("select * from culegeri order by id limit 3", function(err, rez){
+     if (err){
+         console.log("Eroare", err);
+     }
+        else{
+            console.log(rez);
+        }
+ })
 
 let vect_foldere=[ "temp", "logs", "backup", "fisiere_uploadate" ]
 for (let folder of vect_foldere){
@@ -51,8 +74,64 @@ app.get(["/", "/index","/home"], function(req, res){
 //     res.render("pagini/despre");
 // });
 
+app.get("/produse", async function(req, res){
+    let tip = (req.query.tip || "toate").trim();
+    const mapTip = {
+        matematica: "mate",
+        informatica: "info",
+        simulari: "simulari"
+    };
+    let tipNormalizat = mapTip[tip.toLowerCase()] || tip;
 
+    try {
+        let rezOptiuni = await client.query("select distinct categorie::text as categorie from culegeri where categorie is not null order by categorie");
+        let queryProduse = "select * from culegeri where 1=1";
+        let params = [];
 
+        if (tipNormalizat && tipNormalizat.toLowerCase() !== "toate") {
+            params.push(tipNormalizat.toLowerCase());
+            queryProduse += ` and lower(categorie::text) = $${params.length}`;
+        }
+
+        queryProduse += " order by nume";
+        let rezProduse = await client.query(queryProduse, params);
+
+        res.render("pagini/produse", {
+            produse: rezProduse.rows,
+            optiuni: rezOptiuni.rows,
+            filtruTip: tipNormalizat
+        });
+    }
+    catch (err) {
+        console.log("Eroare produse:", err);
+        afisareEroare(res, 2);
+    }
+});
+
+app.get("/produs/:id", async function(req, res){
+    try {
+        let idProdus = Number(req.params.id);
+        if (!Number.isInteger(idProdus) || idProdus <= 0) {
+            afisareEroare(res, 400, "Produs invalid", "Identificatorul produsului nu este valid.");
+            return;
+        }
+
+        let rezProd = await client.query("select * from culegeri where id=$1", [idProdus]);
+        if (!rezProd.rowCount) {
+            afisareEroare(res, 404, "Produs inexistent", "Produsul cautat nu exista in baza de date.");
+            return;
+        }
+
+        res.render("pagini/produs", {
+            prod: rezProd.rows[0]
+        });
+    }
+    catch (err) {
+        console.log("Eroare produs individual:", err);
+        afisareEroare(res);
+    }
+});
+    
 
 function initErori(){
     let continut = fs.readFileSync(path.join(__dirname,"resurse/json/erori.json")).toString("utf-8");
