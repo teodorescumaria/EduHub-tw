@@ -17,9 +17,39 @@
             <h2>Pagina produs</h2>
 
             <article id="art-produs">
-                <figure class="imag-produs">
-                    <img src="/resurse/imagini/produse/<%- locals.prod.imagine || 'Unknown.jpeg' %>" alt="Imagine produs <%- locals.prod.nume %>" />
-                </figure>
+                <!-- BONUS 9: Carousel for multiple images -->
+                <div class="carousel-produs" id="carouselProdus" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <% if (locals.imagini && locals.imagini.length > 0) { %>
+                            <% locals.imagini.forEach((img, idx) => { %>
+                                <div class="carousel-item <%= idx === 0 ? 'active' : '' %>">
+                                    <img src="/resurse/imagini/produse/<%- img %>" alt="Imagine produs <%- locals.prod.nume %> - <%= idx + 1 %>" class="d-block w-100" loading="lazy" />
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="carousel-item active">
+                                <img src="/resurse/imagini/produse/<%- locals.prod.imagine || 'Unknown.jpeg' %>" alt="Imagine produs <%- locals.prod.nume %>" class="d-block w-100" />
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <% if (locals.imagini && locals.imagini.length > 1) { %>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProdus" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterioare</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProdus" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Urmatoare</span>
+                        </button>
+
+                        <div class="carousel-indicators">
+                            <% locals.imagini.forEach((img, idx) => { %>
+                                <button type="button" data-bs-target="#carouselProdus" data-bs-slide-to="<%= idx %>" class="<%= idx === 0 ? 'active' : '' %>" aria-label="Imagine <%= idx + 1 %>"></button>
+                            <% }); %>
+                        </div>
+                    <% } %>
+                </div>
 
                 <div class="detalii-produs">
                     <h3><span class="nume"><%- locals.prod.nume %></span></h3>

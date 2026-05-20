@@ -46,6 +46,86 @@
     object-fit: contain;
 }
 
+/* ===== BONUS 9: CAROUSEL ===== */
+.carousel-produs {
+    background: linear-gradient(145deg, #fff8f7, #fcebe9);
+    border: 1px solid #e6c5c0;
+    border-radius: var(--rotunjire);
+    min-height: 320px;
+    overflow: hidden;
+}
+
+.carousel-produs .carousel-inner {
+    height: 100%;
+}
+
+.carousel-produs .carousel-item {
+    min-height: 320px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, #fff8f7, #fcebe9);
+}
+
+.carousel-produs .carousel-item img {
+    width: min(92%, 340px);
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.carousel-produs .carousel-control-prev-icon,
+.carousel-produs .carousel-control-next-icon {
+    background-color: rgba(120, 30, 0, 0.6);
+    border-radius: 50%;
+    padding: 0.5rem;
+}
+
+.carousel-produs .carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-produs .carousel-control-next:hover .carousel-control-next-icon {
+    background-color: rgba(120, 30, 0, 0.9);
+}
+
+.carousel-produs .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(120, 30, 0, 0.5);
+    border: 1px solid rgba(120, 30, 0, 0.7);
+}
+
+.carousel-produs .carousel-indicators button.active {
+    background-color: #781E00;
+    border-color: #781E00;
+}
+
+[data-bs-theme="dark"] .carousel-produs {
+    background: linear-gradient(145deg, #2a1a1a, #1f1515);
+    border-color: #444;
+}
+
+[data-bs-theme="dark"] .carousel-produs .carousel-item {
+    background: linear-gradient(145deg, #2a1a1a, #1f1515);
+}
+
+[data-bs-theme="dark"] .carousel-produs .carousel-control-prev-icon,
+[data-bs-theme="dark"] .carousel-produs .carousel-control-next-icon {
+    background-color: rgba(232, 133, 106, 0.6);
+}
+
+[data-bs-theme="dark"] .carousel-produs .carousel-control-prev:hover .carousel-control-prev-icon,
+[data-bs-theme="dark"] .carousel-produs .carousel-control-next:hover .carousel-control-next-icon {
+    background-color: rgba(232, 133, 106, 0.9);
+}
+
+[data-bs-theme="dark"] .carousel-produs .carousel-indicators button {
+    background-color: rgba(232, 133, 106, 0.5);
+    border-color: rgba(232, 133, 106, 0.7);
+}
+
+[data-bs-theme="dark"] .carousel-produs .carousel-indicators button.active {
+    background-color: #e8856a;
+    border-color: #e8856a;
+}
+
 .detalii-produs {
     display: grid;
     gap: 0.55rem;

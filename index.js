@@ -140,8 +140,29 @@ app.get("/produs/:id", async function(req, res){
             return;
         }
 
+        // BONUS 9: Scan for product images
+        let prodData = rezProd.rows[0];
+        let imagini = [prodData.imagine]; // Start with main image
+        
+        let folderProdus = path.join(__dirname, "resurse/imagini/produse", `prod_${idProdus}`);
+        try {
+            let files = fs.readdirSync(folderProdus);
+            let imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif"];
+            let imaginiGassite = files.filter(f => {
+                let ext = path.extname(f).toLowerCase();
+                return imageExtensions.includes(ext);
+            });
+            
+            if (imaginiGassite.length > 0) {
+                imagini = imaginiGassite.map(f => `prod_${idProdus}/${f}`);
+            }
+        } catch (e) {
+            // Folder not found, use default main image
+        }
+
         res.render("pagini/produs", {
-            prod: rezProd.rows[0]
+            prod: prodData,
+            imagini: imagini
         });
     }
     catch (err) {

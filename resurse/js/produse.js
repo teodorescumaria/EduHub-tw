@@ -18,6 +18,13 @@ window.addEventListener("load", function () {
     let switchTema = document.getElementById("switch-tema");
     let iconTema = document.getElementById("icon-tema");
 
+    
+    let sortKey1 = document.getElementById("sort-key1");
+    let sortKey2 = document.getElementById("sort-key2");
+    let sortDir1Radio = document.querySelectorAll('input[name="sort-dir1"]');
+    let sortDir2Radio = document.querySelectorAll('input[name="sort-dir2"]');
+    let butonSortApply = document.getElementById("sort-apply");
+
     let valMinInitial = parseFloat(inpPretMin.min);
     let valMaxInitial = parseFloat(inpPretMax.max);
 
@@ -231,6 +238,71 @@ window.addEventListener("load", function () {
         }
     }
 
+    
+    function getValueByKey(prod, key) {
+        switch (key) {
+            case "nume":
+                return prod.getElementsByClassName("val-nume")[0]?.textContent.trim().toLowerCase() || "";
+            case "pret":
+                return parseFloat(prod.getElementsByClassName("val-pret")[0]?.textContent.trim() || "0");
+            case "nivel":
+                return prod.getElementsByClassName("val-nivel")[0]?.textContent.trim().toLowerCase() || "";
+            case "data":
+                return prod.dataset.paginaCurenta || "0"; 
+            case "format":
+                return prod.dataset.format || "";
+            case "pagini":
+                return parseInt(prod.dataset.pagini || "0");
+            default:
+                return "";
+        }
+    }
+
+    function compareValues(valA, valB, isNumeric, ascending) {
+        if (isNumeric) {
+            let numA = typeof valA === "number" ? valA : parseFloat(valA);
+            let numB = typeof valB === "number" ? valB : parseFloat(valB);
+            return ascending ? numA - numB : numB - numA;
+        } else {
+            let strA = String(valA).toLowerCase();
+            let strB = String(valB).toLowerCase();
+            return ascending ? strA.localeCompare(strB) : strB.localeCompare(strA);
+        }
+    }
+
+    function sorteazaPe2Chei(key1, dir1, key2, dir2) {
+        if (!key1 || key1 === "") {
+            alert("Selecteaza cel putin cheia 1 pentru sortare!");
+            return;
+        }
+
+        let vProduse = Array.from(gridProduse.children);
+        let numericKeys = ["pret", "pagini"];
+
+        vProduse.sort(function (a, b) {
+            let valA1 = getValueByKey(a, key1);
+            let valB1 = getValueByKey(b, key1);
+            let isNum1 = numericKeys.includes(key1);
+
+            let cmp1 = compareValues(valA1, valB1, isNum1, dir1 === "asc");
+            if (cmp1 !== 0) return cmp1;
+
+            
+            if (key2 && key2 !== "") {
+                let valA2 = getValueByKey(a, key2);
+                let valB2 = getValueByKey(b, key2);
+                let isNum2 = numericKeys.includes(key2);
+                return compareValues(valA2, valB2, isNum2, dir2 === "asc");
+            }
+
+            return 0;
+        });
+
+        for (let prod of vProduse) {
+            gridProduse.appendChild(prod);
+        }
+    }
+
     function afiseazaRezultatCalcul(text) {
         let vechiMesaj = document.getElementById("mesaj-calcul-dinamic");
         if (vechiMesaj) {
@@ -264,6 +336,7 @@ window.addEventListener("load", function () {
             inpPretMax.value = inpPretMin.value;
         }
         actualizeazaInfoRange();
+        filtreazaProduse();
     });
 
     inpPretMax.addEventListener("input", function () {
@@ -271,6 +344,19 @@ window.addEventListener("load", function () {
             inpPretMin.value = inpPretMax.value;
         }
         actualizeazaInfoRange();
+        filtreazaProduse();
+    });
+
+    inpNume.addEventListener("change", function () {
+        filtreazaProduse();
+    });
+
+    inpCategorie.addEventListener("change", function () {
+        filtreazaProduse();
+    });
+
+    inpFormat.addEventListener("change", function () {
+        filtreazaProduse();
     });
 
     inpNivel.addEventListener("change", function () {
@@ -284,10 +370,27 @@ window.addEventListener("load", function () {
         if (!Array.from(inpNivel.selectedOptions).length) {
             optOricare.selected = true;
         }
+        filtreazaProduse();
     });
 
     inpDescriere.addEventListener("input", function () {
         actualizeazaValidareTextarea();
+    });
+
+    inpDescriere.addEventListener("change", function () {
+        filtreazaProduse();
+    });
+
+    document.querySelectorAll('input[name="gr_rad"]').forEach(function (radio) {
+        radio.addEventListener("change", function () {
+            filtreazaProduse();
+        });
+    });
+
+    document.querySelectorAll(".inp-beneficiu").forEach(function (chk) {
+        chk.addEventListener("change", function () {
+            filtreazaProduse();
+        });
     });
 
     if (switchTema) {
@@ -328,6 +431,11 @@ window.addEventListener("load", function () {
             opt.selected = opt.value === "oricare";
         }
 
+        if (sortKey1) sortKey1.value = "";
+        if (sortKey2) sortKey2.value = "";
+        document.querySelector('input[name="sort-dir1"][value="asc"]').checked = true;
+        document.querySelector('input[name="sort-dir2"][value="asc"]').checked = true;
+
         actualizeazaInfoRange();
         filtreazaProduse();
         restaureazaOrdineInitiala();
@@ -346,6 +454,22 @@ window.addEventListener("load", function () {
         }
         sorteazaDupaPretSiNume(false);
     });
+
+    
+    if (butonSortApply) {
+        butonSortApply.addEventListener("click", function () {
+            if (!valideazaInputuri()) {
+                return;
+            }
+
+            let key1 = sortKey1.value;
+            let key2 = sortKey2.value;
+            let dir1 = document.querySelector('input[name="sort-dir1"]:checked')?.value || "asc";
+            let dir2 = document.querySelector('input[name="sort-dir2"]:checked')?.value || "asc";
+
+            sorteazaPe2Chei(key1, dir1, key2, dir2);
+        });
+    }
 
     butonCalculeaza.addEventListener("click", function () {
         if (!valideazaInputuri()) {
@@ -369,6 +493,185 @@ window.addEventListener("load", function () {
                 .reduce((acc, p) => acc + parseFloat(p.getElementsByClassName("val-pret")[0].textContent.trim()), 0);
             alert(`Suma preturilor produselor afisate este ${suma.toFixed(2)} lei.`);
         }
+    });
+
+    const stateManager = {
+        pinned: new Set(),
+        hidden: new Set(),
+        deleted: new Set(),
+
+        savePinnedToStorage() {
+            sessionStorage.setItem("bonus6-pinned", JSON.stringify([...this.pinned]));
+        },
+        loadPinnedFromStorage() {
+            const stored = sessionStorage.getItem("bonus6-pinned");
+            if (stored) this.pinned = new Set(JSON.parse(stored));
+        },
+
+        saveDeletedToStorage() {
+            sessionStorage.setItem("bonus6-deleted", JSON.stringify([...this.deleted]));
+        },
+        loadDeletedFromStorage() {
+            const stored = sessionStorage.getItem("bonus6-deleted");
+            if (stored) this.deleted = new Set(JSON.parse(stored));
+        }
+    };
+
+    function setupActionButtons() {
+        document.querySelectorAll(".btn-action").forEach((btn) => {
+            btn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                const action = this.dataset.action;
+                const article = this.closest("article.produs");
+                if (!article) return;
+
+                const prodId = article.dataset.prodId || article.id.replace("art", "");
+
+                if (action === "pin") {
+                    if (stateManager.pinned.has(prodId)) {
+                        stateManager.pinned.delete(prodId);
+                        article.classList.remove("pinned");
+                        this.classList.remove("active");
+                    } else {
+                        stateManager.pinned.add(prodId);
+                        article.classList.add("pinned");
+                        this.classList.add("active");
+                    }
+                    stateManager.savePinnedToStorage();
+                } else if (action === "hide") {
+                    if (stateManager.hidden.has(prodId)) {
+                        stateManager.hidden.delete(prodId);
+                        article.classList.remove("hidden-prod");
+                        this.classList.remove("active");
+                    } else {
+                        stateManager.hidden.add(prodId);
+                        article.classList.add("hidden-prod");
+                        this.classList.add("active");
+                    }
+                } else if (action === "delete") {
+                    if (stateManager.deleted.has(prodId)) {
+                        stateManager.deleted.delete(prodId);
+                        article.style.display = "";
+                        this.classList.remove("active");
+                    } else {
+                        stateManager.deleted.add(prodId);
+                        article.style.display = "none";
+                        this.classList.add("active");
+                    }
+                    stateManager.saveDeletedToStorage();
+                    actualizeazaNumarProduse(produse.filter((p) => p.style.display !== "none").length);
+                }
+            });
+        });
+    }
+
+    function applyStoredState() {
+        stateManager.loadPinnedFromStorage();
+        stateManager.loadDeletedFromStorage();
+
+        produse.forEach((prod) => {
+            const prodId = prod.dataset.prodId || prod.id.replace("art", "");
+            const btns = prod.querySelectorAll(".btn-action");
+
+            if (stateManager.pinned.has(prodId)) {
+                prod.classList.add("pinned");
+                btns.forEach((b) => b.dataset.action === "pin" && b.classList.add("active"));
+            }
+
+            if (stateManager.deleted.has(prodId)) {
+                prod.style.display = "none";
+                btns.forEach((b) => b.dataset.action === "delete" && b.classList.add("active"));
+            }
+        });
+    }
+
+    
+    let originalFiltreazaProduse = window.filtreazaProduse;
+    window.filtreazaProduse = function () {
+        if (typeof originalFiltreazaProduse === "function") {
+            originalFiltreazaProduse.call(this);
+        }
+
+       
+        produse.forEach((prod) => {
+            const prodId = prod.dataset.prodId || prod.id.replace("art", "");
+            if (stateManager.hidden.has(prodId) && prod.style.display !== "none") {
+                prod.style.display = "none";
+            }
+        });
+
+        
+        stateManager.pinned.forEach((prodId) => {
+            let prod = document.getElementById(`art${prodId}`);
+            if (!prod) prod = produse.find((p) => (p.dataset.prodId || p.id.replace("art", "")) === prodId);
+            if (prod && stateManager.deleted.has(prodId) === false) {
+                prod.style.display = "";
+            }
+        });
+
+        actualizeazaNumarProduse(produse.filter((p) => p.style.display !== "none").length);
+    };
+
+    setupActionButtons();
+    applyStoredState();
+
+    
+    const luniRo = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
+    const zileRo = ["Duminica", "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
+
+    let modalProdus = document.getElementById("modalProdus");
+    let bsModal = new bootstrap.Modal(modalProdus);
+
+    produse.forEach((prod) => {
+        prod.addEventListener("click", function (e) {
+            // Dacă s-a dat click pe un buton de acțiune, nu deschide modalul
+            if (e.target.closest(".produs-actiuni")) {
+                return;
+            }
+            // Dacă s-a dat click pe un link din produs (titlu sau imagine), previne navigarea și deschide doar modalul
+            const link = e.target.closest("a");
+            if (link && prod.contains(link)) {
+                e.preventDefault();
+            }
+
+            const prodId = prod.dataset.prodId || prod.id.replace("art", "");
+            const prodNume = prod.getElementsByClassName("val-nume")[0]?.textContent.trim() || "N/A";
+            const prodPret = prod.getElementsByClassName("val-pret")[0]?.textContent.trim() || "N/A";
+            const prodDescriere = prod.dataset.descriere || "Fără descriere";
+            const prodCategorie = prod.getElementsByClassName("val-categorie")[0]?.textContent.trim() || "N/A";
+            const prodNivel = prod.getElementsByClassName("val-nivel")[0]?.textContent.trim() || "N/A";
+            const prodFormat = prod.dataset.format || "N/A";
+            const prodPagini = prod.dataset.pagini || "N/A";
+            const prodBeneficii = prod.dataset.beneficii || "N/A";
+            const prodImagine = `/resurse/imagini/produse/${prod.querySelector("img")?.src.split("/resurse/imagini/produse/")[1] || "Unknown.jpeg"}`;
+
+            let dataText = "N/A";
+            let timeElement = prod.querySelector("time");
+            if (timeElement) {
+                dataText = timeElement.textContent.trim();
+            }
+
+            let acreditataText = "Nu";
+            let acreditataSpan = prod.querySelector(".val-acreditata");
+            if (acreditataSpan) {
+                acreditataText = acreditataSpan.textContent.trim();
+            }
+
+            document.getElementById("modal-prod-nume").textContent = prodNume;
+            document.getElementById("modal-prod-pret").textContent = prodPret;
+            document.getElementById("modal-prod-descriere").textContent = prodDescriere;
+            document.getElementById("modal-prod-categorie").textContent = prodCategorie;
+            document.getElementById("modal-prod-nivel").textContent = prodNivel;
+            document.getElementById("modal-prod-format").textContent = prodFormat;
+            document.getElementById("modal-prod-pagini").textContent = prodPagini;
+            document.getElementById("modal-prod-beneficii").textContent = prodBeneficii || "N/A";
+            document.getElementById("modal-prod-data").textContent = dataText;
+            document.getElementById("modal-prod-acreditata").textContent = acreditataText;
+            document.getElementById("modal-prod-imagine").src = prodImagine;
+            document.getElementById("modal-link-produs").href = `/produs/${prodId}`;
+
+            bsModal.show();
+        });
     });
 
     actualizeazaInfoRange();

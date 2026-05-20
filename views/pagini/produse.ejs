@@ -36,6 +36,13 @@
                         .filter(Boolean)
                 )
             )];
+            const paginiSortate = locals.produse.map(p => Number(p.nr_pagini)).filter(Boolean).sort((a, b) => a - b);
+            const paginMin = paginiSortate[0] || 0;
+            const paginMax = paginiSortate[paginiSortate.length - 1] || 999;
+            const prag1 = Math.round(paginMin + (paginMax - paginMin) / 3);
+            const prag2 = Math.round(paginMin + 2 * (paginMax - paginMin) / 3);
+            const exempluNume = locals.produse[0]?.nome || "Ex: mate*bac";
+            const exempluDescriere = (locals.produse[0]?.descriere || "").substring(0, 40).replace(/\s+\S*$/, "...") || "Ex: bacalaureat rezolvate";
             const luniRo = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
             const zileRo = ["Duminica", "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
         %>
@@ -52,7 +59,7 @@
             <div class="row g-3 align-items-start">
                 <div class="col-12 col-md-6 col-xl-3">
                     <label class="form-label fw-semibold" for="inp-nume">Nume</label>
-                    <input class="form-control form-control-sm" type="text" id="inp-nume" placeholder="Ex: mate*bac" autocomplete="off">
+                    <input class="form-control form-control-sm" type="text" id="inp-nume" placeholder="<%= exempluNume %>" autocomplete="off">
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-3">
@@ -105,7 +112,7 @@
 
                 <div class="col-12 col-md-6 col-xl-6">
                     <div class="form-floating">
-                        <textarea class="form-control" id="inp-descriere" placeholder="Ex: bacalaureat rezolvate" style="height: 110px;"></textarea>
+                        <textarea class="form-control" id="inp-descriere" placeholder="<%= exempluDescriere %>" style="height: 110px;"></textarea>
                         <label for="inp-descriere">Descriere (textarea)</label>
                         <div class="invalid-feedback">Textarea contine caractere invalide.</div>
                     </div>
@@ -115,14 +122,14 @@
             <fieldset class="radio-grup mt-3">
                 <legend class="h6 mb-2">Numar pagini</legend>
                 <div class="d-flex flex-wrap gap-2">
-                    <input class="btn-check" id="i_rad1" name="gr_rad" value="0:150" type="radio" autocomplete="off"/>
-                    <label class="btn btn-sm btn-outline-secondary" for="i_rad1">Compacte (&lt; 150)</label>
+                    <input class="btn-check" id="i_rad1" name="gr_rad" value="<%= paginMin %>:<%= prag1 %>" type="radio" autocomplete="off"/>
+                    <label class="btn btn-sm btn-outline-secondary" for="i_rad1">Compacte (&lt; <%= prag1 %>)</label>
 
-                    <input class="btn-check" id="i_rad2" name="gr_rad" value="150:220" type="radio" autocomplete="off"/>
-                    <label class="btn btn-sm btn-outline-secondary" for="i_rad2">Medii (150 - 220)</label>
+                    <input class="btn-check" id="i_rad2" name="gr_rad" value="<%= prag1 %>:<%= prag2 %>" type="radio" autocomplete="off"/>
+                    <label class="btn btn-sm btn-outline-secondary" for="i_rad2">Medii (<%= prag1 %> - <%= prag2 %>)</label>
 
-                    <input class="btn-check" id="i_rad3" name="gr_rad" value="220:1000000000" type="radio" autocomplete="off"/>
-                    <label class="btn btn-sm btn-outline-secondary" for="i_rad3">Extinse (&ge; 220)</label>
+                    <input class="btn-check" id="i_rad3" name="gr_rad" value="<%= prag2 %>:<%= paginMax + 1 %>" type="radio" autocomplete="off"/>
+                    <label class="btn btn-sm btn-outline-secondary" for="i_rad3">Extinse (&ge; <%= prag2 %>)</label>
 
                     <input class="btn-check" id="i_rad4" checked name="gr_rad" value="toate" type="radio" autocomplete="off"/>
                     <label class="btn btn-sm btn-outline-secondary" for="i_rad4">Toate</label>
@@ -140,10 +147,70 @@
                 </div>
             </fieldset>
 
+            <!-- BONUS 8: DOUBLE KEY SORT -->
+            <fieldset class="sortare-dubla mt-3">
+                <legend class="h6 mb-2">Sortare avansata (2 chei)</legend>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold" for="sort-key1">Cheie 1</label>
+                        <select class="form-select form-select-sm" id="sort-key1">
+                            <option value="" selected>--- Selecteaza ---</option>
+                            <option value="nume">Nume</option>
+                            <option value="pret">Pret</option>
+                            <option value="nivel">Nivel</option>
+                            <option value="data">Data adaugare</option>
+                            <option value="format">Format</option>
+                            <option value="pagini">Nr. pagini</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold" for="sort-key2">Cheie 2</label>
+                        <select class="form-select form-select-sm" id="sort-key2">
+                            <option value="" selected>--- Selecteaza ---</option>
+                            <option value="nume">Nume</option>
+                            <option value="pret">Pret</option>
+                            <option value="nivel">Nivel</option>
+                            <option value="data">Data adaugare</option>
+                            <option value="format">Format</option>
+                            <option value="pagini">Nr. pagini</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap gap-4 mt-2">
+                    <div>
+                        <span class="fw-semibold d-block mb-2 text-sm">Direcție Cheie 1:</span>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sort-dir1" id="sort-dir1-asc" value="asc" checked>
+                                <label class="form-check-label" for="sort-dir1-asc">Crescător</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sort-dir1" id="sort-dir1-desc" value="desc">
+                                <label class="form-check-label" for="sort-dir1-desc">Descrescător</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="fw-semibold d-block mb-2 text-sm">Direcție Cheie 2:</span>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sort-dir2" id="sort-dir2-asc" value="asc" checked>
+                                <label class="form-check-label" for="sort-dir2-asc">Crescător</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sort-dir2" id="sort-dir2-desc" value="desc">
+                                <label class="form-check-label" for="sort-dir2-desc">Descrescător</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
             <div class="actiuni-filtre mt-3 d-flex flex-wrap gap-2">
                 <button class="btn btn-primary btn-sm" id="filtrare"><i class="bi bi-funnel-fill"></i> <span class="d-none d-sm-inline">Filtreaza</span></button>
-                <button class="btn btn-secondary btn-sm" id="sortCrescNume"><i class="bi bi-sort-down"></i> <span class="d-none d-sm-inline">Sortare +</span></button>
-                <button class="btn btn-secondary btn-sm" id="sortDescrescNume"><i class="bi bi-sort-up"></i> <span class="d-none d-sm-inline">Sortare -</span></button>
+                <button class="btn btn-success btn-sm" id="sort-apply"><i class="bi bi-sort-down"></i> <span class="d-none d-sm-inline">Aplica sortare</span></button>
+                <button class="btn btn-secondary btn-sm d-none" id="sortCrescNume"><i class="bi bi-sort-down"></i> <span class="d-none d-sm-inline">Sortare +</span></button>
+                <button class="btn btn-secondary btn-sm d-none" id="sortDescrescNume"><i class="bi bi-sort-up"></i> <span class="d-none d-sm-inline">Sortare -</span></button>
                 <button class="btn btn-outline-primary btn-sm" id="calculeaza"><i class="bi bi-calculator-fill"></i> <span class="d-none d-sm-inline">Calculeaza</span></button>
                 <button class="btn btn-outline-secondary btn-sm" id="resetare"><i class="bi bi-arrow-counterclockwise"></i> <span class="d-none d-sm-inline">Reseteaza</span></button>
             </div>
@@ -168,8 +235,21 @@
                         const ziSapt = Number.isNaN(dataObj.getTime()) ? "-" : zileRo[dataObj.getDay()];
                         const dataAfisata = `${zi}/${luna}/${an} (${ziSapt})`;
                     %>
-                    <article id="art<%- prod.id %>" class="produs <%- prod.categorie %>" data-descriere="<%= prod.descriere || '' %>" data-beneficii="<%= prod.beneficii || '' %>" data-format="<%= prod.format || '' %>" data-pagini="<%= prod.nr_pagini %>">
-                        <h3 class="nume"><a href="/produs/<%- prod.id %>"><span class="val-nume"><%- prod.nume %></span></a></h3>
+                    <article id="art<%- prod.id %>" class="produs <%- prod.categorie %>" data-descriere="<%= prod.descriere || '' %>" data-beneficii="<%= prod.beneficii || '' %>" data-format="<%= prod.format || '' %>" data-pagini="<%= prod.nr_pagini %>" data-prod-id="<%- prod.id %>">
+                        <div class="produs-header">
+                            <h3 class="nume"><a href="/produs/<%- prod.id %>"><span class="val-nume"><%- prod.nume %></span></a></h3>
+                            <div class="produs-actiuni" role="group" aria-label="Actiuni pentru produs">
+                                <button class="btn-action btn-pin" type="button" data-action="pin" title="Pastreaza produsul pe ecran">
+                                    <i class="bi bi-bookmark"></i>
+                                </button>
+                                <button class="btn-action btn-hide" type="button" data-action="hide" title="Ascunde temporar">
+                                    <i class="bi bi-eye-slash"></i>
+                                </button>
+                                <button class="btn-action btn-delete" type="button" data-action="delete" title="Sterge din sesiune">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </div>
+                        </div>
                         <p class="categorie-linie">Categorie: <span class="val-categorie"><%- prod.categorie %></span></p>
                         <p class="descriere-scurta"><%- prod.descriere || "Fara descriere." %></p>
 
@@ -216,6 +296,58 @@
 
             <p id="mesaj-nu-exista-produse" class="stare-goala" style="display: none;">Nu exista produse care respecta filtrele selectate.</p>
         </section>
+
+        <!-- BONUS 11: Product Modal -->
+        <div class="modal fade" id="modalProdus" tabindex="-1" aria-labelledby="modalProdusLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalProdusLabel">Detalii Produs</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Inchide"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-produs-grid">
+                            <div class="modal-produs-imagine">
+                                <img id="modal-prod-imagine" src="" alt="Imagine produs" />
+                            </div>
+                            <div class="modal-produs-info">
+                                <h3 id="modal-prod-nume"></h3>
+                                <p class="modal-pret"><strong>Pret:</strong> <span id="modal-prod-pret"></span> lei</p>
+                                <p><strong>Descriere:</strong> <span id="modal-prod-descriere"></span></p>
+                                
+                                <div class="modal-meta">
+                                    <div class="meta-item">
+                                        <strong>Categorie:</strong> <span id="modal-prod-categorie"></span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <strong>Nivel:</strong> <span id="modal-prod-nivel"></span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <strong>Format:</strong> <span id="modal-prod-format"></span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <strong>Nr. Pagini:</strong> <span id="modal-prod-pagini"></span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <strong>Beneficii:</strong> <span id="modal-prod-beneficii"></span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <strong>Data adaugare:</strong> <span id="modal-prod-data"></span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <strong>Acreditata minister:</strong> <span id="modal-prod-acreditata"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a id="modal-link-produs" href="" class="btn btn-primary" target="_blank">Vizita pagina produs</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Inchide</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <%- include("../fragmente/footer") %>
