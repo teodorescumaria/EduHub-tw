@@ -15,6 +15,7 @@ app.set("view engine", "ejs")
 obGlobal={
     obErori:null,
     obImagini:null,
+    categoriiProduse:[],
     folderScss: path.join(__dirname,"resurse/scss"),
     folderCss: path.join(__dirname,"resurse/css"),
     folderBackup: path.join(__dirname,"backup"),
@@ -34,6 +35,21 @@ console.log("Cale fisier", __filename);
  })
 
  client.connect()
+
+async function initCategoriiProduse(){
+    try {
+        let rezCategorii = await client.query("select unnest(enum_range(null::categ_culegere))::text as categorie");
+        obGlobal.categoriiProduse = rezCategorii.rows.map((c) => c.categorie);
+        app.locals.categoriiProduse = obGlobal.categoriiProduse;
+    }
+    catch (err) {
+        console.log("Eroare init categorii produse:", err);
+        obGlobal.categoriiProduse = [];
+        app.locals.categoriiProduse = [];
+    }
+}
+
+initCategoriiProduse();
 
  client.query("select * from culegeri order by id limit 3", function(err, rez){
      if (err){
@@ -55,6 +71,11 @@ for (let folder of vect_foldere){
 app.use("/resurse",express.static(path.join(__dirname, "resurse")));
 app.use("/dist",express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
 
+app.use(function(req, res, next){
+    res.locals.categoriiProduse = obGlobal.categoriiProduse || [];
+    next();
+});
+
 app.get("/favicon.ico", function(req, res){
     res.sendFile(path.join(__dirname,"resurse/imagini/favicon/favicon.ico"))
 });
@@ -75,16 +96,13 @@ app.get(["/", "/index","/home"], function(req, res){
 // });
 
 app.get("/produse", async function(req, res){
-    let tip = (req.query.tip || "toate").trim();
-    const mapTip = {
-        matematica: "mate",
-        informatica: "info",
-        simulari: "simulari"
-    };
-    let tipNormalizat = mapTip[tip.toLowerCase()] || tip;
+    let tip = (req.query.tip || "toate").trim().toLowerCase();
 
     try {
-        let rezOptiuni = await client.query("select distinct categorie::text as categorie from culegeri where categorie is not null order by categorie");
+        let rezOptiuni = await client.query("select unnest(enum_range(null::categ_culegere))::text as categorie");
+        let categoriiValide = rezOptiuni.rows.map((opt) => opt.categorie.toLowerCase());
+        let tipNormalizat = categoriiValide.includes(tip) ? tip : "toate";
+
         let queryProduse = "select * from culegeri where 1=1";
         let params = [];
 

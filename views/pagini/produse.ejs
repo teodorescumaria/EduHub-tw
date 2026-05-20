@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html  lang="ro">
+<html lang="ro" data-bs-theme="dark">
     <head>
         <meta name="description" content="EduHub - Produse educationale pentru matematica si informatica: culegeri, simulari si resurse de pregatire.">
         <meta name="keywords" content="eduhub, produse educationale, matematica, informatica, culegeri, simulari">
         <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
         <title>EduHub - Produse</title>
-        <%- include("../fragmente/head") %>     
+        <%- include("../fragmente/head") %>  
+        <script type = "text/javascript" src="/resurse/js/produse.js"></script> 
+        <script type = "text/javascript" src="/resurse/js/produse-cos.js"></script>
     </head>
     <body>
     <%- include("../fragmente/header") %>
@@ -20,48 +22,137 @@
             </p>
         </section>
 
+        <%
+            const preturi = locals.produse.map((p) => Number(p.pret));
+            const pretMinGlobal = preturi.length ? Math.min(...preturi) : 0;
+            const pretMaxGlobal = preturi.length ? Math.max(...preturi) : 0;
+            const niveluriUnice = [...new Set(locals.produse.map((p) => p.nivel))];
+            const formateUnice = [...new Set(locals.produse.map((p) => p.format))];
+            const beneficiiUnice = [...new Set(
+                locals.produse.flatMap((p) =>
+                    (p.beneficii || "")
+                        .split(",")
+                        .map((b) => b.trim().toLowerCase())
+                        .filter(Boolean)
+                )
+            )];
+            const luniRo = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
+            const zileRo = ["Duminica", "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
+        %>
+
         <section class="panou-filtre" aria-labelledby="titlu-filtre">
-            <h2 id="titlu-filtre">Filtre rapide</h2>
-            <div class="filtre-grid">
-                <label class="camp-filtru">Nume
-                    <input type="text" id="inp-nume" placeholder="Ex: Algebra" autocomplete="off">
-                </label>
-
-                <label class="camp-filtru">Pret minim
-                    <input type="range" id="inp-pret" value="0" min="0" max="500">
-                    <span id="infoRange">(0)</span>
-                </label>
-
-                <label class="camp-filtru">Categorie
-                    <select id="inp-categorie">
-                        <option id="sel-toate" value="toate" <%= !locals.filtruTip || locals.filtruTip === "toate" ? "selected" : "" %>>toate</option>
-                        <% for (let opt of locals.optiuni) { %>
-                            <option value="<%- opt.categorie %>" <%= locals.filtruTip && opt.categorie.toLowerCase() === locals.filtruTip.toLowerCase() ? "selected" : "" %>><%- opt.categorie %></option>
-                        <% } %>
-                    </select>
-                </label>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 id="titlu-filtre" class="m-0">Filtre rapide</h2>
+                <div class="form-check form-switch m-0">
+                    <input class="form-check-input" type="checkbox" id="switch-tema" aria-label="Schimba tema">
+                    <label class="form-check-label" for="switch-tema"><i id="icon-tema" class="bi bi-moon-stars-fill"></i> <span class="d-none d-sm-inline">Tema</span></label>
+                </div>
             </div>
 
-            <fieldset class="radio-grup">
-                <legend>Numar pagini</legend>
-                <label><input id="i_rad1" name="gr_rad" value="0:150" type="radio"/> Compacte (&lt; 150)</label>
-                <label><input id="i_rad2" name="gr_rad" value="150:220" type="radio"/> Medii (150 - 220)</label>
-                <label><input id="i_rad3" name="gr_rad" value="220:1000000000" type="radio"/> Extinse (&ge; 220)</label>
-                <label><input id="i_rad4" checked name="gr_rad" value="toate" type="radio"/> Toate</label>
+            <div class="row g-3 align-items-start">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label fw-semibold" for="inp-nume">Nume</label>
+                    <input class="form-control form-control-sm" type="text" id="inp-nume" placeholder="Ex: mate*bac" autocomplete="off">
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label fw-semibold" for="inp-pret-min">Pret minim</label>
+                    <div class="range-linie">
+                        <span class="range-capete"><%= Math.floor(pretMinGlobal) %></span>
+                        <input class="form-range" type="range" id="inp-pret-min" value="<%= pretMinGlobal %>" min="<%= pretMinGlobal %>" max="<%= pretMaxGlobal %>" step="0.01">
+                        <span class="range-capete"><%= Math.floor(pretMaxGlobal) %> <span id="infoRangeMin">(<%= Math.floor(pretMinGlobal) %>)</span></span>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label fw-semibold" for="inp-pret-max">Pret maxim</label>
+                    <div class="range-linie">
+                        <span class="range-capete"><%= Math.floor(pretMinGlobal) %></span>
+                        <input class="form-range" type="range" id="inp-pret-max" value="<%= pretMaxGlobal %>" min="<%= pretMinGlobal %>" max="<%= pretMaxGlobal %>" step="0.01">
+                        <span class="range-capete"><%= Math.floor(pretMaxGlobal) %> <span id="infoRangeMax">(<%= Math.floor(pretMaxGlobal) %>)</span></span>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label fw-semibold" for="inp-categorie">Categorie</label>
+                    <select class="form-select form-select-sm" id="inp-categorie">
+                        <option id="sel-toate" value="oricare" selected>oricare</option>
+                        <% for (let opt of locals.optiuni) { %>
+                            <option value="<%- opt.categorie %>"><%- opt.categorie %></option>
+                        <% } %>
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label fw-semibold" for="inp-format">Format (datalist)</label>
+                    <input class="form-control form-control-sm" id="inp-format" list="lista-formate" placeholder="Ex: fizic" autocomplete="off">
+                    <datalist id="lista-formate">
+                        <% for (let format of formateUnice) { %>
+                            <option value="<%- format %>"></option>
+                        <% } %>
+                    </datalist>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <label class="form-label fw-semibold" for="inp-nivel">Nivel (select multiplu)</label>
+                    <select class="form-select form-select-sm" id="inp-nivel" multiple size="5">
+                        <option value="oricare" selected>oricare</option>
+                        <% for (let nivel of niveluriUnice) { %>
+                            <option value="<%- nivel %>"><%- nivel %></option>
+                        <% } %>
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-6">
+                    <div class="form-floating">
+                        <textarea class="form-control" id="inp-descriere" placeholder="Ex: bacalaureat rezolvate" style="height: 110px;"></textarea>
+                        <label for="inp-descriere">Descriere (textarea)</label>
+                        <div class="invalid-feedback">Textarea contine caractere invalide.</div>
+                    </div>
+                </div>
+            </div>
+
+            <fieldset class="radio-grup mt-3">
+                <legend class="h6 mb-2">Numar pagini</legend>
+                <div class="d-flex flex-wrap gap-2">
+                    <input class="btn-check" id="i_rad1" name="gr_rad" value="0:150" type="radio" autocomplete="off"/>
+                    <label class="btn btn-sm btn-outline-secondary" for="i_rad1">Compacte (&lt; 150)</label>
+
+                    <input class="btn-check" id="i_rad2" name="gr_rad" value="150:220" type="radio" autocomplete="off"/>
+                    <label class="btn btn-sm btn-outline-secondary" for="i_rad2">Medii (150 - 220)</label>
+
+                    <input class="btn-check" id="i_rad3" name="gr_rad" value="220:1000000000" type="radio" autocomplete="off"/>
+                    <label class="btn btn-sm btn-outline-secondary" for="i_rad3">Extinse (&ge; 220)</label>
+
+                    <input class="btn-check" id="i_rad4" checked name="gr_rad" value="toate" type="radio" autocomplete="off"/>
+                    <label class="btn btn-sm btn-outline-secondary" for="i_rad4">Toate</label>
+                </div>
             </fieldset>
 
-            <div class="actiuni-filtre">
-                <button class="c1 c2 c3" id="filtrare">Filtreaza</button>
-                <button id="resetare">Reseteaza</button>
-                <button id="sortCrescNume">Sorteaza crescator</button>
-                <button id="sortDescrescNume">Sorteaza descrescator</button>
+            <fieldset class="checkbox-grup mt-3">
+                <legend class="h6 mb-2">Beneficii (checkbox)</legend>
+                <div class="d-flex flex-wrap gap-2">
+                    <% for (let beneficiu of beneficiiUnice) { %>
+                        <% const idBenef = `benef_${beneficiu.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "")}`; %>
+                        <input type="checkbox" class="btn-check inp-beneficiu" id="<%- idBenef %>" value="<%- beneficiu %>" autocomplete="off">
+                        <label class="btn btn-sm btn-outline-secondary" for="<%- idBenef %>"><%- beneficiu %></label>
+                    <% } %>
+                </div>
+            </fieldset>
+
+            <div class="actiuni-filtre mt-3 d-flex flex-wrap gap-2">
+                <button class="btn btn-primary btn-sm" id="filtrare"><i class="bi bi-funnel-fill"></i> <span class="d-none d-sm-inline">Filtreaza</span></button>
+                <button class="btn btn-secondary btn-sm" id="sortCrescNume"><i class="bi bi-sort-down"></i> <span class="d-none d-sm-inline">Sortare +</span></button>
+                <button class="btn btn-secondary btn-sm" id="sortDescrescNume"><i class="bi bi-sort-up"></i> <span class="d-none d-sm-inline">Sortare -</span></button>
+                <button class="btn btn-outline-primary btn-sm" id="calculeaza"><i class="bi bi-calculator-fill"></i> <span class="d-none d-sm-inline">Calculeaza</span></button>
+                <button class="btn btn-outline-secondary btn-sm" id="resetare"><i class="bi bi-arrow-counterclockwise"></i> <span class="d-none d-sm-inline">Reseteaza</span></button>
             </div>
 
             <p id="p-suma">Sfat: apasa Alt + C pentru suma preturilor produselor afisate.</p>
         </section>
 
         <section id="produse" aria-labelledby="titlu-produse">
-            <h2 id="titlu-produse">Produse disponibile (<%- locals.produse.length %>)</h2>
+            <h2 id="titlu-produse">Produse disponibile (<span id="numar-produse-afisate"><%- locals.produse.length %></span>)</h2>
 
             <% if (!locals.produse.length) { %>
                 <p class="stare-goala">Nu exista produse pentru filtrul ales.</p>
@@ -69,32 +160,61 @@
 
             <div class="grid-produse">
                 <% for( let prod of locals.produse) { %>
-                    <article class="produs">
-                        <figure class="media-produs">
-                            <a href="/produs/<%- prod.id %>" aria-label="Deschide produsul <%- prod.nume %>">
-                                <img src="/resurse/imagini/produse/<%- prod.imagine || 'Unknown.jpeg' %>" alt="Imagine produs <%- prod.nume %>" loading="lazy" />
-                            </a>
-                            <figcaption class="badge-categorie val-categorie"><%- prod.categorie %></figcaption>
-                        </figure>
+                    <%
+                        const dataObj = new Date(prod.data_adaugare);
+                        const zi = Number.isNaN(dataObj.getTime()) ? "-" : dataObj.getDate();
+                        const luna = Number.isNaN(dataObj.getTime()) ? "-" : luniRo[dataObj.getMonth()];
+                        const an = Number.isNaN(dataObj.getTime()) ? "-" : dataObj.getFullYear();
+                        const ziSapt = Number.isNaN(dataObj.getTime()) ? "-" : zileRo[dataObj.getDay()];
+                        const dataAfisata = `${zi}/${luna}/${an} (${ziSapt})`;
+                    %>
+                    <article id="art<%- prod.id %>" class="produs <%- prod.categorie %>" data-descriere="<%= prod.descriere || '' %>" data-beneficii="<%= prod.beneficii || '' %>" data-format="<%= prod.format || '' %>" data-pagini="<%= prod.nr_pagini %>">
+                        <h3 class="nume"><a href="/produs/<%- prod.id %>"><span class="val-nume"><%- prod.nume %></span></a></h3>
+                        <p class="categorie-linie">Categorie: <span class="val-categorie"><%- prod.categorie %></span></p>
+                        <p class="descriere-scurta"><%- prod.descriere || "Fara descriere." %></p>
 
-                        <div class="continut-produs">
-                            <h3 class="nume"><a href="/produs/<%- prod.id %>"><span class="val-nume"><%- prod.nume %></span></a></h3>
+                        <div class="layout-produs">
+                            <figure class="media-produs">
+                                <a href="/produs/<%- prod.id %>" aria-label="Deschide produsul <%- prod.nume %>">
+                                    <img src="/resurse/imagini/produse/<%- prod.imagine || 'Unknown.jpeg' %>" alt="Imagine produs <%- prod.nume %>" loading="lazy" />
+                                </a>
+                            </figure>
 
-                            <div class="meta-produs info-prod">
-                                <p class="pret">Pret: <strong><span class="val-pret"><%- prod.pret %></span> lei</strong></p>
-                                <p class="calorii">Nivel: <span class="val-calorii"><%- prod.nivel %></span></p>
-                                <p class="gramaj">Pagini: <span class="val-gramaj"><%- prod.nr_pagini %></span></p>
-                                <p class="format">Format: <span><%- prod.format %></span></p>
-                            </div>
-
-                            <label class="selecteaza-cos">
-                                <input type="checkbox" class="select-cos" value="<%- prod.id %>" autocomplete="off">
-                                <span class="text-select">Selecteaza in cos</span>
-                            </label>
+                            <table class="tabel-produs">
+                                <tbody>
+                                    <tr>
+                                        <td>Pret</td>
+                                        <td><strong><span class="val-pret"><%- prod.pret %></span> lei</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nivel</td>
+                                        <td><span class="val-nivel"><%- prod.nivel %></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Beneficii</td>
+                                        <td><span class="val-beneficii"><%- prod.beneficii || "-" %></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data adaugare</td>
+                                        <td><time datetime="<%- prod.data_adaugare %>"><%- dataAfisata %></time></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acreditata minister</td>
+                                        <td><span class="val-acreditata"><%- prod.acreditata_minister ? "da" : "nu" %></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+
+                        <label class="selecteaza-cos">
+                            <input type="checkbox" class="select-cos" value="<%- prod.id %>" autocomplete="off">
+                            <span class="text-select">Selecteaza in cos</span>
+                        </label>
                     </article>
                 <% }%>
             </div>
+
+            <p id="mesaj-nu-exista-produse" class="stare-goala" style="display: none;">Nu exista produse care respecta filtrele selectate.</p>
         </section>
     </main>
 

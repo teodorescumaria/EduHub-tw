@@ -21,9 +21,9 @@
                     <a href="/produse"><i class="fa-solid fa-book"></i><span>Produse</span></a>
                     <ul class="sub-menu other-pages">
                         <li><a href="/produse">Toate</a></li>
-                        <li><a href="/produse?tip=matematica">Culegeri mate</a></li>
-                        <li><a href="/produse?tip=informatica">Culegeri info</a></li>
-                        <li><a href="/produse?tip=simulari">Simulari</a></li>
+                        <% for (let categ of (locals.categoriiProduse || [])) { %>
+                            <li><a href="/produse?tip=<%- categ %>"><%- categ.charAt(0).toUpperCase() + categ.slice(1) %></a></li>
+                        <% } %>
                     </ul>
                 </li>
                 <li class="nav-item has-submenu">

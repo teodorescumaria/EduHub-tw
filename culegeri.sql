@@ -30,6 +30,19 @@ CREATE TABLE IF NOT EXISTS culegeri (
    acreditata_minister BOOLEAN NOT NULL DEFAULT FALSE
 );
 
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'maria') THEN
+        CREATE ROLE maria LOGIN PASSWORD 'maria';
+    END IF;
+END
+$$;
+
+GRANT CONNECT ON DATABASE tw2026 TO maria;
+GRANT USAGE ON SCHEMA public TO maria;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE culegeri TO maria;
+GRANT USAGE, SELECT ON SEQUENCE culegeri_id_seq TO maria;
+
 
 INSERT INTO culegeri 
 (nume, descriere, imagine, categorie, nivel, pret, nr_pagini, data_adaugare, format, beneficii, acreditata_minister) VALUES

@@ -881,3 +881,35 @@ iframe[name="ifr-video"] {
             url("/resurse/imagini/laborator-info.jpg");
     }
 }
+
+/* ===== DARK MODE ===== */
+[data-bs-theme="dark"] body {
+    --culoare-baza: #e8856a;
+    --culoare-secundara: #e07878;
+    --culoare-fundal: #150c0c;
+    --culoare-accent: #90cc96;
+    --culoare-accent-deschisa: #1a331c;
+    --text-main: #edddd8;
+    --culoare-link: var(--culoare-baza);
+    --culoare-link-hover: var(--culoare-secundara);
+    --culoare-link-vizitat: var(--culoare-accent);
+    --culoare-pata-link: var(--culoare-accent-deschisa);
+    background-color: var(--culoare-fundal);
+    color: var(--text-main);
+}
+
+[data-bs-theme="dark"] h1 { color: var(--culoare-baza); }
+[data-bs-theme="dark"] h2 { color: var(--culoare-secundara); }
+
+[data-bs-theme="dark"] .grid-container-z1,
+[data-bs-theme="dark"] .grid-container-z2,
+[data-bs-theme="dark"] .grid-container-z8 {
+    background-color: #231414;
+    border-color: #5c3232;
+}
+
+[data-bs-theme="dark"] .grid-container-z1 > section + section,
+[data-bs-theme="dark"] .grid-container-z2 > section + section,
+[data-bs-theme="dark"] .grid-container-z8 > section + section {
+    border-top-color: #5c3232;
+}

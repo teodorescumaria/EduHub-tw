@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  lang="ro">
+<html lang="ro" data-bs-theme="dark">
     <head>
         <meta name="description" content="EduHub - pagina produs pentru culegeri si materiale educationale.">
         <meta name="keywords" content="eduhub, culegeri, produs, <%- locals.prod.nume %>">
@@ -27,6 +27,7 @@
                     <p>Descriere: <span class="descriere"><%- locals.prod.descriere || 'Fara descriere disponibila.' %></span></p>
 
                     <ul class="lista-meta">
+                        <li>ID: <span class="id-produs"><%- locals.prod.id %></span></li>
                         <li>Categorie: <span class="categorie"><%- locals.prod.categorie %></span></li>
                         <li>Nivel: <span class="nivel"><%- locals.prod.nivel %></span></li>
                         <li>Numar pagini: <span class="nr_pagini"><%- locals.prod.nr_pagini %></span></li>
