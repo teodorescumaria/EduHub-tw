@@ -1,3 +1,25 @@
+.badge-nou {
+    display: inline-block;
+    background: linear-gradient(90deg, #00e6d0 0%, #00bcd4 100%);
+    color: #004d40;
+    font-weight: 700;
+    border-radius: 0.7em;
+    padding: 0.18em 0.7em 0.18em 0.5em;
+    margin-left: 0.7em;
+    font-size: 1em;
+    box-shadow: 0 2px 8px #00bcd444;
+    vertical-align: middle;
+    animation: pulse-nou 1.2s infinite alternate;
+    letter-spacing: 0.04em;
+}
+.badge-nou i {
+    color: #00bcd4;
+    margin-right: 0.3em;
+}
+@keyframes pulse-nou {
+    0% { box-shadow: 0 2px 8px #00bcd444; }
+    100% { box-shadow: 0 0 16px 4px #00e6d099; }
+}
 .page-produs {
     width: min(1000px, 94vw);
     margin: 1.4rem auto 2.4rem;
@@ -48,11 +70,13 @@
 
 /* ===== BONUS 9: CAROUSEL ===== */
 .carousel-produs {
+    position: relative;
     background: linear-gradient(145deg, #fff8f7, #fcebe9);
     border: 1px solid #e6c5c0;
     border-radius: var(--rotunjire);
     min-height: 320px;
-    overflow: hidden;
+    overflow: visible;
+    padding-bottom: 2.2rem;
 }
 
 .carousel-produs .carousel-inner {
@@ -61,15 +85,15 @@
 
 .carousel-produs .carousel-item {
     min-height: 320px;
-    display: grid;
-    place-items: center;
     background: linear-gradient(145deg, #fff8f7, #fcebe9);
+    text-align: center;
 }
 
 .carousel-produs .carousel-item img {
     width: min(92%, 340px);
     max-height: 300px;
     object-fit: contain;
+    margin: 0 auto;
 }
 
 .carousel-produs .carousel-control-prev-icon,
@@ -79,9 +103,30 @@
     padding: 0.5rem;
 }
 
+.carousel-produs .carousel-control-prev,
+.carousel-produs .carousel-control-next {
+    width: 15%;
+    top: 0;
+    bottom: 2.2rem;
+    opacity: 1;
+}
+
+.carousel-produs .carousel-control-prev {
+    left: 0;
+}
+
+.carousel-produs .carousel-control-next {
+    right: 0;
+}
+
 .carousel-produs .carousel-control-prev:hover .carousel-control-prev-icon,
 .carousel-produs .carousel-control-next:hover .carousel-control-next-icon {
     background-color: rgba(120, 30, 0, 0.9);
+}
+
+.carousel-produs .carousel-indicators {
+    bottom: -0.1rem;
+    margin-bottom: 0;
 }
 
 .carousel-produs .carousel-indicators button {

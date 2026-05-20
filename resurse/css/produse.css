@@ -5,6 +5,61 @@
     gap: 1.4rem;
 }
 
+.produs-nou {
+    box-shadow: 0 0 0 3px #e0f7fa, 0 0 12px 0 #00bcd44d;
+    position: relative;
+}
+
+.badge-nou {
+    display: inline-block;
+    background: linear-gradient(90deg, #00e6d0 0%, #00bcd4 100%);
+    color: #004d40;
+    font-weight: 700;
+    border-radius: 0.7em;
+    padding: 0.18em 0.7em 0.18em 0.5em;
+    margin-left: 0.7em;
+    font-size: 1em;
+    box-shadow: 0 2px 8px #00bcd444;
+    vertical-align: middle;
+    animation: pulse-nou 1.2s infinite alternate;
+    letter-spacing: 0.04em;
+}
+.badge-nou i {
+    color: #00bcd4;
+    margin-right: 0.3em;
+}
+@keyframes pulse-nou {
+    0% { box-shadow: 0 2px 8px #00bcd444; }
+    100% { box-shadow: 0 0 16px 4px #00e6d099; }
+}
+.produs-ieftin {
+    border: 2.5px solid #eab308 !important;
+    box-shadow: 0 0 0 3px #fffbe6, 0 0 12px 0 #eab30844;
+    position: relative;
+}
+
+.badge-ieftin {
+    display: inline-block;
+    background: linear-gradient(90deg, #ffe066 0%, #ffd43b 100%);
+    color: #7c4700;
+    font-weight: 700;
+    border-radius: 0.7em;
+    padding: 0.18em 0.7em 0.18em 0.5em;
+    margin-left: 0.7em;
+    font-size: 1em;
+    box-shadow: 0 2px 8px #ffd43b44;
+    vertical-align: middle;
+    animation: pulse-ieftin 1.2s infinite alternate;
+}
+.badge-ieftin i {
+    color: #eab308;
+    margin-right: 0.3em;
+}
+@keyframes pulse-ieftin {
+    0% { box-shadow: 0 2px 8px #ffd43b44; }
+    100% { box-shadow: 0 0 16px 4px #ffe06699; }
+}
+
 .hero-produse {
     position: relative;
     overflow: hidden;

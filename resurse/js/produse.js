@@ -83,8 +83,8 @@ window.addEventListener("load", function () {
             esteValid = false;
         }
 
-        let valFormat = inpFormat.value.trim().toLowerCase();
-        let optiuniFormat = Array.from(document.querySelectorAll("#lista-formate option")).map((opt) => opt.value.trim().toLowerCase());
+        let valFormat = normalizeText(inpFormat.value.trim());
+        let optiuniFormat = Array.from(document.querySelectorAll("#lista-formate option")).map((opt) => normalizeText(opt.value.trim()));
         if (esteValid && valFormat && !optiuniFormat.includes(valFormat)) {
             marcheazaInvalid(inpFormat);
             alert("Formatul introdus trebuie sa fie unul dintre valorile din lista.");
@@ -119,13 +119,21 @@ window.addEventListener("load", function () {
         return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 
+    function normalizeText(text) {
+        return (text || "")
+            .toString()
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+    }
+
     function potrivireNume(numeProdus, sablon) {
         if (!sablon) {
             return true;
         }
 
-        let sablonMic = sablon.toLowerCase();
-        let numeMic = numeProdus.toLowerCase();
+        let sablonMic = normalizeText(sablon);
+        let numeMic = normalizeText(numeProdus);
 
         if (!sablonMic.includes("*")) {
             return numeMic.includes(sablonMic);
@@ -164,29 +172,29 @@ window.addEventListener("load", function () {
     function filtreazaProduse() {
         let nrAfisate = 0;
 
-        let filtruNume = inpNume.value.trim();
+        let filtruNume = normalizeText(inpNume.value.trim());
         let filtruPretMin = parseFloat(inpPretMin.value);
         let filtruPretMax = parseFloat(inpPretMax.value);
-        let filtruCategorie = inpCategorie.value.trim().toLowerCase();
-        let filtruFormat = inpFormat.value.trim().toLowerCase();
-        let filtruDescriere = inpDescriere.value.trim().toLowerCase();
+        let filtruCategorie = normalizeText(inpCategorie.value.trim());
+        let filtruFormat = normalizeText(inpFormat.value.trim());
+        let filtruDescriere = normalizeText(inpDescriere.value.trim());
 
         let intervalPagini = obtineIntervalPagini();
 
-        let niveleSelectate = Array.from(inpNivel.selectedOptions).map((opt) => opt.value.trim().toLowerCase());
+        let niveleSelectate = Array.from(inpNivel.selectedOptions).map((opt) => normalizeText(opt.value.trim()));
         let filtruNivelActiv = niveleSelectate.length && !niveleSelectate.includes("oricare");
 
-        let beneficiiBifate = Array.from(document.querySelectorAll(".inp-beneficiu:checked")).map((chk) => chk.value.trim().toLowerCase());
+        let beneficiiBifate = Array.from(document.querySelectorAll(".inp-beneficiu:checked")).map((chk) => normalizeText(chk.value.trim()));
 
         for (let prod of produse) {
-            let nume = prod.getElementsByClassName("val-nume")[0].textContent.trim();
+            let nume = normalizeText(prod.getElementsByClassName("val-nume")[0].textContent.trim());
             let pret = parseFloat(prod.getElementsByClassName("val-pret")[0].textContent.trim());
-            let categorie = prod.getElementsByClassName("val-categorie")[0].textContent.trim().toLowerCase();
-            let nivel = prod.getElementsByClassName("val-nivel")[0].textContent.trim().toLowerCase();
+            let categorie = normalizeText(prod.getElementsByClassName("val-categorie")[0].textContent.trim());
+            let nivel = normalizeText(prod.getElementsByClassName("val-nivel")[0].textContent.trim());
             let pagini = parseInt(prod.dataset.pagini || "0", 10);
-            let format = (prod.dataset.format || "").trim().toLowerCase();
-            let descriere = (prod.dataset.descriere || "").toLowerCase();
-            let beneficii = (prod.dataset.beneficii || "").toLowerCase();
+            let format = normalizeText((prod.dataset.format || "").trim());
+            let descriere = normalizeText(prod.dataset.descriere || "");
+            let beneficii = normalizeText(prod.dataset.beneficii || "");
 
             let condNume = potrivireNume(nume, filtruNume);
             let condPret = pret >= filtruPretMin && pret <= filtruPretMax;

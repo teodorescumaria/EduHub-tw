@@ -26,6 +26,7 @@
             const preturi = locals.produse.map((p) => Number(p.pret));
             const pretMinGlobal = preturi.length ? Math.min(...preturi) : 0;
             const pretMaxGlobal = preturi.length ? Math.max(...preturi) : 0;
+            const T_ZILE_PRODUS_NOU = Number(locals.intervalProdusNouZile) || 180;
             const niveluriUnice = [...new Set(locals.produse.map((p) => p.nivel))];
             const formateUnice = [...new Set(locals.produse.map((p) => p.format))];
             const beneficiiUnice = [...new Set(
@@ -226,6 +227,14 @@
             <% } %>
 
             <div class="grid-produse">
+                <% // Determină cel mai ieftin produs din fiecare categorie
+                   const minPretPeCategorie = {};
+                   for (const p of locals.produse) {
+                       if (!minPretPeCategorie[p.categorie] || Number(p.pret) < minPretPeCategorie[p.categorie].pret) {
+                           minPretPeCategorie[p.categorie] = { pret: Number(p.pret), id: p.id };
+                       }
+                   }
+                %>
                 <% for( let prod of locals.produse) { %>
                     <%
                         const dataObj = new Date(prod.data_adaugare);
@@ -234,10 +243,26 @@
                         const an = Number.isNaN(dataObj.getTime()) ? "-" : dataObj.getFullYear();
                         const ziSapt = Number.isNaN(dataObj.getTime()) ? "-" : zileRo[dataObj.getDay()];
                         const dataAfisata = `${zi}/${luna}/${an} (${ziSapt})`;
+                        const esteIeftin = minPretPeCategorie[prod.categorie]?.id === prod.id;
+                        // --- BONUS 18 ---
+                        const msPeZi = 24*60*60*1000;
+                        const azi = new Date();
+                        const diffZile = (azi - dataObj) / msPeZi;
+                        const esteNou = !Number.isNaN(dataObj.getTime()) && diffZile <= T_ZILE_PRODUS_NOU;
                     %>
-                    <article id="art<%- prod.id %>" class="produs <%- prod.categorie %>" data-descriere="<%= prod.descriere || '' %>" data-beneficii="<%= prod.beneficii || '' %>" data-format="<%= prod.format || '' %>" data-pagini="<%= prod.nr_pagini %>" data-prod-id="<%- prod.id %>">
+                    <article id="art<%- prod.id %>" class="produs <%- prod.categorie %><%= esteIeftin ? ' produs-ieftin' : '' %><%= esteNou ? ' produs-nou' : '' %>" data-descriere="<%= prod.descriere || '' %>" data-beneficii="<%= prod.beneficii || '' %>" data-format="<%= prod.format || '' %>" data-pagini="<%= prod.nr_pagini %>" data-prod-id="<%- prod.id %>">
                         <div class="produs-header">
                             <h3 class="nume"><a href="/produs/<%- prod.id %>"><span class="val-nume"><%- prod.nume %></span></a></h3>
+                            <% if (esteIeftin) { %>
+                                <span class="badge-ieftin" title="Cel mai ieftin produs din această categorie">
+                                    <i class="bi bi-star-fill"></i> Cel mai ieftin!
+                                </span>
+                            <% } %>
+                            <% if (esteNou) { %>
+                                <span class="badge-nou" title="Produs nou!">
+                                    <i class="bi bi-lightning-charge-fill"></i> NOU
+                                </span>
+                            <% } %>
                             <div class="produs-actiuni" role="group" aria-label="Actiuni pentru produs">
                                 <button class="btn-action btn-pin" type="button" data-action="pin" title="Pastreaza produsul pe ecran">
                                     <i class="bi bi-bookmark"></i>

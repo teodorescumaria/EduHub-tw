@@ -18,12 +18,12 @@
 
             <article id="art-produs">
                 <!-- BONUS 9: Carousel for multiple images -->
-                <div class="carousel-produs" id="carouselProdus" data-bs-ride="carousel">
+                <div class="carousel slide carousel-produs" id="carouselProdus" data-bs-ride="false" data-bs-interval="false">
                     <div class="carousel-inner">
                         <% if (locals.imagini && locals.imagini.length > 0) { %>
                             <% locals.imagini.forEach((img, idx) => { %>
                                 <div class="carousel-item <%= idx === 0 ? 'active' : '' %>">
-                                    <img src="/resurse/imagini/produse/<%- img %>" alt="Imagine produs <%- locals.prod.nume %> - <%= idx + 1 %>" class="d-block w-100" loading="lazy" />
+                                    <img src="/resurse/imagini/produse/<%- img %>" alt="Imagine produs <%- locals.prod.nume %> - <%= idx + 1 %>" class="d-block w-100" loading="eager" />
                                 </div>
                             <% }); %>
                         <% } else { %>
@@ -52,7 +52,22 @@
                 </div>
 
                 <div class="detalii-produs">
-                    <h3><span class="nume"><%- locals.prod.nume %></span></h3>
+                    <h3><span class="nume"><%- locals.prod.nume %></span>
+                    <% // BONUS 18: badge NOU pe pagina produsului %>
+                    <%
+                        const T_ZILE = Number(locals.intervalProdusNouZile) || 180;
+                        const msPeZi = 24*60*60*1000;
+                        const azi = new Date();
+                        const dataObj = new Date(locals.prod.data_adaugare);
+                        const diffZile = (azi - dataObj) / msPeZi;
+                        const esteNou = !Number.isNaN(dataObj.getTime()) && diffZile <= T_ZILE;
+                    %>
+                    <% if (esteNou) { %>
+                        <span class="badge-nou" title="Produs nou!">
+                            <i class="bi bi-lightning-charge-fill"></i> NOU
+                        </span>
+                    <% } %>
+                    </h3>
                     <p class="pret-linie">Pret: <span class="pret"><%- locals.prod.pret %></span> lei</p>
                     <p>Descriere: <span class="descriere"><%- locals.prod.descriere || 'Fara descriere disponibila.' %></span></p>
 
@@ -79,5 +94,19 @@
     </main>
 
     <%- include("../fragmente/footer") %>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const carouselElement = document.getElementById("carouselProdus");
+            if (!carouselElement || !window.bootstrap) return;
+
+            bootstrap.Carousel.getOrCreateInstance(carouselElement, {
+                interval: false,
+                ride: false,
+                touch: true,
+                wrap: true,
+                pause: true
+            });
+        });
+    </script>
     </body>
 </html>

@@ -10,6 +10,36 @@ const pg = require("pg");
 app= express();
 app.set("view engine", "ejs")
 
+const INTERVAL_PRODUS_NOU_ZILE = 180;
+const FOLDERE_IMAGINI_PRODUSE = {
+    1: "simulare-EN-cls8",
+    2: "matematica-bac-teste-m2",
+    3: "ghid-complet-EN",
+    4: "teste-sim-cls8-paralela45",
+    5: "mate-teste-rez-portal",
+    6: "bac-info-gri",
+    7: "ghid-pregatire-bac-info-2009",
+    8: "teste-rez-bac-info",
+    9: "pregatire-bac-info-letras",
+    10: "bac-mate-2026-paralela",
+    11: "EN-6-art",
+    12: "40-teste-EN-art",
+    13: "EN-6-teste-booklet",
+    14: "EN-cls4-paralela45",
+    15: "EN6-art",
+    16: "flash-carduri-mate-bac",
+    17: "culegere-mate-cls8-modele",
+    18: "flash-carduri-info",
+    19: "bac-mate-start-in-scoala-inimi",
+    20: "EN-cls8-mate-2025",
+    21: "mate-cls8-bacademia",
+    22: "mate-bac-bacademia",
+    23: "info-bacademia",
+    24: "sim-cls8-EN-turcoaz",
+    25: "teste-EN4",
+    26: "EN-cls6-paralela45-alba"
+};
+
 
 
 obGlobal={
@@ -80,15 +110,39 @@ app.get("/favicon.ico", function(req, res){
     res.sendFile(path.join(__dirname,"resurse/imagini/favicon/favicon.ico"))
 });
 
-app.get(["/", "/index","/home"], function(req, res){
+app.get(["/", "/index","/home"], async function(req, res){
     let imaginiBaza = (obGlobal.obImagini.imagini || []).slice(0, 14);
-    
-    res.render("pagini/index", {
-        ip: req.ip,
-        cale_galerie: obGlobal.obImagini.cale_galerie,
-        titlu_galerie: obGlobal.obImagini.titlu_galerie,
-        imagini: imaginiBaza
-    });
+
+    try {
+        let rezProduseNoi = await client.query(
+            `select id, nume, data_adaugare
+             from culegeri
+             where data_adaugare >= current_date - ($1::int)
+             order by data_adaugare desc, id desc
+             limit 8`,
+            [INTERVAL_PRODUS_NOU_ZILE]
+        );
+
+        res.render("pagini/index", {
+            ip: req.ip,
+            cale_galerie: obGlobal.obImagini.cale_galerie,
+            titlu_galerie: obGlobal.obImagini.titlu_galerie,
+            imagini: imaginiBaza,
+            produseNoi: rezProduseNoi.rows,
+            intervalProdusNouZile: INTERVAL_PRODUS_NOU_ZILE
+        });
+    }
+    catch (err) {
+        console.log("Eroare incarcare produse noi pentru index:", err);
+        res.render("pagini/index", {
+            ip: req.ip,
+            cale_galerie: obGlobal.obImagini.cale_galerie,
+            titlu_galerie: obGlobal.obImagini.titlu_galerie,
+            imagini: imaginiBaza,
+            produseNoi: [],
+            intervalProdusNouZile: INTERVAL_PRODUS_NOU_ZILE
+        });
+    }
 });
 
 // app.get("/despre", function(req, res){
@@ -117,7 +171,8 @@ app.get("/produse", async function(req, res){
         res.render("pagini/produse", {
             produse: rezProduse.rows,
             optiuni: rezOptiuni.rows,
-            filtruTip: tipNormalizat
+            filtruTip: tipNormalizat,
+            intervalProdusNouZile: INTERVAL_PRODUS_NOU_ZILE
         });
     }
     catch (err) {
@@ -142,27 +197,48 @@ app.get("/produs/:id", async function(req, res){
 
         // BONUS 9: Scan for product images
         let prodData = rezProd.rows[0];
-        let imagini = [prodData.imagine]; // Start with main image
-        
-        let folderProdus = path.join(__dirname, "resurse/imagini/produse", `prod_${idProdus}`);
-        try {
-            let files = fs.readdirSync(folderProdus);
-            let imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif"];
-            let imaginiGassite = files.filter(f => {
-                let ext = path.extname(f).toLowerCase();
-                return imageExtensions.includes(ext);
+        let imagini = [prodData.imagine || "Unknown.jpeg"];
+
+        let imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif"];
+        let folderNumeCustom = FOLDERE_IMAGINI_PRODUSE[idProdus];
+        let foldereCandidate = [];
+
+        if (folderNumeCustom) {
+            foldereCandidate.push({
+                abs: path.join(__dirname, "resurse/imagini/produse/imagini-produse", folderNumeCustom),
+                rel: `imagini-produse/${folderNumeCustom}`
             });
-            
-            if (imaginiGassite.length > 0) {
-                imagini = imaginiGassite.map(f => `prod_${idProdus}/${f}`);
+        }
+
+        // Fallback compatibil cu structura veche
+        foldereCandidate.push({
+            abs: path.join(__dirname, "resurse/imagini/produse", `prod_${idProdus}`),
+            rel: `prod_${idProdus}`
+        });
+
+        for (let folder of foldereCandidate) {
+            if (!fs.existsSync(folder.abs)) {
+                continue;
             }
-        } catch (e) {
-            // Folder not found, use default main image
+
+            let files = fs.readdirSync(folder.abs);
+            let imaginiGasite = files
+                .filter((f) => imageExtensions.includes(path.extname(f).toLowerCase()))
+                .sort((a, b) => a.localeCompare(b, "ro"))
+                .map((f) => `${folder.rel}/${f}`);
+
+            if (imaginiGasite.length) {
+                // Imaginea principală rămâne prima, apoi restul imaginilor din folder
+                let toate = [prodData.imagine || "Unknown.jpeg", ...imaginiGasite];
+                imagini = [...new Set(toate)];
+                break;
+            }
         }
 
         res.render("pagini/produs", {
             prod: prodData,
-            imagini: imagini
+            imagini: imagini,
+            intervalProdusNouZile: INTERVAL_PRODUS_NOU_ZILE
         });
     }
     catch (err) {

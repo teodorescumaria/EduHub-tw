@@ -104,3 +104,53 @@
 		margin-right: 2cm;
 		margin-left: 1cm;
 	}
+
+	#produse-noi-home {
+		margin: 1rem 0 0.6rem;
+		padding: 0.85rem;
+		border-radius: 14px;
+		border: 1px solid #9dd9ff;
+		background: linear-gradient(145deg, #f3fbff, #e9f7ff);
+	}
+
+	#produse-noi-home h3 {
+		margin: 0 0 0.35rem;
+		color: #0b5f92;
+		font-size: 1.05rem;
+	}
+
+	.produse-noi-subtitlu {
+		margin: 0 0 0.5rem;
+		color: #224;
+	}
+
+	.lista-produse-noi {
+		margin: 0;
+		padding-left: 1.15rem;
+		display: grid;
+		gap: 0.35rem;
+	}
+
+	.lista-produse-noi li {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.7rem;
+		align-items: baseline;
+	}
+
+	.lista-produse-noi a {
+		font-weight: 700;
+		color: #0b5f92;
+	}
+
+	.lista-produse-noi time {
+		font-size: 0.9rem;
+		color: #4b6070;
+		white-space: nowrap;
+	}
+
+	.fara-produse-noi {
+		margin: 0;
+		font-style: italic;
+		color: #4b6070;
+	}

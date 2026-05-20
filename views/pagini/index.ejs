@@ -44,6 +44,24 @@
                         </div>
                     </div>
                     <p><a href="#lectii-demo" title="Mergi la lectiile video demonstrative">Vezi lectiile video demonstrative</a></p>
+
+                    <section id="produse-noi-home" aria-labelledby="titlu-produse-noi">
+                        <h3 id="titlu-produse-noi"><i class="bi bi-megaphone-fill"></i> Produse noi pe site</h3>
+                        <p class="produse-noi-subtitlu">Produse adaugate in ultimele <strong><%- locals.intervalProdusNouZile || 180 %></strong> zile:</p>
+                        <% if (locals.produseNoi && locals.produseNoi.length) { %>
+                            <ul class="lista-produse-noi">
+                                <% for (const p of locals.produseNoi) { %>
+                                    <li>
+                                        <a href="/produs/<%- p.id %>"><%- p.nume %></a>
+                                        <time datetime="<%- p.data_adaugare %>"><%- p.data_adaugare %></time>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        <% } else { %>
+                            <p class="fara-produse-noi">Momentan nu exista produse noi in intervalul selectat.</p>
+                        <% } %>
+                    </section>
+
                     <div id="dv-prezentare-1">
                         <div id="dv-prezentare">
                             <picture>
