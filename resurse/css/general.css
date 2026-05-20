@@ -238,6 +238,72 @@ header img {
     border-radius: 8px;
 }
 
+.theme-toggle-global {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.16);
+}
+
+.theme-toggle-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.theme-toggle-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #fff;
+    font-weight: 700;
+    margin: 0;
+    cursor: pointer;
+}
+
+.theme-toggle-slider {
+    width: 42px;
+    height: 24px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+.theme-toggle-slider::after {
+    content: "";
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.2s ease;
+}
+
+.theme-toggle-input:checked + .theme-toggle-label .theme-toggle-slider {
+    background: rgba(118, 178, 124, 0.9);
+    border-color: rgba(118, 178, 124, 1);
+}
+
+.theme-toggle-input:checked + .theme-toggle-label .theme-toggle-slider::after {
+    transform: translateX(18px);
+}
+
+.theme-toggle-input:focus-visible + .theme-toggle-label {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.theme-toggle-text {
+    line-height: 1;
+}
+
 @media screen and (max-width: 767px) {
     header {
         position: relative;
@@ -266,6 +332,16 @@ header img {
         padding: 0 12px;
         box-sizing: border-box;
     }
+
+    .theme-toggle-global {
+        order: 3;
+        margin-left: 12px;
+        padding: 0.3rem 0.55rem;
+    }
+
+    .theme-toggle-text {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1099px) {
@@ -283,6 +359,11 @@ header img {
         order: 2;
         flex: 1 1 auto;
         margin-top: 0;
+    }
+
+    .theme-toggle-global {
+        order: 4;
+        margin-left: auto;
     }
     
     header img {
@@ -306,6 +387,11 @@ header img {
         order: 2;
         flex: 1 1 auto;
         margin-top: 0;
+    }
+
+    .theme-toggle-global {
+        order: 4;
+        margin-left: auto;
     }
 
     header img {

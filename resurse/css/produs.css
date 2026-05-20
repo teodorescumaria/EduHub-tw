@@ -142,35 +142,6 @@
     border-color: #781E00;
 }
 
-[data-bs-theme="dark"] .carousel-produs {
-    background: linear-gradient(145deg, #2a1a1a, #1f1515);
-    border-color: #444;
-}
-
-[data-bs-theme="dark"] .carousel-produs .carousel-item {
-    background: linear-gradient(145deg, #2a1a1a, #1f1515);
-}
-
-[data-bs-theme="dark"] .carousel-produs .carousel-control-prev-icon,
-[data-bs-theme="dark"] .carousel-produs .carousel-control-next-icon {
-    background-color: rgba(232, 133, 106, 0.6);
-}
-
-[data-bs-theme="dark"] .carousel-produs .carousel-control-prev:hover .carousel-control-prev-icon,
-[data-bs-theme="dark"] .carousel-produs .carousel-control-next:hover .carousel-control-next-icon {
-    background-color: rgba(232, 133, 106, 0.9);
-}
-
-[data-bs-theme="dark"] .carousel-produs .carousel-indicators button {
-    background-color: rgba(232, 133, 106, 0.5);
-    border-color: rgba(232, 133, 106, 0.7);
-}
-
-[data-bs-theme="dark"] .carousel-produs .carousel-indicators button.active {
-    background-color: #e8856a;
-    border-color: #e8856a;
-}
-
 .detalii-produs {
     display: grid;
     gap: 0.55rem;

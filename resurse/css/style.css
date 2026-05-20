@@ -109,19 +109,28 @@
 		margin: 1rem 0 0.6rem;
 		padding: 0.85rem;
 		border-radius: 14px;
-		border: 1px solid #9dd9ff;
-		background: linear-gradient(145deg, #f3fbff, #e9f7ff);
+	}
+
+	[data-bs-theme="light"] #produse-noi-home {
+		border: 1px solid var(--culoare-secundara);
+		background: linear-gradient(145deg, #fff4f2, #fcebe9);
 	}
 
 	#produse-noi-home h3 {
 		margin: 0 0 0.35rem;
-		color: #0b5f92;
 		font-size: 1.05rem;
+	}
+
+	[data-bs-theme="light"] #produse-noi-home h3 {
+		color: var(--culoare-secundara);
 	}
 
 	.produse-noi-subtitlu {
 		margin: 0 0 0.5rem;
-		color: #224;
+	}
+
+	[data-bs-theme="light"] .produse-noi-subtitlu {
+		color: var(--culoare-baza);
 	}
 
 	.lista-produse-noi {
@@ -140,17 +149,26 @@
 
 	.lista-produse-noi a {
 		font-weight: 700;
-		color: #0b5f92;
+	}
+
+	[data-bs-theme="light"] .lista-produse-noi a {
+		color: var(--culoare-secundara);
 	}
 
 	.lista-produse-noi time {
 		font-size: 0.9rem;
-		color: #4b6070;
 		white-space: nowrap;
+	}
+
+	[data-bs-theme="light"] .lista-produse-noi time {
+		color: #7a4a45;
 	}
 
 	.fara-produse-noi {
 		margin: 0;
 		font-style: italic;
-		color: #4b6070;
+	}
+
+	[data-bs-theme="light"] .fara-produse-noi {
+		color: #7a4a45;
 	}

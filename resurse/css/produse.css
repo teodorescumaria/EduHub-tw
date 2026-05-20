@@ -354,44 +354,6 @@
     }
 }
 
-/* ===== DARK MODE ===== */
-[data-bs-theme="dark"] .panou-filtre {
-    background: #2b1a1a;
-    border-color: #5c3232;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-[data-bs-theme="dark"] .radio-grup,
-[data-bs-theme="dark"] .checkbox-grup {
-    background: #231414;
-    border-color: #5c3232;
-}
-
-[data-bs-theme="dark"] .range-capete,
-[data-bs-theme="dark"] #p-suma {
-    color: #b8908a;
-}
-
-[data-bs-theme="dark"] .produs {
-    background: #231414;
-    border-color: #5c3232;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
-}
-
-[data-bs-theme="dark"] .produs:hover {
-    box-shadow: 0 12px 24px rgba(232, 133, 106, 0.22);
-}
-
-[data-bs-theme="dark"] .tabel-produs td {
-    border-color: #5c3232;
-}
-
-[data-bs-theme="dark"] .hero-produse {
-    background:
-        radial-gradient(circle at 10% 16%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 42%),
-        linear-gradient(115deg, #2b0d00 0%, #5a1a1f 68%, #3d0e12 100%);
-}
-
 /* ===== BONUS 6: ACTION BUTTONS ===== */
 .produs-header {
     display: flex;
@@ -438,32 +400,12 @@
     color: white;
 }
 
-[data-bs-theme="dark"] .btn-action {
-    border-color: #444;
-    color: #aaa;
-}
-
-[data-bs-theme="dark"] .btn-action:hover {
-    border-color: #e8856a;
-    color: #e8856a;
-    background-color: rgba(232, 133, 106, 0.1);
-}
-
-[data-bs-theme="dark"] .btn-action.active {
-    background-color: #e8856a;
-    border-color: #e8856a;
-    color: #150c0c;
-}
 
 .produs.pinned {
     border: 2px solid #781E00;
     background-color: rgba(120, 30, 0, 0.03);
 }
 
-[data-bs-theme="dark"] .produs.pinned {
-    border: 2px solid #e8856a;
-    background-color: rgba(232, 133, 106, 0.05);
-}
 
 .produs.hidden-prod {
     opacity: 0.5;
@@ -478,10 +420,6 @@
     background-color: #f9f9f9;
 }
 
-[data-bs-theme="dark"] .sortare-dubla {
-    border-color: #444;
-    background-color: #1a1a1a;
-}
 
 .sortare-dubla .text-sm {
     font-size: 0.875rem;
@@ -528,10 +466,6 @@
     overflow: hidden;
 }
 
-[data-bs-theme="dark"] .modal-produs-imagine {
-    background: linear-gradient(145deg, #2a1a1a, #1f1515);
-    border-color: #444;
-}
 
 .modal-produs-imagine img {
     width: min(95%, 200px);
@@ -545,9 +479,6 @@
     font-size: 1.3rem;
 }
 
-[data-bs-theme="dark"] .modal-produs-info h3 {
-    color: #e8856a;
-}
 
 .modal-pret {
     font-size: 1.1rem;
@@ -556,9 +487,6 @@
     margin-bottom: 0.8rem;
 }
 
-[data-bs-theme="dark"] .modal-pret {
-    color: #e07878;
-}
 
 .modal-meta {
     display: grid;
@@ -575,10 +503,6 @@
     border-radius: 4px;
 }
 
-[data-bs-theme="dark"] .meta-item {
-    background-color: rgba(232, 133, 106, 0.05);
-    border-color: #e8856a;
-}
 
 .meta-item strong {
     color: var(--culoare-baza);
@@ -587,18 +511,12 @@
     margin-bottom: 0.3rem;
 }
 
-[data-bs-theme="dark"] .meta-item strong {
-    color: #e8856a;
-}
 
 .modal-footer {
     border-top: 1px solid var(--culoare-secundara);
     background-color: rgba(120, 30, 0, 0.03);
 }
 
-[data-bs-theme="dark"] .modal-footer {
-    background-color: rgba(232, 133, 106, 0.05);
-}
 
 .modal-footer .btn-primary {
     background-color: var(--culoare-baza);

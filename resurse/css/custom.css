@@ -6205,6 +6205,7 @@ textarea.form-control-lg {
     --bs-spinner-animation-speed: 1.5s;
   }
 }
+
 .offcanvas, .offcanvas-xxl, .offcanvas-xl, .offcanvas-lg, .offcanvas-md, .offcanvas-sm {
   --bs-offcanvas-zindex: 1045;
   --bs-offcanvas-width: 400px;
