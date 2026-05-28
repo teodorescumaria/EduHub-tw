@@ -103,6 +103,7 @@ app.use("/dist",express.static(path.join(__dirname, "node_modules/bootstrap/dist
 
 app.use(function(req, res, next){
     res.locals.categoriiProduse = obGlobal.categoriiProduse || [];
+    res.locals.ip = req.ip;
     next();
 });
 
@@ -111,7 +112,10 @@ app.get("/favicon.ico", function(req, res){
 });
 
 app.get(["/", "/index","/home"], async function(req, res){
-    let imaginiBaza = (obGlobal.obImagini.imagini || []).slice(0, 14);
+    let imaginiBaza = obtineImaginiGaleriePentruAfisare();
+    let imaginiAnimata = selecteazaImaginiGalerieAnimata(obGlobal.obImagini.imagini || []);
+    await genereazaVersiuniResponsiveGalerie(imaginiBaza);
+    genereazaCssGalerieAnimata(imaginiAnimata.length);
 
     try {
         let rezProduseNoi = await client.query(
@@ -124,10 +128,10 @@ app.get(["/", "/index","/home"], async function(req, res){
         );
 
         res.render("pagini/index", {
-            ip: req.ip,
             cale_galerie: obGlobal.obImagini.cale_galerie,
             titlu_galerie: obGlobal.obImagini.titlu_galerie,
             imagini: imaginiBaza,
+            imaginiAnimata: imaginiAnimata,
             produseNoi: rezProduseNoi.rows,
             intervalProdusNouZile: INTERVAL_PRODUS_NOU_ZILE
         });
@@ -135,10 +139,10 @@ app.get(["/", "/index","/home"], async function(req, res){
     catch (err) {
         console.log("Eroare incarcare produse noi pentru index:", err);
         res.render("pagini/index", {
-            ip: req.ip,
             cale_galerie: obGlobal.obImagini.cale_galerie,
             titlu_galerie: obGlobal.obImagini.titlu_galerie,
             imagini: imaginiBaza,
+            imaginiAnimata: imaginiAnimata,
             produseNoi: [],
             intervalProdusNouZile: INTERVAL_PRODUS_NOU_ZILE
         });
@@ -268,7 +272,6 @@ function getZileSaptamana() {
 function filtreazaImaginidupaDzi(imagini, dataCurenta = new Date()) {
     const zile = getZileSaptamana();
     const indexZiCurenta = dataCurenta.getDay();
-    const zileCurenta = zile[indexZiCurenta];
     
     let imaginiFiltrate = imagini.filter(imagine => {
         if (!imagine.intervale_zile || !Array.isArray(imagine.intervale_zile)) {
@@ -304,6 +307,192 @@ function filtreazaImaginidupaDzi(imagini, dataCurenta = new Date()) {
     return imaginiFiltrate;
 }
 
+function getDataGalerieCurenta() {
+    if (!process.env.GALERIE_DATA_TEST) {
+        return new Date();
+    }
+
+    const dataTest = new Date(process.env.GALERIE_DATA_TEST);
+    if (Number.isNaN(dataTest.getTime())) {
+        return new Date();
+    }
+
+    return dataTest;
+}
+
+async function genereazaVersiuniResponsiveGalerie(imagini) {
+    let caleGalerieRel = (obGlobal.obImagini.cale_galerie || "/resurse/imagini").replace(/^\/+/, "");
+    let caleAbsGalerie = path.join(__dirname, caleGalerieRel);
+    let caleAbsMediu = path.join(caleAbsGalerie, "mediu");
+    let caleAbsMic = path.join(caleAbsGalerie, "mic");
+
+    if (!fs.existsSync(caleAbsMediu)) {
+        fs.mkdirSync(caleAbsMediu, { recursive: true });
+    }
+    if (!fs.existsSync(caleAbsMic)) {
+        fs.mkdirSync(caleAbsMic, { recursive: true });
+    }
+
+    for (let imag of imagini) {
+        if (!imag?.fisier_imagine) {
+            continue;
+        }
+
+        let numeFis = path.parse(imag.fisier_imagine).name;
+        let caleFisAbs = path.join(caleAbsGalerie, imag.fisier_imagine);
+        let caleFisMediuAbs = path.join(caleAbsMediu, `${numeFis}.webp`);
+        let caleFisMicAbs = path.join(caleAbsMic, `${numeFis}.webp`);
+
+        if (!fs.existsSync(caleFisAbs)) {
+            continue;
+        }
+
+        let operatii = [];
+
+        if (!fs.existsSync(caleFisMediuAbs)) {
+            operatii.push(
+                sharp(caleFisAbs)
+                    .resize({ width: 360, height: 300, fit: "cover", position: "centre" })
+                    .webp({ quality: 82 })
+                    .toFile(caleFisMediuAbs)
+            );
+        }
+
+        if (!fs.existsSync(caleFisMicAbs)) {
+            operatii.push(
+                sharp(caleFisAbs)
+                    .resize({ width: 220, height: 180, fit: "cover", position: "centre" })
+                    .webp({ quality: 80 })
+                    .toFile(caleFisMicAbs)
+            );
+        }
+
+        if (operatii.length) {
+            try {
+                await Promise.all(operatii);
+            }
+            catch (err) {
+                console.log(`Eroare generare versiuni galerie pentru ${imag.fisier_imagine}:`, err.message);
+            }
+        }
+    }
+}
+
+function pregatesteImaginiGaleriePentruTemplate(imagini) {
+    const caleGalerie = obGlobal.obImagini.cale_galerie || "/resurse/imagini";
+
+    return imagini.map((imagine) => {
+        const numeBazaFisier = path.parse(imagine.fisier_imagine || "").name;
+        return {
+            ...imagine,
+            continut_alternativ: imagine.continut_alternativ || imagine.nume_poza || imagine.fisier_imagine || "Imagine galerie",
+            fisier_mediu: `mediu/${numeBazaFisier}.webp`,
+            fisier_mic: `mic/${numeBazaFisier}.webp`,
+            cale_galerie: caleGalerie
+        };
+    });
+}
+
+function obtineImaginiGaleriePentruAfisare() {
+    const imaginiToate = obGlobal.obImagini.imagini || [];
+    const dataCurenta = getDataGalerieCurenta();
+    const indexZi = dataCurenta.getDay();
+    const imaginiFiltrate = filtreazaImaginidupaDzi(imaginiToate, dataCurenta);
+
+    function selecteazaCuRotatie(lista, nrDorite, offset) {
+        if (!Array.isArray(lista) || !lista.length || nrDorite <= 0) {
+            return [];
+        }
+        const start = ((offset % lista.length) + lista.length) % lista.length;
+        const listaRotita = [...lista.slice(start), ...lista.slice(0, start)];
+        return listaRotita.slice(0, nrDorite);
+    }
+
+    // Modificarea offset-ului pe zi asigura un set vizibil diferit in fiecare zi.
+    const offsetZi = indexZi * 3;
+
+    let imaginiFinale = [...imaginiFiltrate];
+    if (imaginiFinale.length >= 14) {
+        imaginiFinale = selecteazaCuRotatie(imaginiFiltrate, 14, offsetZi);
+    }
+    else {
+        const imaginiCompletare = imaginiToate
+            .filter((img) => !imaginiFinale.includes(img))
+        const completareRotita = selecteazaCuRotatie(imaginiCompletare, 14 - imaginiFinale.length, offsetZi);
+        imaginiFinale = [...imaginiFinale, ...completareRotita];
+    }
+
+    if (imaginiFinale.length < 14) {
+        const completareFallback = selecteazaCuRotatie(imaginiToate, 14 - imaginiFinale.length, offsetZi + 2);
+        for (let img of completareFallback) {
+            if (!imaginiFinale.includes(img)) {
+                imaginiFinale.push(img);
+            }
+            if (imaginiFinale.length >= 14) {
+                break;
+            }
+        }
+    }
+
+    if (imaginiFinale.length < 14) {
+        const completareCiclica = selecteazaCuRotatie(imaginiToate, 14, offsetZi + 5);
+        for (let img of completareCiclica) {
+            imaginiFinale.push(img);
+            if (imaginiFinale.length >= 14) {
+                break;
+            }
+        }
+    }
+
+    imaginiFinale = imaginiFinale.slice(0, 14);
+    return pregatesteImaginiGaleriePentruTemplate(imaginiFinale);
+}
+
+function numarRandomParGalerieAnimata() {
+    const valori = [6, 8, 10, 12, 14];
+    const pozitie = Math.floor(Math.random() * valori.length);
+    return valori[pozitie];
+}
+
+function selecteazaImaginiGalerieAnimata(imagini) {
+    const nrImagini = numarRandomParGalerieAnimata();
+    const imaginiIndiceImparDistincte = [];
+    const fisiereVazute = new Set();
+
+    imagini.forEach((imagine, index) => {
+        if (index % 2 !== 1) {
+            return;
+        }
+
+        const idFisier = imagine?.fisier_imagine;
+        if (!idFisier || fisiereVazute.has(idFisier)) {
+            return;
+        }
+
+        fisiereVazute.add(idFisier);
+        imaginiIndiceImparDistincte.push(imagine);
+    });
+
+    return imaginiIndiceImparDistincte.slice(0, nrImagini);
+}
+
+function genereazaCssGalerieAnimata(nrImagini) {
+    const caleConfig = path.join(__dirname, "resurse/scss/_galerie-animata-config.scss");
+    const caleScss = path.join(__dirname, "resurse/scss/galerie-animata.scss");
+    const caleCss = path.join(__dirname, "resurse/css/galerie-animata.css");
+
+    fs.writeFileSync(caleConfig, `$nr-imagini-galerie-animata: ${nrImagini};\n`);
+
+    const rezultat = sass.compile(caleScss, {
+        loadPaths: [path.join(__dirname, "resurse/scss")],
+        style: "expanded",
+        quietDeps: true,
+        silenceDeprecations: ["import", "global-builtin", "color-functions", "if-function"]
+    });
+
+    fs.writeFileSync(caleCss, rezultat.css);
+}
+
 function initImagini(){
     let caleGalerieJson = path.join(__dirname,"resurse/json/galerie.json");
     if (!fs.existsSync(caleGalerieJson)) {
@@ -313,26 +502,6 @@ function initImagini(){
 
     var continut = fs.readFileSync(caleGalerieJson).toString("utf-8");
     obGlobal.obImagini = JSON.parse(continut);
-    let vImagini = obGlobal.obImagini.imagini || [];
-    let caleGalerie = obGlobal.obImagini.cale_galerie || "/resurse/imagini";
-
-    let caleAbs = path.join(__dirname, caleGalerie);
-    let caleAbsMediu = path.join(caleAbs, "mediu");
-    if (!fs.existsSync(caleAbsMediu))
-        fs.mkdirSync(caleAbsMediu, { recursive: true });
-    
-    for (let imag of vImagini){
-        let numeFisExt = imag.fisier_imagine;
-        let [numeFis, ext] = numeFisExt.split(".");
-        let caleFisAbs = path.join(caleAbs, imag.fisier_imagine);
-        let caleFisMediuAbs = path.join(caleAbsMediu, numeFis+".webp");
-        
-        if (fs.existsSync(caleFisAbs)) {
-            sharp(caleFisAbs).resize(300).toFile(caleFisMediuAbs).catch(err => {
-                console.log("Eroare sharp:", err.message);
-            });
-        }
-    }
 }
 initImagini();
 
@@ -400,6 +569,9 @@ function compileazaScss(caleScss, caleCss){
 //la pornirea serverului
 vFisiere=fs.readdirSync(obGlobal.folderScss);
 for( let numeFis of vFisiere ){
+    if (numeFis.startsWith("_")){
+        continue;
+    }
     if (path.extname(numeFis)==".scss"){
         compileazaScss(numeFis);
     }
@@ -408,6 +580,9 @@ for( let numeFis of vFisiere ){
 
 fs.watch(obGlobal.folderScss, function(eveniment, numeFis){
     if (eveniment=="change" || eveniment=="rename"){
+        if (numeFis?.startsWith("_")){
+            return;
+        }
         let caleCompleta=path.join(obGlobal.folderScss, numeFis);
         if (fs.existsSync(caleCompleta)){
             compileazaScss(caleCompleta);
@@ -416,18 +591,23 @@ fs.watch(obGlobal.folderScss, function(eveniment, numeFis){
 })
 
 
-app.get("/galerie", function(req, res){
-    let imaginiBaza = (obGlobal.obImagini.imagini || []).slice(0, 14);
+app.get("/galerie", async function(req, res){
+    let imaginiBaza = obtineImaginiGaleriePentruAfisare();
+    let imaginiAnimata = selecteazaImaginiGalerieAnimata(obGlobal.obImagini.imagini || []);
+    await genereazaVersiuniResponsiveGalerie(imaginiBaza);
+    genereazaCssGalerieAnimata(imaginiAnimata.length);
     
     res.render("pagini/galerie", {
         cale_galerie: obGlobal.obImagini.cale_galerie,
         titlu_galerie: obGlobal.obImagini.titlu_galerie,
-           imagini: imaginiBaza
+           imagini: imaginiBaza,
+           imaginiAnimata: imaginiAnimata
     });
 });
 
-app.get("/despre", function(req, res){
-    let imaginiBaza = (obGlobal.obImagini.imagini || []).slice(0, 14);
+app.get("/despre", async function(req, res){
+    let imaginiBaza = obtineImaginiGaleriePentruAfisare();
+    await genereazaVersiuniResponsiveGalerie(imaginiBaza);
     
     res.render("pagini/despre", {
         cale_galerie: obGlobal.obImagini.cale_galerie,

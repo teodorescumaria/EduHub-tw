@@ -4,19 +4,33 @@
   <% if (typeof imagini !== 'undefined' && imagini && imagini.length > 0) { %>
     <div class="galerie-grid">
       <% imagini.forEach((imagine, idx) => { %>
-        <figure class="galerie-item galerie-item-<%= idx + 1 %>">
+        <% const randCurent = Math.floor(idx / 2) + 1; %>
+        <% const perechiZigZag = [[1, 2], [1, 3], [2, 3]]; %>
+        <% const perecheCurenta = perechiZigZag[(randCurent - 1) % perechiZigZag.length]; %>
+        <% const coloanaCurenta = idx % 2 === 0 ? perecheCurenta[0] : perecheCurenta[1]; %>
+        <% const caleBaza = (typeof cale_galerie !== 'undefined' ? cale_galerie : '/resurse/imagini'); %>
+        <figure class="galerie-item galerie-item-<%= idx + 1 %>" style="--gal-row:<%= randCurent %>; --gal-col:<%= coloanaCurenta %>;">
           <picture>
-            <source media="(min-width: 1200px)" srcset="<%= (typeof cale_galerie !== 'undefined' ? cale_galerie : '/resurse/imagini') %>/<%= imagine.fisier_imagine %>">
-            <source media="(min-width: 768px)" srcset="<%= (typeof cale_galerie !== 'undefined' ? cale_galerie : '/resurse/imagini') %>/<%= imagine.fisier_imagine %>">
+            <source media="(max-width: 767px)" srcset="<%= caleBaza %>/<%= imagine.fisier_mic || imagine.fisier_imagine %>">
+            <source media="(max-width: 1199px)" srcset="<%= caleBaza %>/<%= imagine.fisier_mediu || imagine.fisier_imagine %>">
+            <source media="(min-width: 1200px)" srcset="<%= caleBaza %>/<%= imagine.fisier_imagine %>">
             <img 
-              src="<%= (typeof cale_galerie !== 'undefined' ? cale_galerie : '/resurse/imagini') %>/<%= imagine.fisier_imagine %>" 
-              alt="<%= imagine.continut_alternativ || imagine.nume_poza %>"
-              title="<%= imagine.descriere_poza %>"
+              src="<%= caleBaza %>/<%= imagine.fisier_imagine %>" 
+              alt="<%= imagine.continut_alternativ || imagine.nume_poza || imagine.fisier_imagine %>"
+              title="<%= imagine.descriere_poza || imagine.nume_poza || imagine.fisier_imagine %>"
               class="galerie-img"
             >
           </picture>
           <figcaption class="galerie-caption">
-            <span class="galerie-index"></span><%= imagine.nume_poza %>
+            <span class="galerie-index"></span><%= imagine.nume_poza || imagine.fisier_imagine %>
+            <% if (imagine.atribuire && imagine.atribuire.licenta) { %>
+              <span class="galerie-licenta">
+                Licenta: <%= imagine.atribuire.licenta %>
+                <% if (imagine.atribuire.autor) { %>
+                  | Autor: <%= imagine.atribuire.autor %>
+                <% } %>
+              </span>
+            <% } %>
           </figcaption>
         </figure>
       <% }); %>

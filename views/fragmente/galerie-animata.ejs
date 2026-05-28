@@ -1,0 +1,22 @@
+<% if (typeof imaginiAnimata !== "undefined" && imaginiAnimata && imaginiAnimata.length > 0) { %>
+<section id="galerie-animata">
+    <h2>Galerie</h2>
+
+    <div class="galerie-animata-wrapper">
+        <% imaginiAnimata.forEach((imagine, index) => { %>
+            <div class="galerie-animata-slide galerie-animata-slide-<%= index + 1 %>">
+                <img
+                    src="<%= cale_galerie %>/<%= imagine.fisier_imagine %>"
+                    alt="<%= imagine.continut_alternativ || imagine.nume_poza || imagine.fisier_imagine %>"
+                    title="<%= imagine.descriere_poza || imagine.nume_poza || imagine.fisier_imagine %>"
+                    class="galerie-animata-img"
+                    loading="eager"
+                >
+                <% if (imagine.descriere_poza || imagine.nume_poza) { %>
+                <div class="galerie-animata-caption"><%= imagine.descriere_poza || imagine.nume_poza %></div>
+                <% } %>
+            </div>
+        <% }) %>
+    </div>
+</section>
+<% } %>

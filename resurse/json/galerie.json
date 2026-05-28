@@ -1,104 +1,209 @@
 {
   "cale_galerie": "/resurse/imagini",
-  "titlu_galerie": "Galerie EduHub: Momente din activitatea noastra",
+  "titlu_galerie": "Galerie EduHub: selectie dinamica pe zile",
   "imagini": [
     {
       "fisier_imagine": "interior-info.jpg",
-      "nume_poza": "Sala de cursuri - Informatică",
-      "continut_alternativ": "Elevi în sala de cursuri la informatică",
-      "descriere_poza": "Momentul din care ne-am pregătit elevii pentru examenele de informatică",
-      "intervale_zile": [["luni", "miercuri"], ["vineri", "vineri"]]
+      "nume_poza": "Sala de curs - informatica",
+      "continut_alternativ": "Elevi in sala de curs la informatica",
+      "descriere_poza": "Sedinta de recapitulare pentru algoritmi si structuri de date.",
+      "intervale_zile": [["luni", "marti"]]
     },
     {
       "fisier_imagine": "interior-mate.jpg",
-      "nume_poza": "Sala de cursuri - Matematică",
-      "continut_alternativ": "Elevi în sala de cursuri la matematică",
-      "descriere_poza": "Sesiune de pregatire la matematică cu metode interactive",
-      "intervale_zile": [["luni", "joi"], ["sambata", "sambata"]]
+      "nume_poza": "Sala de curs - matematica",
+      "continut_alternativ": "Elevi in timpul unei lectii de matematica",
+      "descriere_poza": "Exercitii ghidate pentru subiectele clasice de examen.",
+      "intervale_zile": [["miercuri", "joi"]]
     },
     {
-      "fisier_imagine": "premianti-info.jpg",
-      "nume_poza": "Premianții Informatică",
-      "continut_alternativ": "Elevi premianți la informatică",
-      "descriere_poza": "Elevii care au obținut premii la olimpiadele de informatică",
-      "intervale_zile": [["marti", "marti"], ["vineri", "duminica"]]
-    },
-    {
-      "fisier_imagine": "premianti-mate.jpg",
-      "nume_poza": "Premianții Matematică",
-      "continut_alternativ": "Elevi premianți la matematică",
-      "descriere_poza": "Elevii care au obținut rezultate remarcabile la olimpiadele de matematică",
-      "intervale_zile": [["miercuri", "joi"], ["sambata", "sambata"]]
-    },
-    {
-      "fisier_imagine": "ora-mate-online.jpg",
-      "nume_poza": "Curs Online - Matematică",
-      "continut_alternativ": "Sesiune de curs online la matematică",
-      "descriere_poza": "Platformă de curs online pentru pregătirea de la distanță",
+      "fisier_imagine": "laborator-info.jpg",
+      "nume_poza": "Laborator informatica",
+      "continut_alternativ": "Laborator de informatica echipat",
+      "descriere_poza": "Rezolvare practica in laborator, pe seturi de probleme.",
       "intervale_zile": [["luni", "vineri"]]
     },
     {
       "fisier_imagine": "ora-info.jpg",
-      "nume_poza": "Lecție de Informatică",
-      "continut_alternativ": "Lecție de informatică în desfășurare",
-      "descriere_poza": "Momentul unui curs de informatică cu contenut practic",
-      "intervale_zile": [["marti", "joi"], ["duminica", "duminica"]]
+      "nume_poza": "Ora de informatica",
+      "continut_alternativ": "Lecție de informatica in desfasurare",
+      "descriere_poza": "Antrenament pe subiecte de bac, cu feedback imediat.",
+      "intervale_zile": [["marti", "vineri"]]
     },
     {
-      "fisier_imagine": "culegere-mate-bac.jpg",
-      "nume_poza": "Culegere Matematică BAC",
-      "continut_alternativ": "Culegerea de matematică pentru BAC",
-      "descriere_poza": "Una dintre culegeri noastre de matematică pentru bacalaureat",
-      "intervale_zile": [["luni", "sambata"]]
-    },
-    {
-      "fisier_imagine": "culegere-info-bac.jpg",
-      "nume_poza": "Culegere Informatică BAC",
-      "continut_alternativ": "Culegerea de informatică pentru BAC",
-      "descriere_poza": "Culegerea de informatică cu sarcini și subiecte de examen",
-      "intervale_zile": [["marti", "vineri"], ["sambata", "sambata"]]
-    },
-    {
-      "fisier_imagine": "curs-info-incepatori.jpg",
-      "nume_poza": "Curs Informatică Începători",
-      "continut_alternativ": "Curs de informatică pentru începători",
-      "descriere_poza": "Program special pentru elevii care încep studiul informaticii de la zero",
-      "intervale_zile": [["luni", "joi"], ["duminica", "duminica"]]
-    },
-    {
-      "fisier_imagine": "studiu-grup.jpg",
-      "nume_poza": "Studiu în grup",
-      "continut_alternativ": "Elevi studiind în grup",
-      "descriere_poza": "Sesiune de studiu colaborativ între elevi",
-      "intervale_zile": [["marti", "joi"], ["sambata", "sambata"]]
-    },
-    {
-      "fisier_imagine": "laborator-info.jpg",
-      "nume_poza": "Laborator Informatică",
-      "continut_alternativ": "Laborator cu computere",
-      "descriere_poza": "Sala de laborator echipată cu stații de lucru",
-      "intervale_zile": [["luni", "vineri"]]
-    },
-    {
-      "fisier_imagine": "activitate-extrascolar.jpg",
-      "nume_poza": "Activitate Extracurriculară",
-      "continut_alternativ": "Activitate în afara orelor regulate",
-      "descriere_poza": "Program de activități extracurriculare pentru elevi",
-      "intervale_zile": [["miercuri", "vineri"], ["duminica", "duminica"]]
-    },
-    {
-      "fisier_imagine": "workshop-mate.jpg",
-      "nume_poza": "Workshop Matematică",
-      "continut_alternativ": "Sesiune de workshop",
-      "descriere_poza": "Atelier special de matematică cu metode avansate",
+      "fisier_imagine": "ora-mate-online.jpg",
+      "nume_poza": "Ora online matematica",
+      "continut_alternativ": "Sesiune online de matematica",
+      "descriere_poza": "Recapitulare structurata pe unitati de invatare.",
       "intervale_zile": [["luni", "joi"]]
     },
     {
+      "fisier_imagine": "curs-info-incepatori.jpg",
+      "nume_poza": "Curs pentru incepatori",
+      "continut_alternativ": "Curs de informatica pentru incepatori",
+      "descriere_poza": "Notiuni de baza, explicate gradual, pentru elevii la inceput de drum.",
+      "intervale_zile": [["miercuri", "duminica"]]
+    },
+    {
+      "fisier_imagine": "studiu-grup.jpg",
+      "nume_poza": "Studiu in echipa",
+      "continut_alternativ": "Elevi care invata in grup",
+      "descriere_poza": "Sedinta colaborativa pentru fixarea metodelor de rezolvare.",
+      "intervale_zile": [["sambata", "duminica"]]
+    },
+    {
+      "fisier_imagine": "activitate-extrascolar.jpg",
+      "nume_poza": "Activitate extracurriculara",
+      "continut_alternativ": "Elevi participand la activitati extrascolare",
+      "descriere_poza": "Activitati aplicate pentru motivatie si ritm constant.",
+      "intervale_zile": [["vineri", "duminica"]]
+    },
+    {
+      "fisier_imagine": "workshop-mate.jpg",
+      "nume_poza": "Workshop matematica",
+      "continut_alternativ": "Atelier de matematica aplicata",
+      "descriere_poza": "Strategii de rezolvare pentru exercitii cu punctaj mare.",
+      "intervale_zile": [["luni", "miercuri"]]
+    },
+    {
       "fisier_imagine": "proiect-final.jpg",
-      "nume_poza": "Proiect Final",
-      "continut_alternativ": "Prezentare de proiect",
-      "descriere_poza": "Prezentarea proiectelor finale ale elevilor",
+      "nume_poza": "Prezentare proiect final",
+      "continut_alternativ": "Prezentarea proiectelor finale",
+      "descriere_poza": "Sinteza progresului elevilor in ultima etapa de pregatire.",
+      "intervale_zile": [["joi", "sambata"]]
+    },
+    {
+      "fisier_imagine": "img1.jpg",
+      "nume_poza": "Pregătire la matematică",
+      "continut_alternativ": "Antrenament intensiv pentru examen",
+      "descriere_poza": "Pregătire la matematică",
+      "intervale_zile": [["luni", "luni"]]
+    },
+    {
+      "fisier_imagine": "img4.jpg",
+      "nume_poza": "Lecție la tablă",
+      "continut_alternativ": "Recapitulare aplicata la tabla",
+      "descriere_poza": "Lecție la tablă",
+      "intervale_zile": [["marti", "miercuri"]]
+    },
+    {
+      "fisier_imagine": "img8.jpg",
+      "nume_poza": "Lucrat intens",
+      "continut_alternativ": "Set de probleme mixte pentru recapitulare",
+      "descriere_poza": "Lucrat intens",
+      "intervale_zile": [["joi", "vineri"]]
+    },
+    {
+      "fisier_imagine": "img12.jpg",
+      "nume_poza": "Elevi fericiti",
+      "continut_alternativ": "Consolidare finala inainte de weekend",
+      "descriere_poza": "Elevi fericiti",
+      "intervale_zile": [["sambata", "sambata"]]
+    },
+    {
+      "fisier_imagine": "img13.jpg",
+      "nume_poza": "Atelier de informatică",
+      "continut_alternativ": "Exercitii scurte de relaxare in timpul studiului",
+      "descriere_poza": "Atelier de informatică",
+      "intervale_zile": [["joi", "joi"]],
+      "atribuire": {
+        "licenta": "CC-BY 4.0",
+        "autor": "Michael Carter",
+        "url_autor": "https://example.com/author",
+        "sursa": "Example Stock",
+        "url_sursa": "https://example.com/photo"
+      }
+    },
+    {
+      "fisier_imagine": "img14.jpg",
+      "nume_poza": "Feedback constant",
+      "continut_alternativ": "Lista de verificare pentru dimineata examenului",
+      "descriere_poza": "Feedback constant",
       "intervale_zile": [["marti", "sambata"]]
+    },
+    {
+      "fisier_imagine": "img15.jpg",
+      "nume_poza": "Workshop uri",
+      "continut_alternativ": "Elevi premiati dupa sesiunea de pregatire",
+      "descriere_poza": "Workshop uri",
+      "intervale_zile": [["marti", "marti"], ["vineri", "duminica"]]
+    },
+    {
+      "fisier_imagine": "img16.jpg",
+      "nume_poza": "Laborator",
+      "continut_alternativ": "Elevi cu rezultate remarcabile la matematica",
+      "descriere_poza": "Laborator",
+      "intervale_zile": [["miercuri", "joi"], ["sambata", "sambata"]]
+    },
+    {
+      "fisier_imagine": "culegere-mate-bac.jpg",
+      "nume_poza": "Culegere matematica bac",
+      "continut_alternativ": "Coperta culegerii de matematica pentru bac",
+      "descriere_poza": "Resursa clasica folosita in sesiunile de pregatire.",
+      "intervale_zile": [["luni", "joi"]]
+    },
+    {
+      "fisier_imagine": "culegere-info-bac.jpg",
+      "nume_poza": "Culegere informatica bac",
+      "continut_alternativ": "Coperta culegerii de informatica pentru bac",
+      "descriere_poza": "Set de exercitii pentru recapitulare la informatica.",
+      "intervale_zile": [["marti", "vineri"]]
+    },
+    {
+      "fisier_imagine": "img5.jpg",
+      "nume_poza": "Probleme pe tablă",
+      "continut_alternativ": "Sprint de recapitulare in ziua de vineri",
+      "descriere_poza": "Probleme pe tablă",
+      "intervale_zile": [["vineri", "vineri"]]
+    },
+    {
+      "fisier_imagine": "img10.jpg",
+      "nume_poza": "Sali de clasa",
+      "continut_alternativ": "Sprint de recapitulare in ziua de sambata",
+      "descriere_poza": "Sali de clasa",
+      "intervale_zile": [["sambata", "sambata"]]
+    },
+    {
+      "fisier_imagine": "img2.jpg",
+      "nume_poza": "Matematică prin joc",
+      "continut_alternativ": "Exercitii interactive de matematica",
+      "descriere_poza": "Matematică prin joc",
+      "intervale_zile": [["luni", "miercuri"]]
+    },
+    {
+      "fisier_imagine": "img3.jpg",
+      "nume_poza": "Exerciții rezolvate",
+      "continut_alternativ": "Exemple rezolvate pas cu pas",
+      "descriere_poza": "Exerciții rezolvate",
+      "intervale_zile": [["marti", "joi"]]
+    },
+    {
+      "fisier_imagine": "img6.jpg",
+      "nume_poza": "Învățare prin practică",
+      "continut_alternativ": "Invatare prin aplicatii practice",
+      "descriere_poza": "Învățare prin practică",
+      "intervale_zile": [["miercuri", "vineri"]]
+    },
+    {
+      "fisier_imagine": "img7.jpg",
+      "nume_poza": "Activitati distractive",
+      "continut_alternativ": "Activitati distractive in cadrul centrului",
+      "descriere_poza": "Activitati distractive",
+      "intervale_zile": [["joi", "duminica"]]
+    },
+    {
+      "fisier_imagine": "img9.jpg",
+      "nume_poza": "Lucru individual",
+      "continut_alternativ": "Elev lucrand individual",
+      "descriere_poza": "Lucru individual",
+      "intervale_zile": [["luni", "vineri"]]
+    },
+    {
+      "fisier_imagine": "img11.jpg",
+      "nume_poza": "Holul centrului",
+      "continut_alternativ": "Holul centrului educational",
+      "descriere_poza": "Holul centrului",
+      "intervale_zile": [["vineri", "duminica"]]
     }
   ]
 }

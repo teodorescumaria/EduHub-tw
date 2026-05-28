@@ -8,6 +8,7 @@
     <meta name="msapplication-TileColor" content="#0099e5">
 
     <%- include('../fragmente/head.ejs') %>
+    <link rel="stylesheet" href="/resurse/css/galerie-animata.css" type="text/css" />
 
 </head>
 
@@ -62,18 +63,13 @@
                         <% } %>
                     </section>
 
-                    <div id="dv-prezentare-1">
-                        <div id="dv-prezentare">
-                            <picture>
-                                <source srcset="/resurse/imagini/studiu-mic.jpg" media="(max-width:500px)" />
-                                <source srcset="/resurse/imagini/studiu-mediu.jpg" media="(max-width:700px)" />
-                                <img src="/resurse/imagini/studiu-desktop.jpg" alt="Elevi studiind" title="Sesiune de pregatire EduHub">
-                            </picture>
-                        </div>
-                    </div>
+                    <%- include('../fragmente/galerie-animata.ejs') %>
                 </section>
                 <section id="testimoniale">
-                    <h2>Ce spun elevii nostri</h2>
+                    <h2 class="titlu-reflexie">
+                        <span class="titlu-reflexie__text">Ce spun elevii nostri</span>
+                        <span class="titlu-reflexie__reflectat" aria-hidden="true">Ce spun elevii nostri</span>
+                    </h2>
                     <blockquote cite="https://exemplu-blog-educatie.ro/succes-elevi">
                         <p>"Datorita resurselor de la <b>EduHub</b>, am reusit sa inteleg conceptele de grafuri care mi se pareau imposibile. Materialele sunt structurate exact pe formatul de examen."</p>
                         <footer>&#8212; <cite>Andrei Popescu</cite>, elev premiat la Olimpiada de Informatica</footer>
@@ -303,20 +299,30 @@
                 <p><i>Nota: Toate orele afisate corespund fusului orar al Romaniei.</i></p>
                 <div class="video-fundal-card">
                     <video class="video-fundal-media" autoplay muted loop playsinline poster="/resurse/imagini/poster-video.png">
-                        <source src="/resurse/video/video-prezentare.webm" type="video/webm">
-                        <source src="/resurse/video/video-prezentare.mp4" type="video/mp4">
+                        <source src="/resurse/video/video-fundal.mp4" type="video/mp4">
+                        <source src="/resurse/video/video-fundal.mov" type="video/quicktime">
                     </video>
                     <div class="video-fundal-overlay">
-                        <h3>Un video care functioneaza ca fundal</h3>
-                        <p>Zona aceasta foloseste acelasi material video ca fundal decorativ, peste care ramane lizibil un mesaj scurt.</p>
+                        <h3>Strategii de invatare eficiente</h3>
+                        <p>Descopera metode si tehnici care te vor ajuta sa inveti mai eficient si sa obtii rezultate mai bune.</p>
                     </div>
                 </div>
+                <section class="date-utilizator" aria-labelledby="titlu-date-utilizator">
+                    <h3 id="titlu-date-utilizator">Date despre utilizator</h3>
+                    <p>IP-ul utilizatorului este <strong><%- locals.ip %></strong>.</p>
+                </section>
             </section>
 
-            <section id="galerie-statica">
-                <h2>Galerie EduHub</h2>
-                <p>Galeria este disponibila si pe aceasta pagina, iar pentru vizualizarea dedicata poti accesa <a href="/galerie" title="Deschide pagina dedicata galeriei">pagina completa a galeriei</a>.</p>
-                <%- include('../fragmente/galerie.ejs') %>
+            <section id="ghid-seara-examen" aria-labelledby="titlu-ghid-seara-examen">
+                <h2 id="titlu-ghid-seara-examen">Ce faci in seara dinainte de examen</h2>
+                <p>In ultimele ore inainte de examen, obiectivul principal este claritatea mentala, nu invatarea agresiva de continut nou. Un plan simplu te ajuta sa ramai calm si eficient.</p>
+                <ol>
+                    <li>Recapituleaza doar ideile-cheie in 45-60 de minute: formule, tipare de exercitii, greseli frecvente.</li>
+                    <li>Pregateste din timp ce ai nevoie: act de identitate, pixuri, apa, eventual gustare usoara.</li>
+                    <li>Evita ecranele cu cel putin 30 de minute inainte de somn si noteaza pe scurt planul pentru dimineata.</li>
+                    <li>Culca-te la o ora stabila si tinteste minimum 7-8 ore de somn.</li>
+                </ol>
+                <p><strong>Regula de aur:</strong> nu mai incepe capitole noi in acea seara; consolideaza ce stii deja.</p>
             </section>
 
             <div class="grid-container-z8">
@@ -351,6 +357,11 @@
                         </div>
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/KC-r59aA9B4" name="ifr-video" title="YouTube video player" style="border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
+                </section>
+                <section id="galerie-statica">
+                    <h2>Galerie EduHub</h2>
+                    <p>Galeria este disponibila si pe aceasta pagina, iar pentru vizualizarea dedicata poti accesa <a href="/galerie" title="Deschide pagina dedicata galeriei">pagina completa a galeriei</a>.</p>
+                    <%- include('../fragmente/galerie.ejs') %>
                 </section>
             </div>
 
